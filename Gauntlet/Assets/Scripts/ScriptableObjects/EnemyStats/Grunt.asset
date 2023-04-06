@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f348b75880791c04d9142a959c21c623, type: 3}
+  m_Name: Grunt
+  m_EditorClassIdentifier: 
+  enemyMoveSpeed: 400
+  enemyMeleeDamage: 1
+  enemyShotDamage: 1
+  enemyEngageDistance: 10
+  enemyPointValue: 10
+  enemyMaxHealth: 5
