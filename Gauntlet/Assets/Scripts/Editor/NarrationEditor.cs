@@ -6,7 +6,7 @@ using UnityEditor;
 
 public class NarrationEditor : EditorWindow
 {
-    private Enums.NarrationType _newAssetNarrationType;
+    private NarrationType _newAssetNarrationType;
     private string[] _newAssetStrings = new string[2];
 
     private static EditorWindow _narrationEditorWindowInstance;
