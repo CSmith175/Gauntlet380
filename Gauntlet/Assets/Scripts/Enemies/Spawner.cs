@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour
 {
     public SpawnerStats spawnerStats;
 
-    private Vector3 spawnBoxHalfSize = new Vector3(0.5f, 0.5f, 0.5f);
+    private Vector3 spawnBoxHalfSize = new Vector3(0.45f, 0.45f, 0.45f);
     private bool enemySpawned = false;
 
     private void Start()
@@ -18,36 +18,29 @@ public class Spawner : MonoBehaviour
     private void SpawnEnemy()
     {
         enemySpawned = false;
-        Vector3 originalOffset = new Vector3(transform.position.x-2, transform.position.y, transform.position.z - 2);
+        Vector3 originalOffset = new Vector3(transform.position.x-2f, transform.position.y, transform.position.z - 2f);
         //Iterates through z axis
         for (int i = 0; i < 3; i++)
         {
+            if (enemySpawned)
+                return;
             originalOffset.z++;
+
+            //Reset x axis
+            originalOffset.x = transform.position.x - 2f;
             //Iterates through x axis
             for (int ii = 0; ii < 3; ii++)
             {
                 originalOffset.x++;
-                Debug.Log("Checking coordinate: " + originalOffset);
-                Collider[] hitColliders = Physics.OverlapBox(transform.localPosition + originalOffset, spawnBoxHalfSize);
-                if (Physics.OverlapBox(transform.localPosition + originalOffset, spawnBoxHalfSize).Length == 0)
+                if(!Physics.CheckBox(originalOffset, spawnBoxHalfSize))
                 {
-                    Debug.Log("Spot clear, spawning enemy");
-                    GameObject enemy = Instantiate(spawnerStats.spawnerEnemyPrefab);
+                    GameObject enemy = Instantiate(spawnerStats.spawnerEnemyPrefab, transform);
                     enemy.transform.position = originalOffset;
                     enemySpawned = true;
                     return;
-                }
-                else
-                {
-                    Debug.Log(originalOffset + " blocked by " + hitColliders[0].name);
                 }
             }
         }
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawCube(new Vector3(transform.position.x - 1, transform.position.y, transform.position.z - 1), Vector3.one * 0.95f);
-    //}
 }
