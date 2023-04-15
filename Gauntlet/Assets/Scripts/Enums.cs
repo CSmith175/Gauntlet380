@@ -15,12 +15,25 @@ public enum CameraModes
 //used to determine which pool of narrations to pull from
 public enum NarrationType
 {
+    Undefined,
     Damage,
     Treasure,
     Key,
     Potion,
     Food,
     LowHealth,
+}
+
+//used to help organize data for narration
+public enum NarrationInformationType
+{
+    NoType,
+    PlayerClassName,
+    EnemyName,
+    FoodName,
+    DamageValue,
+    HealValue,
+    TreasureValue,
 }
 
 //used to determine which inventoryItem a player has picked up
