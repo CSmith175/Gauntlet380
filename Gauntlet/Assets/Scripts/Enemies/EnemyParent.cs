@@ -5,12 +5,12 @@ using UnityEngine;
 public class EnemyParent : MonoBehaviour, IEnemy
 {
     public EnemyStats stats;
-    public float detectionRange = 100f;
     public LayerMask playerLayerMask = 3;
 
     protected GameObject closestPlayer;
 
     private Rigidbody rb;
+    private float detectionRange = 100f;
     protected bool chasingPlayer = false;
 
     private void Awake()

@@ -60,7 +60,7 @@ public class RangedEnemy : EnemyParent
     {
         if(projectilePrefab != null)
         {
-            projectile = Instantiate(projectilePrefab, transform);
+            projectile = Instantiate(projectilePrefab);
             projectile.transform.position = transform.position;
             projectile.transform.rotation = Quaternion.LookRotation(closestPlayer.transform.position - transform.position, transform.up);
         }
