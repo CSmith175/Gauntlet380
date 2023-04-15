@@ -2,35 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyParent : MonoBehaviour
+public class EnemyParent : MonoBehaviour, IEnemy
 {
     public EnemyStats stats;
     public float detectionRange = 100f;
     public LayerMask playerLayerMask = 3;
 
+    protected GameObject closestPlayer;
+
     private Rigidbody rb;
-    private bool chasingPlayer = false;
+    protected bool chasingPlayer = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         InvokeRepeating("MoveTowardsNearestPlayer", 0.3f, 0.3f);
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         CancelInvoke("MoveTowardsNearestPlayer");
     }
 
-    protected void MoveTowardsNearestPlayer()
+    protected virtual void MoveTowardsNearestPlayer()
     {
         Collider[] players = Physics.OverlapSphere(transform.position, detectionRange, playerLayerMask);
-        float minDistance = 100f;
-        GameObject closestPlayer = null;
+        float minDistance = detectionRange;
         //Debug.Log("Number of players found: " + players.Length);
 
         if (players.Length <= 0)
@@ -66,5 +67,15 @@ public class EnemyParent : MonoBehaviour
             rb.velocity = transform.forward * stats.enemyMoveSpeed * Time.deltaTime;
         else
             rb.velocity = Vector3.zero;
+    }
+
+    public void OnDeath()
+    {
+        //Give points to the player and despawn self
+    }
+
+    public void ReactToShot(int shotDamage)
+    {
+        //Take damage from the player
     }
 }
