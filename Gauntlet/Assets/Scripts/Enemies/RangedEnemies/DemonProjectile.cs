@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DemonProjectile : MonoBehaviour
+public class DemonProjectile : MonoBehaviour, IProjectile
 {
     public float projectileSpeed = 1f;
     public EnemyStats stats;
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == 3)
@@ -24,5 +24,10 @@ public class DemonProjectile : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position += transform.forward * projectileSpeed * Time.deltaTime;
+    }
+
+    public void AssignStatsOfProjectile(EnemyStats baseStats)
+    {
+        stats = baseStats;
     }
 }

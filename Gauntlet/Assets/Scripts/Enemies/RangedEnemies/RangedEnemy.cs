@@ -61,6 +61,7 @@ public class RangedEnemy : EnemyParent
         if(projectilePrefab != null)
         {
             projectile = Instantiate(projectilePrefab);
+            projectile.GetComponent<IProjectile>().AssignStatsOfProjectile(stats);
             projectile.transform.position = transform.position;
             projectile.transform.rotation = Quaternion.LookRotation(closestPlayer.transform.position - transform.position, transform.up);
         }
