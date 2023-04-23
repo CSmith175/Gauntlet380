@@ -12,8 +12,22 @@ public class PlayerManager : MonoBehaviour
     {
         get { return _classes; }
     }
-
     private Player[] _players;
+
+    //camera related
+    private CameraController _cameraController;
+    [Space(10)]
+    [SerializeField] [Tooltip("Scriptable Object Settings for the Camera")] private CameraSettings _cameraSettings;
+
+    private void Awake()
+    {
+        //attatches controller and saves refrence for updating display modes
+        _cameraController = gameObject.AddComponent<CameraController>();
+        if(_cameraSettings)
+        {
+            _cameraController.IntilizeCameraController(_cameraSettings); //applies the settings to the camera
+        }
+    }
 
     private void AddPlayer(ClassData playerClass)
     {
@@ -34,9 +48,12 @@ public class PlayerManager : MonoBehaviour
 
                 _players[i].InitilizePlayer(DetermineControllerNumber(), playerClass);
                 _players[i].transform.position = _playerSpawnPos; //lazy way of setting to a spawn position. convert to a function later
-                return;
+                break;
             }
         }
+
+        //updates camera
+        _cameraController.UpdateCamera(_players);
     }
 
     private int DetermineControllerNumber()
@@ -165,6 +182,8 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
+        //updates camera
+        _cameraController.UpdateCamera(_players);
     }
 
     private void RemovePlayer(Player player) //what happens when a player is dropped

@@ -12,7 +12,7 @@ public class VoroniDiagramTesting : MonoBehaviour
     private Vector2[] _playerPosArray;
     private Color[] _playerColors;
 
-    bool _toggleConstantUpdate = false;
+    bool _toggleConstantUpdate = true;
 
     [SerializeField] private Color[] colors;
     private void Update()
@@ -101,6 +101,7 @@ public class VoroniDiagramTesting : MonoBehaviour
 
     private void OnGUI()
     {
+        /*
         GUILayout.BeginArea(new Rect(Screen.width - 200, 0, 200, 100));
         GUILayout.BeginVertical();
         
@@ -115,5 +116,6 @@ public class VoroniDiagramTesting : MonoBehaviour
 
         GUILayout.EndVertical();
         GUILayout.EndArea();
+        */
     }
 }
