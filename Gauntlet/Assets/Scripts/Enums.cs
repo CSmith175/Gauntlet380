@@ -39,6 +39,7 @@ public enum NarrationInformationType
 //used to determine which inventoryItem a player has picked up
 public enum ItemType
 {
+    Empty,
     Potion,
     Key
 }
