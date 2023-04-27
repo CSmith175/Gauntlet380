@@ -45,7 +45,7 @@ public enum ItemType
 }
 
 //used to easily acsess a players stats in one function
-public enum PlayerStats
+public enum PlayerStatCategories
 {
     MoveSpeed,
     ShotDamage,

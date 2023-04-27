@@ -9,7 +9,8 @@ public struct ProjectileData
 
 public struct PlayerStatValues
 {
-    public int ShotDamage;
+    public int moveSpeed;
+    public int shotDamage;
     public int meleeDamage;
     public int magicDamage;
     public int defense;

@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
                 changeInPosition.z = inputVector.y;
 
                 if (_classData)
-                    transform.position += (changeInPosition * _classData.MoveSpeed * Time.deltaTime);
+                    transform.position += (changeInPosition * _classData.BaseMoveSpeed * Time.deltaTime);
                 else
                     Debug.LogError("No class data could be found on Player " + _controllerNumber);
             }

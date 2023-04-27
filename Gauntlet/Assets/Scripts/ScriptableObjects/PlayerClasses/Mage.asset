@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52b807c1eccd4240a007c40ca8cca35, type: 3}
   m_Name: Mage
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  _classCharacterPrefab: {fileID: 1584206139138172056, guid: 191b3672cdbf96044bf28836c31b9740, type: 3}
+  _baseMoveSpeed: 15
+  _baseShotAttack: 0
+  _baseMeleeAttack: 0
+  _baseMagicAttack: 0
+  _baseDefense: 0
+  _baseShotSpeed: 0
+  _baseHealth: 0
+  _characterModelPrefab: {fileID: 0}
