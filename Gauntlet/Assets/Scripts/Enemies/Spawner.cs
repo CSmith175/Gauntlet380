@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        ObjectPooling.MakeNewObjectPool(spawnerStats.spawnerEnemyPrefab);
         InvokeRepeating("SpawnEnemy", spawnerStats.enemySpawnRate, spawnerStats.enemySpawnRate);
     }
 
@@ -34,13 +35,16 @@ public class Spawner : MonoBehaviour
                 originalOffset.x++;
                 if(!Physics.CheckBox(originalOffset, spawnBoxHalfSize))
                 {
-                    GameObject enemy = Instantiate(spawnerStats.spawnerEnemyPrefab, transform);
-                    enemy.transform.position = originalOffset;
-                    enemySpawned = true;
+                    Debug.Log("Pulling object from pool");
+                    GameObject enemy = ObjectPooling.PullObjectFromPool(spawnerStats.spawnerEnemyPrefab);
+                    if(enemy != null)
+                    {
+                        enemy.transform.position = originalOffset;
+                        enemySpawned = true;
+                    }
                     return;
                 }
             }
         }
     }
-
 }

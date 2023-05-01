@@ -71,7 +71,7 @@ public class EnemyParent : MonoBehaviour, IEnemy
 
     public void OnDeath()
     {
-        //Give points to the player and despawn self
+        gameObject.SetActive(false);
     }
 
     public void ReactToShot(int shotDamage)

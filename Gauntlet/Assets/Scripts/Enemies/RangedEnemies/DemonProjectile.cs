@@ -13,11 +13,11 @@ public class DemonProjectile : MonoBehaviour, IProjectile
         {
             //other.gameObject.GetComponent<Player>().ReactToShot(stats.enemyShotDamage);
             Debug.Log("Oh ouch, player shot!");
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
         else if(other.gameObject.layer != 6)
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 
