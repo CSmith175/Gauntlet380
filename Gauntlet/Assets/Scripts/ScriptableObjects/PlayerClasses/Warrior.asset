@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52b807c1eccd4240a007c40ca8cca35, type: 3}
   m_Name: Warrior
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  _classCharacterPrefab: {fileID: 924927120865986372, guid: cce9416d831da8745a04d6d31b188f47, type: 3}
+  _baseMoveSpeed: 10
+  _baseShotAttack: 0
+  _baseMeleeAttack: 0
+  _baseMagicAttack: 0
+  _baseDefense: 0
+  _baseShotSpeed: 0
+  _baseHealth: 0
+  _characterModelPrefab: {fileID: 0}

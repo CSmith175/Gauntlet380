@@ -39,12 +39,13 @@ public enum NarrationInformationType
 //used to determine which inventoryItem a player has picked up
 public enum ItemType
 {
+    Empty,
     Potion,
     Key
 }
 
 //used to easily acsess a players stats in one function
-public enum PlayerStats
+public enum PlayerStatCategories
 {
     MoveSpeed,
     ShotDamage,
