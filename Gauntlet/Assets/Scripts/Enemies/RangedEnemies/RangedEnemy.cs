@@ -6,13 +6,13 @@ public class RangedEnemy : EnemyParent
 {
     public GameObject projectilePrefab;
     protected float rangedAttackSpeed = 2f;
-    private GameObject projectile;
+    protected GameObject projectile;
 
     private bool shooting = false;
 
     private void Start()
     {
-        //ObjectPooling.MakeNewObjectPool(projectilePrefab);
+        ObjectPooling.MakeNewObjectPool(projectilePrefab);
     }
 
     private void OnEnable()
@@ -61,7 +61,7 @@ public class RangedEnemy : EnemyParent
         //yield return new WaitForSeconds(1 / rangedAttackSpeed);
     }
 
-    protected void EnemyShoot()
+    protected virtual void EnemyShoot()
     {
         if(projectilePrefab != null)
         {

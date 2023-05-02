@@ -17,6 +17,9 @@ public class ObjectPooling : MonoBehaviour
 
     public static void MakeNewObjectPool(GameObject go)
     {
+        if (objectPools.ContainsKey(go.name))
+            return;
+
         specificPool = Instantiate(poolParent);
         specificPool.transform.position = Vector3.zero;
         specificPool.name = go.name + " Pool";
