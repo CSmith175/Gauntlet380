@@ -55,3 +55,11 @@ public enum PlayerStatCategories
     ShotSpeed,
     Health
 }
+//Used for binding players to controllers
+public enum PlayerNums
+{
+    Player1 = 1,
+    Player2 = 2,
+    Player3 = 3,
+    Player4 = 4
+}

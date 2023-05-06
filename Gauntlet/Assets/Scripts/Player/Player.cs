@@ -1,13 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private PlayerActionMap _playerActionMap;
-    private InputAction _playerInputAction;
-
     private int _controllerNumber;
     public int ControllerNumber
     {
@@ -20,90 +16,58 @@ public class Player : MonoBehaviour
         get { return _classData; }
     }
 
-    private enum PlayerNums
-    {
-        Player1 = 1,
-        Player2 = 2,
-        Player3 = 3,
-        Player4 = 4
-    }
-
-
     public void InitilizePlayer(int controllerNumber, ClassData classData)
     {
-        _controllerNumber = Mathf.Clamp(controllerNumber, 1, 4);
-        DeterminePlayerAction(_controllerNumber);
-
-        InitilizeInputAction();
+        bool playerControlsInitilized = false;
         _classData = classData;
-        OnEnable();
-    }
 
-    private void OnEnable()
-    {
-        if(_playerActionMap != null)
-            _playerActionMap.Enable();
-
-    }
-
-    private void OnDisable()
-    {
-        if (_playerActionMap != null)
-            _playerActionMap.Disable();
-    }
-
-    private void Update()
-    {
-        if (_playerInputAction != null) //temp move check
+        foreach(var component in gameObject.GetComponents(typeof(Component)))
         {
-            if (_playerInputAction.ReadValue<Vector2>() != Vector2.zero)
+            if(!(component is Transform))
             {
+                if(component is PlayerControls)
+                {
+                    SetUpPlayerMovement(component as PlayerControls, controllerNumber, classData);
+                    playerControlsInitilized = true;
+                }
 
-                Vector2 inputVector = _playerInputAction.ReadValue<Vector2>();
-                Vector3 changeInPosition = Vector3.zero;
 
-                changeInPosition.x = inputVector.x;
-                changeInPosition.z = inputVector.y;
 
-                if (_classData)
-                    transform.position += (changeInPosition * _classData.BaseMoveSpeed * Time.deltaTime);
-                else
-                    Debug.LogError("No class data could be found on Player " + _controllerNumber);
+
+
+
             }
         }
-    }
 
-    private void DeterminePlayerAction(int playerNumber)
-    {
-        if(_playerActionMap == null)
+        if(!playerControlsInitilized)
         {
-            InitilizeInputAction();
+            SetUpPlayerMovement(null, controllerNumber, classData);
         }
 
-        playerNumber = Mathf.Clamp(playerNumber, 1, 4);
+    }
 
-        switch ((PlayerNums)playerNumber)
+
+
+    #region "Helper Functions for Player Initilization
+
+    /// <summary>
+    /// Sets up Player Controls monobehavior. Resets one if its passed in, otherwise attatches a new one
+    /// </summary>
+    /// <param name="controls"> pass in a controls here to reset it instead of creating a new one </param>
+    private void SetUpPlayerMovement(PlayerControls controls, int controllerNumber, ClassData classData)
+    {
+        _controllerNumber = controllerNumber; //sets the held controller number
+
+        if (controls) //resets a currently exsisting controls
         {
-            case PlayerNums.Player1:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player1;
-                break;
-            case PlayerNums.Player2:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player2;
-                break;
-            case PlayerNums.Player3:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player3;
-                break;
-            case PlayerNums.Player4:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player4;
-                break;
-            default:
-                break;
+            controls.InitilizePlayer(controllerNumber, classData);
+        }
+        else //creates a new controls and sets it up
+        {
+            gameObject.AddComponent<PlayerControls>().InitilizePlayer(controllerNumber, classData);
+
         }
     }
 
-    private void InitilizeInputAction() //initilizes the action map
-    {
-        _playerActionMap = new PlayerActionMap();
-        _playerActionMap.Enable();
-    }
+    #endregion
 }

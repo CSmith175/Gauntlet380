@@ -3,7 +3,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewClassData", menuName = "GauntletData/ClassData", order = 1)]
 public class ClassData : ScriptableObject
 {
+    #region Display Inspector Variables
+    [Header("Display Info")]
+    [SerializeField] private string _characterName;
+    #endregion
+
+    #region "Display Getter Properties"
+    public string CharacterName { get { return _characterName; } }
+    #endregion
+
     #region "Stat Inspector Variables"
+    [Header("Stats")]
+    [Space(15)]
     [SerializeField] private int _baseMoveSpeed;
     [SerializeField] private int _baseShotAttack;
     [SerializeField] private int _baseMeleeAttack;
@@ -11,6 +22,10 @@ public class ClassData : ScriptableObject
     [SerializeField] private int _baseDefense;
     [SerializeField] private int _baseShotSpeed;
     [SerializeField] private int _baseHealth;
+
+
+    [Header("Player Art Prefab")]
+    [Space(15)]
     [SerializeField] private GameObject _characterModelPrefab;
     #endregion
 

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52b807c1eccd4240a007c40ca8cca35, type: 3}
   m_Name: Valkyrie
   m_EditorClassIdentifier: 
+  _characterName: Thyra
   _baseMoveSpeed: 15
   _baseShotAttack: 0
   _baseMeleeAttack: 0
@@ -19,4 +20,4 @@ MonoBehaviour:
   _baseDefense: 0
   _baseShotSpeed: 0
   _baseHealth: 0
-  _characterModelPrefab: {fileID: 0}
+  _characterModelPrefab: {fileID: 6604856568255550271, guid: 25d4d16809e1c0c40a6c330f3cd5ee6a, type: 3}

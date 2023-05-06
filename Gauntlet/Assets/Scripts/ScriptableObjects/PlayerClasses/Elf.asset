@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52b807c1eccd4240a007c40ca8cca35, type: 3}
   m_Name: Elf
   m_EditorClassIdentifier: 
+  _characterName: Questor
   _baseMoveSpeed: 20
   _baseShotAttack: 0
   _baseMeleeAttack: 0
@@ -19,4 +20,4 @@ MonoBehaviour:
   _baseDefense: 0
   _baseShotSpeed: 0
   _baseHealth: 0
-  _characterModelPrefab: {fileID: 0}
+  _characterModelPrefab: {fileID: 6391790742193814661, guid: 1864fdb00147bcd4bb55a99a546bca05, type: 3}
