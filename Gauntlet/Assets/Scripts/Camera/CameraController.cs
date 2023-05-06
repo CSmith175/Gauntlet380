@@ -45,7 +45,7 @@ public class CameraController: MonoBehaviour
 
 
     //runs current camera mode every frame
-    private void Update()
+    private void LateUpdate()
     {
         if (_currentDisplayFunction != null)
         {

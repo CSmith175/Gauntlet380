@@ -41,7 +41,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""73aef529-6c99-4978-8781-ceca6f80fc83"",
                     ""expectedControlType"": """",
-                    ""processors"": """",
+                    ""processors"": ""Clamp(min=-1,max=1)"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -50,7 +50,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""44137564-1e7f-40f9-85bf-6a065e76a070"",
                     ""expectedControlType"": """",
-                    ""processors"": """",
+                    ""processors"": ""Clamp(min=-1,max=1)"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -59,7 +59,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""fe3a3f20-2053-4937-856b-07e0bd29a526"",
                     ""expectedControlType"": """",
-                    ""processors"": """",
+                    ""processors"": ""Clamp(min=-1,max=1)"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 }
@@ -70,7 +70,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""id"": ""1df169c2-0fe6-4cda-85ac-e0708e9e1e86"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Clamp(min=-1,max=1)"",
                     ""groups"": """",
                     ""action"": ""Player 1"",
                     ""isComposite"": true,

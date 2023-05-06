@@ -1,8 +1,9 @@
 using UnityEngine;
+using System;
 
 public class PlayerStats
 {
-    private readonly ClassData _baseStats; //base stats of the player. Passed in through the constructor
+    private ClassData _baseStats; //base stats of the player. Passed in through the constructor
     private PlayerStatValues _currentStats; //current stats of the player
 
     #region "Public Functions"
@@ -12,16 +13,27 @@ public class PlayerStats
     /// <param name="baseStats"> Stats to set the new PlayerStats to to start out </param>
     public PlayerStats(ClassData baseStats)
     {
+        InitilizePlayerStats(baseStats);
+    }
+
+    /// <summary>
+    /// Initilizes the base stats
+    /// </summary>
+    /// <param name="baseStats"> Initial stats from a class </param>
+    public void InitilizePlayerStats(ClassData baseStats)
+    {
         _baseStats = baseStats;
 
         SetStatsFromClassData(baseStats);
     }
+
+
     /// <summary>
     /// Add to a stat by the given amount
     /// </summary>
     /// <param name="statCategory"> Stat to change </param>
     /// <param name="increment"> Amount to increment by </param>
-    public void IncrementPlayerStats(PlayerStatCategories statCategory, int increment)
+    public void IncrementPlayerStat(PlayerStatCategories statCategory, int increment)
     {
         switch (statCategory)
         {
@@ -64,6 +76,31 @@ public class PlayerStats
                 break;
         }
     }
+
+    public int GetPlayerStat(PlayerStatCategories statCategory)
+    {
+        switch (statCategory)
+        {
+            case PlayerStatCategories.MoveSpeed:
+                return _currentStats.moveSpeed;
+            case PlayerStatCategories.ShotDamage:
+                return _currentStats.shotDamage;
+            case PlayerStatCategories.MeleeDamage:
+                return _currentStats.meleeDamage;
+            case PlayerStatCategories.MagicDamage:
+                return _currentStats.magicDamage;
+            case PlayerStatCategories.Defense:
+                return _currentStats.defense;
+            case PlayerStatCategories.ShotSpeed:
+                return _currentStats.shotSpeed;
+            case PlayerStatCategories.Health:
+                return _currentStats.health;
+            default:
+                Debug.LogError("No Stat Category of type: <b>" + Enum.GetName(typeof(PlayerStatCategories), statCategory) + "</b> Implemented in GetPlayerStat on PlayerStats.cs. Returning 10 as a default");
+                return 10;
+        }
+    }
+
     #endregion
 
     #region "Helper Functions"

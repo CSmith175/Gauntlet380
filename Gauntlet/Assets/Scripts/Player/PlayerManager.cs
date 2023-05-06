@@ -12,7 +12,10 @@ public class PlayerManager : MonoBehaviour
     {
         get { return _classes; }
     }
+
+    //Current Players
     private Player[] _players;
+    public Player[] Players { get { return _players; } }
 
     //camera related
     private CameraController _cameraController;
@@ -192,6 +195,7 @@ public class PlayerManager : MonoBehaviour
     }
         
 
+    //for debugging
     private void OnGUI()
     {
         //adding players debugging
