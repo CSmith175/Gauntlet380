@@ -594,6 +594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAmount: 8
   _testPlayerVoroniImage: {fileID: 268318626}
+  _toggleConstantUpdate: 1
   colors:
   - {r: 0.5660378, g: 0.5367648, b: 0.15218939, a: 1}
   - {r: 0.37654623, g: 0, b: 0.5943396, a: 1}
@@ -1226,6 +1227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAmount: 8
   _testPlayerVoroniImage: {fileID: 540365964}
+  _toggleConstantUpdate: 1
   colors:
   - {r: 0, g: 1, b: 0.15447211, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
@@ -2752,6 +2754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAmount: 8
   _testPlayerVoroniImage: {fileID: 1414607191}
+  _toggleConstantUpdate: 1
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
@@ -3367,6 +3370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAmount: 8
   _testPlayerVoroniImage: {fileID: 1897974438}
+  _toggleConstantUpdate: 1
   colors:
   - {r: 0.7924528, g: 0.14578143, b: 0.3048338, a: 1}
   - {r: 0.9811321, g: 0.631494, b: 0.1527234, a: 1}

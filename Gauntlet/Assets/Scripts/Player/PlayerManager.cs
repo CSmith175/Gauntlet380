@@ -45,7 +45,6 @@ public class PlayerManager : MonoBehaviour
             {
                 _players[i] = playerClass.SpawnClassPrefab().AddComponent<Player>();
                 _players[i].gameObject.name = ("Player" + (i + 1) + " : " + playerClass.name);
-
                 _players[i].InitilizePlayer(DetermineControllerNumber(), playerClass);
                 _players[i].transform.position = _playerSpawnPos; //lazy way of setting to a spawn position. convert to a function later
                 break;
@@ -80,6 +79,7 @@ public class PlayerManager : MonoBehaviour
 
                 if (ii == _players.Length - 1)
                     return checkingValue;
+
             }
         }
 
@@ -128,7 +128,7 @@ public class PlayerManager : MonoBehaviour
 
                 for (int ii = 0; ii < _players.Length; ii++)
                 {
-                    if(_players[ii])
+                    if(_players[ii] && _players[ii].ClassData)
                     {
                         if (currentClassData == _players[ii].ClassData)
                         {
@@ -172,8 +172,8 @@ public class PlayerManager : MonoBehaviour
             {
                 _players[i] = playerList[i];
 
-                if(_players[i]) //renames the player to the appropiate player number
-                    _players[i].name = _players[i].gameObject.name = ("Player" + (i + 1) + " : " + _players[i].ClassData.name);
+                if(_players[i] != null && _players[i].ClassData != null) //renames the player to the appropiate player number
+                    _players[i].gameObject.name = ("Player" + (i + 1) + " : " + _players[i].ClassData.name);
 
             }
             else
