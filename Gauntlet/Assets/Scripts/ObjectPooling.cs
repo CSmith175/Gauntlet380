@@ -83,8 +83,12 @@ public class ObjectPooling : MonoBehaviour
                 }
             }
 
-            Debug.LogError("ERROR " + go.name + " pool all assets used");
-            return null;
+            //If no objects are available to pull, make a new one and add it to the list
+            GameObject temp = Instantiate(go);
+            tempList.Add(temp);
+            temp.transform.parent = tempList[0].transform.parent;
+
+            return temp;
         }
         else
         {

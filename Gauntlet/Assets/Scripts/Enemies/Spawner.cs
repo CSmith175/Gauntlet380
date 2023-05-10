@@ -10,10 +10,21 @@ public class Spawner : MonoBehaviour
     private Vector3 spawnBoxHalfSize = new Vector3(0.45f, 0.45f, 0.45f);
     private bool enemySpawned = false;
 
+
     private void Start()
     {
         ObjectPooling.MakeNewObjectPool(spawnerStats.spawnerEnemyPrefab);
+    }
+
+    private void OnEnable()
+    {
+        ObjectPooling.MakeNewObjectPool(spawnerStats.spawnerEnemyPrefab);
         InvokeRepeating("SpawnEnemy", spawnerStats.enemySpawnRate, spawnerStats.enemySpawnRate);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke("SpawnEnemy");
     }
 
     private void SpawnEnemy()
