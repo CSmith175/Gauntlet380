@@ -15,7 +15,6 @@ public class PlayerControls : MonoBehaviour
     //variables used to store information internaly
     private Vector2 _movementVector = new Vector3();
     private Vector3 _appliedMovementVector = new Vector3();
-    private Vector3 _turnVelocity = new Vector3();
     private Rigidbody _rBody;
 
     private void OnEnable()
@@ -47,7 +46,7 @@ public class PlayerControls : MonoBehaviour
 
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         PlayerMove();
     }
@@ -70,10 +69,7 @@ public class PlayerControls : MonoBehaviour
                 _appliedMovementVector.y = 0;
                 _appliedMovementVector.z = _movementVector.y;
 
-                _rBody.velocity = Time.deltaTime * 150 * attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.MoveSpeed) * _appliedMovementVector;
-
-                //player rotation
-                //transform.LookAt(Vector3.SmoothDamp(transform.position + transform.forward, transform.position + _rBody.velocity, ref _turnVelocity, 0.05f));
+                _rBody.velocity = Time.deltaTime * attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.MoveSpeed) * _appliedMovementVector;
                 transform.LookAt(transform.position + _rBody.velocity);
             }
         }
