@@ -10,8 +10,16 @@ public class PickupLogic : MonoBehaviour
     {
         if(other.gameObject.layer == 3)
         {
-            other.GetComponent<PlayerInventory>().TryAddItem(item);
-            gameObject.SetActive(false);
+            PlayerInventory pi = other.GetComponent<PlayerInventory>();
+            if (pi.CheckIfInventoryFull())
+            {
+                return;
+            }
+            else
+            {
+                pi.TryAddItem(item);
+                gameObject.SetActive(false);
+            }
         }
     }
 }
