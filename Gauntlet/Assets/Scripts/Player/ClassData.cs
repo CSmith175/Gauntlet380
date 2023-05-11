@@ -24,9 +24,10 @@ public class ClassData : ScriptableObject
     [SerializeField] private int _baseHealth;
 
 
-    [Header("Player Art Prefab")]
+    [Header("Player Art Prefabs")]
     [Space(15)]
     [SerializeField] private GameObject _characterModelPrefab;
+    [SerializeField] private GameObject _characterShotPrefab;
     #endregion
 
     #region "Stat Getter Properties"
@@ -37,6 +38,10 @@ public class ClassData : ScriptableObject
     public int BaseDefense { get { return _baseDefense; } }
     public int BaseShotSpeed { get { return _baseShotSpeed; } }
     public int BaseHealth { get { return _baseHealth; } }
+    #endregion
+
+    #region "Art Getter Properties
+    public GameObject CharacterShotPrefab { get { return _characterShotPrefab; } }
     #endregion
 
     public GameObject SpawnClassPrefab()
@@ -51,4 +56,6 @@ public class ClassData : ScriptableObject
             return GameObject.CreatePrimitive(PrimitiveType.Cube);
         }
     }
+
+
 }

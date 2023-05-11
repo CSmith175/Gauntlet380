@@ -16,6 +16,10 @@ public class PlayerControls : MonoBehaviour
     private Vector3 _appliedMovementVector = new Vector3();
     private Rigidbody _rBody;
 
+    private GameObject _currentShot;
+    private Rigidbody _currentShotRBody;
+    private Projectile _currentprojectile;
+
     private void OnEnable()
     {
         //initilizes rigidbody
@@ -94,8 +98,34 @@ public class PlayerControls : MonoBehaviour
     {
         if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
-            //Debug.Log("Player shoot from controller");
-            
+            if(attatchedPlayer.ClassData.CharacterShotPrefab != null)
+            {
+                // returns out of a pool already exsists of the type so its fine
+                ObjectPooling.MakeNewObjectPool(attatchedPlayer.ClassData.CharacterShotPrefab, 10);
+
+                _currentShot = ObjectPooling.PullObjectFromPool(attatchedPlayer.ClassData.CharacterShotPrefab);
+
+                if (_currentShot != null)
+                {
+                    //activates and launches projectile
+                    _currentShot.transform.position = transform.position;
+                    _currentShot.transform.LookAt(transform.position + transform.forward);
+
+                    //launches the projectile
+                    _currentShot.TryGetComponent(out _currentShotRBody);
+                    if (_currentShotRBody)
+                    {
+                        _currentShotRBody.velocity = transform.forward * attatchedPlayer.ClassData.BaseShotSpeed;
+                    }
+
+                    //tells the projectile that this player is the source of the projectile
+                    _currentShot.TryGetComponent(out _currentprojectile);
+                    if (_currentprojectile)
+                    {
+                        _currentprojectile.SetSourceEntity(gameObject);
+                    }
+                }
+            }
         }
     }
     /// <summary>

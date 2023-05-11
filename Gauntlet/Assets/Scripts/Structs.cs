@@ -2,7 +2,6 @@ using UnityEngine;
 
 public struct ProjectileData
 {
-    public GameObject projectileVisuals;
     public int projectileDamage;
     public ProjectileSource projectileSource;
 }

@@ -39,6 +39,9 @@ public class ObjectPooling : MonoBehaviour
 
     public static void MakeNewObjectPool(GameObject go, int poolSize)
     {
+        if (objectPools.ContainsKey(go.name))
+            return;
+
         specificPool = Instantiate(poolParent);
         specificPool.transform.position = Vector3.zero;
         specificPool.name = go.name + " Pool";
@@ -93,7 +96,6 @@ public class ObjectPooling : MonoBehaviour
         else
         {
             MakeNewObjectPool(go);
-            Debug.LogError("ERROR " + go.name + " pool all assets used");
             return null;
         }
     }
