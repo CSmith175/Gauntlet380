@@ -8,7 +8,6 @@ public class PlayerControls : MonoBehaviour
     [HideInInspector] public Player attatchedPlayer;
 
     private PlayerActionMap _playerActionMap;
-    private InputAction _playerInputAction;
 
     private int _controllerNumber;
 
@@ -19,10 +18,6 @@ public class PlayerControls : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_playerActionMap != null)
-            _playerActionMap.Enable();
-
-
         //initilizes rigidbody
         if (!gameObject.TryGetComponent(out _rBody))
         {
@@ -30,12 +25,17 @@ public class PlayerControls : MonoBehaviour
         }
         InitilizeRigidbody(_rBody);
 
+
+
+
         //player action subscriptions
-        if(_playerActionMap != null)
+        if (_playerActionMap != null)
         {
-            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed += context => PlayerFireController(context);
-            _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed += context => PlayerUsePotionController(context);
-            _playerActionMap.PlayerMovement.ControllerButtonsKey.performed += context => PlayerUseKeyController(context);
+            _playerActionMap.Enable();
+
+            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed += context => PlayerShoot(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed += context => PlayerUsePotion(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsKey.performed += context => PlayerUseKey(context);
         }
 
     }
@@ -45,15 +45,12 @@ public class PlayerControls : MonoBehaviour
         //player action unsubscriptions
         if(_playerActionMap != null)
         {
-            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed -= context => PlayerFireController(context);
-            _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed -= context => PlayerUsePotionController(context);
-            _playerActionMap.PlayerMovement.ControllerButtonsKey.performed -= context => PlayerUseKeyController(context);
-        }
+            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed -= context => PlayerShoot(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed -= context => PlayerUsePotion(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsKey.performed -= context => PlayerUseKey(context);
 
-
-        if (_playerActionMap != null)
             _playerActionMap.Disable();
-
+        }
     }
 
 
@@ -65,21 +62,13 @@ public class PlayerControls : MonoBehaviour
 
     #region Player Actions
 
-    //stick
-
+    /// <summary>
+    /// Moves the player based on inputs
+    /// </summary>
     private void PlayerMove()
     {
         //checks controller input
         _movementVector = ControllerManager.GetMovementVector((PlayerNums)_controllerNumber);
-
-        //checks keyboard if no input gotten from controller
-        if(_movementVector == Vector2.zero)
-        {
-            if (_playerActionMap != null && _playerInputAction != null)
-            {
-                _movementVector = _playerInputAction.ReadValue<Vector2>();
-            }
-        }
 
         //if its still 0, velocity is 0
         if (_movementVector.x == 0 && _movementVector.y == 0)
@@ -97,22 +86,22 @@ public class PlayerControls : MonoBehaviour
         transform.LookAt(transform.position + _rBody.velocity);
     }
 
-    //buttons from controllers
-
+    //Buttons
     /// <summary>
     /// Player fire action invoked from a controller
     /// </summary>
-    private void PlayerFireController(InputAction.CallbackContext context)
+    private void PlayerShoot(InputAction.CallbackContext context)
     {
         if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
-            Debug.Log("Player shoot from controller");
+            //Debug.Log("Player shoot from controller");
+            
         }
     }
     /// <summary>
     /// Player potion action invoked by a controller
     /// </summary>
-    private void PlayerUsePotionController(InputAction.CallbackContext context)
+    private void PlayerUsePotion(InputAction.CallbackContext context)
     {
         if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
@@ -122,16 +111,13 @@ public class PlayerControls : MonoBehaviour
     /// <summary>
     /// Player key action invoked by a controller
     /// </summary>
-    private void PlayerUseKeyController(InputAction.CallbackContext context)
+    private void PlayerUseKey(InputAction.CallbackContext context)
     {
         if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
             Debug.Log("Player Used Key from controller");
         }
     }
-
-    //buttons from the keyboard
-
 
     #endregion
 
@@ -156,25 +142,6 @@ public class PlayerControls : MonoBehaviour
         }
 
         playerNumber = Mathf.Clamp(playerNumber, 1, 4);
-
-        //determines keyboard
-        switch ((PlayerNums)playerNumber)
-        {
-            case PlayerNums.Player1:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player1Keyboard;
-                break;
-            case PlayerNums.Player2:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player2Keyboard;
-                break;
-            case PlayerNums.Player3:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player3Keyboard;
-                break;
-            case PlayerNums.Player4:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player4Keyboard;
-                break;
-            default:
-                break;
-        }
 
         //determines controller
         ControllerManager.BindRandomAvailableControllerToPlayer((PlayerNums)playerNumber);
