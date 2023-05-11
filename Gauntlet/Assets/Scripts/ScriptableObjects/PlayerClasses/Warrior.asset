@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Warrior
   m_EditorClassIdentifier: 
   _characterName: Thor
-  _baseMoveSpeed: 10
+  _baseMoveSpeed: 300
   _baseShotAttack: 0
   _baseMeleeAttack: 0
   _baseMagicAttack: 0
