@@ -8,40 +8,49 @@ public class PlayerControls : MonoBehaviour
     [HideInInspector] public Player attatchedPlayer;
 
     private PlayerActionMap _playerActionMap;
-    private InputAction _playerInputAction;
 
     private int _controllerNumber;
 
     //variables used to store information internaly
-    private Vector2 _movementVector = new Vector3();
+    private Vector2 _movementVector = new Vector2();
     private Vector3 _appliedMovementVector = new Vector3();
     private Rigidbody _rBody;
 
     private void OnEnable()
     {
-        if (_playerActionMap != null)
-            _playerActionMap.Enable();
-        //_playerInputAction.performed += contet => PlayerMove(contet);
-        //_playerInputAction.started += contet => PlayerMove(contet);
-        //_playerInputAction.canceled += contet => PlayerMove(contet);
-
-
         //initilizes rigidbody
         if (!gameObject.TryGetComponent(out _rBody))
         {
             _rBody = gameObject.AddComponent<Rigidbody>();
         }
         InitilizeRigidbody(_rBody);
+
+
+
+
+        //player action subscriptions
+        if (_playerActionMap != null)
+        {
+            _playerActionMap.Enable();
+
+            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed += context => PlayerShoot(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed += context => PlayerUsePotion(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsKey.performed += context => PlayerUseKey(context);
+        }
+
     }
 
     private void OnDisable()
     {
-        if (_playerActionMap != null)
-            _playerActionMap.Disable();
+        //player action unsubscriptions
+        if(_playerActionMap != null)
+        {
+            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed -= context => PlayerShoot(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed -= context => PlayerUsePotion(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsKey.performed -= context => PlayerUseKey(context);
 
-        //_playerInputAction.performed -= contet => PlayerMove(contet);
-        //_playerInputAction.started -= contet => PlayerMove(contet);
-        //_playerInputAction.canceled -= contet => PlayerMove(contet);
+            _playerActionMap.Disable();
+        }
     }
 
 
@@ -51,43 +60,66 @@ public class PlayerControls : MonoBehaviour
         PlayerMove();
     }
 
+    #region Player Actions
+
+    /// <summary>
+    /// Moves the player based on inputs
+    /// </summary>
     private void PlayerMove()
     {
-        if(_playerActionMap != null && _playerInputAction != null)
+        //checks controller input
+        _movementVector = ControllerManager.GetMovementVector((PlayerNums)_controllerNumber);
+
+        //if its still 0, velocity is 0
+        if (_movementVector.x == 0 && _movementVector.y == 0)
         {
-            _movementVector = _playerInputAction.ReadValue<Vector2>();
-            {
-                if (_movementVector.x == 0 && _movementVector.y == 0)
-                {
-                    _rBody.velocity = Vector3.zero;
-                    return; //no movement
-                }
-
-
-                //player movement
-                _appliedMovementVector.x = _movementVector.x;
-                _appliedMovementVector.y = 0;
-                _appliedMovementVector.z = _movementVector.y;
-
-                _rBody.velocity = Time.deltaTime * attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.MoveSpeed) * _appliedMovementVector;
-                transform.LookAt(transform.position + _rBody.velocity);
-            }
+            _rBody.velocity = Vector3.zero;
+            return; //no movement
         }
+
+        //player movement
+        _appliedMovementVector.x = _movementVector.x;
+        _appliedMovementVector.y = 0;
+        _appliedMovementVector.z = _movementVector.y;
+
+        _rBody.velocity = Time.deltaTime * attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.MoveSpeed) * _appliedMovementVector;
+        transform.LookAt(transform.position + _rBody.velocity);
     }
 
-    private void TempMovementFunction()
+    //Buttons
+    /// <summary>
+    /// Player fire action invoked from a controller
+    /// </summary>
+    private void PlayerShoot(InputAction.CallbackContext context)
     {
-        if (_playerActionMap != null && _playerInputAction != null)
+        if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
-            Vector2 moveVector = _playerInputAction.ReadValue<Vector2>();
-            Vector3 worldMoveVector = new Vector3();
-            worldMoveVector.x = moveVector.x;
-            worldMoveVector.z = moveVector.y;
-
-            transform.position += (worldMoveVector * Time.deltaTime * 15);
+            //Debug.Log("Player shoot from controller");
+            
+        }
+    }
+    /// <summary>
+    /// Player potion action invoked by a controller
+    /// </summary>
+    private void PlayerUsePotion(InputAction.CallbackContext context)
+    {
+        if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
+        {
+            Debug.Log("Player Used Potion from controller");
+        }
+    }
+    /// <summary>
+    /// Player key action invoked by a controller
+    /// </summary>
+    private void PlayerUseKey(InputAction.CallbackContext context)
+    {
+        if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
+        {
+            Debug.Log("Player Used Key from controller");
         }
     }
 
+    #endregion
 
     #region "Initilization Related"
 
@@ -111,23 +143,8 @@ public class PlayerControls : MonoBehaviour
 
         playerNumber = Mathf.Clamp(playerNumber, 1, 4);
 
-        switch ((PlayerNums)playerNumber)
-        {
-            case PlayerNums.Player1:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player1;
-                break;
-            case PlayerNums.Player2:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player2;
-                break;
-            case PlayerNums.Player3:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player3;
-                break;
-            case PlayerNums.Player4:
-                _playerInputAction = _playerActionMap.PlayerMovement.Player4;
-                break;
-            default:
-                break;
-        }
+        //determines controller
+        ControllerManager.BindRandomAvailableControllerToPlayer((PlayerNums)playerNumber);
     }
 
     private void InitilizeInputAction() //initilizes the action map
@@ -140,10 +157,12 @@ public class PlayerControls : MonoBehaviour
     {
         rBody.useGravity = false;
         rBody.interpolation = RigidbodyInterpolation.Interpolate;
+
+        //constraints
+        rBody.constraints = RigidbodyConstraints.FreezePositionY;
         rBody.freezeRotation = true;
     }
 
     #endregion
-
 
 }

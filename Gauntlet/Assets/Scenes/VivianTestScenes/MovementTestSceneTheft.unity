@@ -199,6 +199,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4994326916041451396, guid: 602aa2dcc6274ad40abf3573b56ed503, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4994326916041451402, guid: 602aa2dcc6274ad40abf3573b56ed503, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -379,7 +383,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1551981162
 GameObject:
@@ -459,13 +463,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1551981162}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 22, z: -22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1551981166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,7 +608,7 @@ Transform:
   m_LocalScale: {x: 30, y: 1, z: 30}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1976696581
 GameObject:
@@ -619,7 +623,7 @@ GameObject:
   - component: {fileID: 1976696583}
   - component: {fileID: 1976696582}
   m_Layer: 0
-  m_Name: Cube (7)
+  m_Name: Wall :)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -750,7 +754,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &476030839500378495
 PrefabInstance:
@@ -811,6 +815,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 476030839790923592, guid: a7ef6f65526c60e42910c6be0d855ddc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7ef6f65526c60e42910c6be0d855ddc, type: 3}
 --- !u!1001 &3961713869450639712
@@ -827,6 +835,10 @@ PrefabInstance:
     - target: {fileID: 3961713869850143572, guid: b30ca775da16b4845822e41a654ea9bd, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3961713869850143572, guid: b30ca775da16b4845822e41a654ea9bd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3961713869850143576, guid: b30ca775da16b4845822e41a654ea9bd, type: 3}
       propertyPath: m_RootOrder
@@ -888,6 +900,10 @@ PrefabInstance:
     - target: {fileID: 8008375185780018211, guid: ba9c0e6085e4673489cf32bee4686ed1, type: 3}
       propertyPath: m_Name
       value: LobberEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008375185780018211, guid: ba9c0e6085e4673489cf32bee4686ed1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8008375185780018238, guid: ba9c0e6085e4673489cf32bee4686ed1, type: 3}
       propertyPath: m_RootOrder

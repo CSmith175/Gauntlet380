@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private int _controllerNumber;
-    public int ControllerNumber
+
+
+    //used for keyboard and controller bindings
+    private int _keyboardControllerNumber;
+    public int KeyboardControllerNumber
     {
-        get { return _controllerNumber; }
+        get { return _keyboardControllerNumber; }
     }
 
 
+
+    //Class data Instance, (Elf, Mage, Warrior, etc.) used in a few places
     private ClassData _classData;
     public ClassData ClassData
     {
         get { return _classData; }
     }
-
-
+    //Player Stats Class Instance, tracks the current stats of the player such as health, speed, etc. 
     private PlayerStats _playerStats;
     public PlayerStats PlayerStats
     {
@@ -26,12 +30,21 @@ public class Player : MonoBehaviour
             return _playerStats;
         }
     }
+    //Player Inventory Instance, tracks the players current inventory of potions and keys
+    private PlayerInventory _playerInventory;
+    public PlayerInventory PlayerInventory
+    {
+        get
+        {
+            return _playerInventory;
+        }
+    }
 
     public void InitilizePlayer(int controllerNumber, ClassData classData)
     {
         //non component based initilization
         SetUpPlayerStats(classData);
-
+        SetUpPlayerInventory(true);
 
         //component based initilization
 
@@ -41,19 +54,10 @@ public class Player : MonoBehaviour
 
         foreach(var component in gameObject.GetComponents(typeof(Component)))
         {
-            if(!(component is Transform))
+            if (component is PlayerControls)
             {
-                if(component is PlayerControls)
-                {
-                    SetUpPlayerMovement(component as PlayerControls, controllerNumber);
-                    playerControlsInitilized = true;
-                }
-
-
-
-
-
-
+                SetUpPlayerMovement(component as PlayerControls, controllerNumber);
+                playerControlsInitilized = true;
             }
         }
 
@@ -61,10 +65,6 @@ public class Player : MonoBehaviour
         {
             SetUpPlayerMovement(null, controllerNumber);
         }
-
-
-
-
     }
 
 
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
     /// <param name="controls"> pass in a controls here to reset it instead of creating a new one </param>
     private void SetUpPlayerMovement(PlayerControls controls, int controllerNumber)
     {
-        _controllerNumber = controllerNumber; //sets the held controller number
+        _keyboardControllerNumber = controllerNumber; //sets the held controller number
 
         if (controls) //resets a currently exsisting controls
         {
@@ -90,7 +90,10 @@ public class Player : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Sets up the player stats class
+    /// </summary>
+    /// <param name="classData"> base class data to start off with </param>
     private void SetUpPlayerStats(ClassData classData)
     {
         if(_playerStats != null)
@@ -100,6 +103,25 @@ public class Player : MonoBehaviour
         else
         {
             _playerStats = new PlayerStats(classData);
+        }
+    }
+    /// <summary>
+    /// Sets up the Player Inventory
+    /// </summary>
+    /// <param name="clearInventory"> If there is an inventory already, (such as from a previous player) clear it? </param>
+    private void SetUpPlayerInventory(bool clearInventory)
+    {
+        if(_playerInventory != null)
+        {
+            if(clearInventory)
+            {
+                //empties the inventory
+                _playerInventory.EmptyInventory();
+            }
+        }
+        else
+        {
+            _playerInventory = new PlayerInventory();
         }
     }
 
