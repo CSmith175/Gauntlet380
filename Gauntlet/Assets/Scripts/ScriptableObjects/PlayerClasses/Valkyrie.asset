@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Valkyrie
   m_EditorClassIdentifier: 
   _characterName: Thyra
-  _baseMoveSpeed: 15
+  _baseMoveSpeed: 500
   _baseShotAttack: 0
   _baseMeleeAttack: 0
   _baseMagicAttack: 0

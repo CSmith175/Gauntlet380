@@ -28,7 +28,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
             ""id"": ""2d1f9f5e-90a2-4be9-b7d0-14365c5c0a5d"",
             ""actions"": [
                 {
-                    ""name"": ""Player 1"",
+                    ""name"": ""Player 1 Keyboard"",
                     ""type"": ""PassThrough"",
                     ""id"": ""b5f087ae-ae36-4e35-9372-23db176e8204"",
                     ""expectedControlType"": """",
@@ -37,7 +37,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Player 2"",
+                    ""name"": ""Player 2 Keyboard"",
                     ""type"": ""PassThrough"",
                     ""id"": ""73aef529-6c99-4978-8781-ceca6f80fc83"",
                     ""expectedControlType"": """",
@@ -46,7 +46,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Player 3"",
+                    ""name"": ""Player 3 Keyboard"",
                     ""type"": ""PassThrough"",
                     ""id"": ""44137564-1e7f-40f9-85bf-6a065e76a070"",
                     ""expectedControlType"": """",
@@ -55,11 +55,38 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Player 4"",
+                    ""name"": ""Player 4 Keyboard"",
                     ""type"": ""PassThrough"",
                     ""id"": ""fe3a3f20-2053-4937-856b-07e0bd29a526"",
                     ""expectedControlType"": """",
                     ""processors"": ""Clamp(min=-1,max=1)"",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ControllerButtonsShoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd86d078-7ea8-4e02-8904-1aa3ec99a4d3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ControllerButtonsPotion"",
+                    ""type"": ""Button"",
+                    ""id"": ""85a17828-d879-49ba-a1ee-194e2162b8e4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ControllerButtonsKey"",
+                    ""type"": ""Button"",
+                    ""id"": ""34d8c5a2-8f5a-465a-8240-0e17943f2dde"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 }
@@ -72,7 +99,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": ""Clamp(min=-1,max=1)"",
                     ""groups"": """",
-                    ""action"": ""Player 1"",
+                    ""action"": ""Player 1 Keyboard"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -83,7 +110,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 1"",
+                    ""action"": ""Player 1 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -94,7 +121,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 1"",
+                    ""action"": ""Player 1 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -105,7 +132,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 1"",
+                    ""action"": ""Player 1 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -116,7 +143,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 1"",
+                    ""action"": ""Player 1 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -127,7 +154,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 2"",
+                    ""action"": ""Player 2 Keyboard"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -138,7 +165,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 2"",
+                    ""action"": ""Player 2 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -149,7 +176,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 2"",
+                    ""action"": ""Player 2 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -160,7 +187,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 2"",
+                    ""action"": ""Player 2 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -171,7 +198,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 2"",
+                    ""action"": ""Player 2 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -182,7 +209,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 3"",
+                    ""action"": ""Player 3 Keyboard"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -193,7 +220,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 3"",
+                    ""action"": ""Player 3 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -204,7 +231,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 3"",
+                    ""action"": ""Player 3 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -215,7 +242,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 3"",
+                    ""action"": ""Player 3 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -226,7 +253,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 3"",
+                    ""action"": ""Player 3 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -237,7 +264,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 4"",
+                    ""action"": ""Player 4 Keyboard"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -248,7 +275,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 4"",
+                    ""action"": ""Player 4 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -259,7 +286,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 4"",
+                    ""action"": ""Player 4 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -270,7 +297,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 4"",
+                    ""action"": ""Player 4 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -281,9 +308,75 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Player 4"",
+                    ""action"": ""Player 4 Keyboard"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cca577e8-998e-490d-a9a9-4a538a51c64d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0967b852-e45e-4de8-acca-0aca0fb24033"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a6e1681-3328-4f7a-8dc4-8635f81fb7f1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsPotion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35649c32-5081-40cf-a76d-e997415c9438"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsPotion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee83604f-f5b2-4595-beb6-d39258dac704"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b07c49ae-c2c0-4a98-91b7-f808c59101a1"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsKey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -292,10 +385,13 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
 }");
         // PlayerMovement
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
-        m_PlayerMovement_Player1 = m_PlayerMovement.FindAction("Player 1", throwIfNotFound: true);
-        m_PlayerMovement_Player2 = m_PlayerMovement.FindAction("Player 2", throwIfNotFound: true);
-        m_PlayerMovement_Player3 = m_PlayerMovement.FindAction("Player 3", throwIfNotFound: true);
-        m_PlayerMovement_Player4 = m_PlayerMovement.FindAction("Player 4", throwIfNotFound: true);
+        m_PlayerMovement_Player1Keyboard = m_PlayerMovement.FindAction("Player 1 Keyboard", throwIfNotFound: true);
+        m_PlayerMovement_Player2Keyboard = m_PlayerMovement.FindAction("Player 2 Keyboard", throwIfNotFound: true);
+        m_PlayerMovement_Player3Keyboard = m_PlayerMovement.FindAction("Player 3 Keyboard", throwIfNotFound: true);
+        m_PlayerMovement_Player4Keyboard = m_PlayerMovement.FindAction("Player 4 Keyboard", throwIfNotFound: true);
+        m_PlayerMovement_ControllerButtonsShoot = m_PlayerMovement.FindAction("ControllerButtonsShoot", throwIfNotFound: true);
+        m_PlayerMovement_ControllerButtonsPotion = m_PlayerMovement.FindAction("ControllerButtonsPotion", throwIfNotFound: true);
+        m_PlayerMovement_ControllerButtonsKey = m_PlayerMovement.FindAction("ControllerButtonsKey", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -355,18 +451,24 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
     // PlayerMovement
     private readonly InputActionMap m_PlayerMovement;
     private IPlayerMovementActions m_PlayerMovementActionsCallbackInterface;
-    private readonly InputAction m_PlayerMovement_Player1;
-    private readonly InputAction m_PlayerMovement_Player2;
-    private readonly InputAction m_PlayerMovement_Player3;
-    private readonly InputAction m_PlayerMovement_Player4;
+    private readonly InputAction m_PlayerMovement_Player1Keyboard;
+    private readonly InputAction m_PlayerMovement_Player2Keyboard;
+    private readonly InputAction m_PlayerMovement_Player3Keyboard;
+    private readonly InputAction m_PlayerMovement_Player4Keyboard;
+    private readonly InputAction m_PlayerMovement_ControllerButtonsShoot;
+    private readonly InputAction m_PlayerMovement_ControllerButtonsPotion;
+    private readonly InputAction m_PlayerMovement_ControllerButtonsKey;
     public struct PlayerMovementActions
     {
         private @PlayerActionMap m_Wrapper;
         public PlayerMovementActions(@PlayerActionMap wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Player1 => m_Wrapper.m_PlayerMovement_Player1;
-        public InputAction @Player2 => m_Wrapper.m_PlayerMovement_Player2;
-        public InputAction @Player3 => m_Wrapper.m_PlayerMovement_Player3;
-        public InputAction @Player4 => m_Wrapper.m_PlayerMovement_Player4;
+        public InputAction @Player1Keyboard => m_Wrapper.m_PlayerMovement_Player1Keyboard;
+        public InputAction @Player2Keyboard => m_Wrapper.m_PlayerMovement_Player2Keyboard;
+        public InputAction @Player3Keyboard => m_Wrapper.m_PlayerMovement_Player3Keyboard;
+        public InputAction @Player4Keyboard => m_Wrapper.m_PlayerMovement_Player4Keyboard;
+        public InputAction @ControllerButtonsShoot => m_Wrapper.m_PlayerMovement_ControllerButtonsShoot;
+        public InputAction @ControllerButtonsPotion => m_Wrapper.m_PlayerMovement_ControllerButtonsPotion;
+        public InputAction @ControllerButtonsKey => m_Wrapper.m_PlayerMovement_ControllerButtonsKey;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -376,43 +478,64 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_PlayerMovementActionsCallbackInterface != null)
             {
-                @Player1.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer1;
-                @Player1.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer1;
-                @Player1.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer1;
-                @Player2.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer2;
-                @Player2.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer2;
-                @Player2.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer2;
-                @Player3.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer3;
-                @Player3.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer3;
-                @Player3.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer3;
-                @Player4.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer4;
-                @Player4.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer4;
-                @Player4.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer4;
+                @Player1Keyboard.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer1Keyboard;
+                @Player1Keyboard.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer1Keyboard;
+                @Player1Keyboard.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer1Keyboard;
+                @Player2Keyboard.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer2Keyboard;
+                @Player2Keyboard.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer2Keyboard;
+                @Player2Keyboard.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer2Keyboard;
+                @Player3Keyboard.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer3Keyboard;
+                @Player3Keyboard.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer3Keyboard;
+                @Player3Keyboard.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer3Keyboard;
+                @Player4Keyboard.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer4Keyboard;
+                @Player4Keyboard.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer4Keyboard;
+                @Player4Keyboard.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPlayer4Keyboard;
+                @ControllerButtonsShoot.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsShoot;
+                @ControllerButtonsShoot.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsShoot;
+                @ControllerButtonsShoot.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsShoot;
+                @ControllerButtonsPotion.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsPotion;
+                @ControllerButtonsPotion.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsPotion;
+                @ControllerButtonsPotion.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsPotion;
+                @ControllerButtonsKey.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsKey;
+                @ControllerButtonsKey.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsKey;
+                @ControllerButtonsKey.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsKey;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Player1.started += instance.OnPlayer1;
-                @Player1.performed += instance.OnPlayer1;
-                @Player1.canceled += instance.OnPlayer1;
-                @Player2.started += instance.OnPlayer2;
-                @Player2.performed += instance.OnPlayer2;
-                @Player2.canceled += instance.OnPlayer2;
-                @Player3.started += instance.OnPlayer3;
-                @Player3.performed += instance.OnPlayer3;
-                @Player3.canceled += instance.OnPlayer3;
-                @Player4.started += instance.OnPlayer4;
-                @Player4.performed += instance.OnPlayer4;
-                @Player4.canceled += instance.OnPlayer4;
+                @Player1Keyboard.started += instance.OnPlayer1Keyboard;
+                @Player1Keyboard.performed += instance.OnPlayer1Keyboard;
+                @Player1Keyboard.canceled += instance.OnPlayer1Keyboard;
+                @Player2Keyboard.started += instance.OnPlayer2Keyboard;
+                @Player2Keyboard.performed += instance.OnPlayer2Keyboard;
+                @Player2Keyboard.canceled += instance.OnPlayer2Keyboard;
+                @Player3Keyboard.started += instance.OnPlayer3Keyboard;
+                @Player3Keyboard.performed += instance.OnPlayer3Keyboard;
+                @Player3Keyboard.canceled += instance.OnPlayer3Keyboard;
+                @Player4Keyboard.started += instance.OnPlayer4Keyboard;
+                @Player4Keyboard.performed += instance.OnPlayer4Keyboard;
+                @Player4Keyboard.canceled += instance.OnPlayer4Keyboard;
+                @ControllerButtonsShoot.started += instance.OnControllerButtonsShoot;
+                @ControllerButtonsShoot.performed += instance.OnControllerButtonsShoot;
+                @ControllerButtonsShoot.canceled += instance.OnControllerButtonsShoot;
+                @ControllerButtonsPotion.started += instance.OnControllerButtonsPotion;
+                @ControllerButtonsPotion.performed += instance.OnControllerButtonsPotion;
+                @ControllerButtonsPotion.canceled += instance.OnControllerButtonsPotion;
+                @ControllerButtonsKey.started += instance.OnControllerButtonsKey;
+                @ControllerButtonsKey.performed += instance.OnControllerButtonsKey;
+                @ControllerButtonsKey.canceled += instance.OnControllerButtonsKey;
             }
         }
     }
     public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
     public interface IPlayerMovementActions
     {
-        void OnPlayer1(InputAction.CallbackContext context);
-        void OnPlayer2(InputAction.CallbackContext context);
-        void OnPlayer3(InputAction.CallbackContext context);
-        void OnPlayer4(InputAction.CallbackContext context);
+        void OnPlayer1Keyboard(InputAction.CallbackContext context);
+        void OnPlayer2Keyboard(InputAction.CallbackContext context);
+        void OnPlayer3Keyboard(InputAction.CallbackContext context);
+        void OnPlayer4Keyboard(InputAction.CallbackContext context);
+        void OnControllerButtonsShoot(InputAction.CallbackContext context);
+        void OnControllerButtonsPotion(InputAction.CallbackContext context);
+        void OnControllerButtonsKey(InputAction.CallbackContext context);
     }
 }

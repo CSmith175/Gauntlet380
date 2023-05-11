@@ -150,6 +150,20 @@ public class PlayerInventory
             return _inventoryItems;
         }
     }
+
+    /// <summary>
+    /// Sets all items in the inventory to empty
+    /// </summary>
+    public void EmptyInventory()
+    {
+        if(_inventoryItems != null)
+        {
+            for (int i = 0; i < _inventoryItems.Length; i++)
+            {
+                _inventoryItems[i] = ItemType.Empty;
+            }
+        }
+    }
     #endregion
 
     #region "Helper Functions"

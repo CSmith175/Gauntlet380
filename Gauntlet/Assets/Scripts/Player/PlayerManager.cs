@@ -76,7 +76,7 @@ public class PlayerManager : MonoBehaviour
             {
                 if(_players[ii])
                 {
-                    if (_players[ii].ControllerNumber == checkingValue)
+                    if (_players[ii].KeyboardControllerNumber == checkingValue)
                         break;
                 }
 
