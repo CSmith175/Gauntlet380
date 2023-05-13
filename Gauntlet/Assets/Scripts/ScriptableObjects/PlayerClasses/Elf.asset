@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Elf
   m_EditorClassIdentifier: 
   _characterName: Questor
-  _baseMoveSpeed: 400
-  _baseShotAttack: 0
-  _baseShotDowntime: 0.2
+  _baseMoveSpeed: 600
+  _baseShotAttack: 5
+  _baseShotDowntime: 0.25
   _baseMeleeAttack: 0
   _baseMagicAttack: 0
   _baseDefense: 0
-  _baseShotSpeed: 25
+  _baseShotSpeed: 26
   _baseHealth: 0
   _characterModelPrefab: {fileID: 6391790742193814661, guid: 1864fdb00147bcd4bb55a99a546bca05, type: 3}
   _characterShotPrefab: {fileID: 6162495184772664855, guid: 9b90e433285f7ad46aa49447b7785fc6, type: 3}

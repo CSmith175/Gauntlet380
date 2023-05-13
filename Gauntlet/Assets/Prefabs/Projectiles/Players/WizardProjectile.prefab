@@ -129,8 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _randomRotation: 1
   _stopOnCollision: 1
-  _maxSpeed: 90
-  _minSpeed: 360
+  _maxSpeed: 180
+  _minSpeed: 720
   _manualRotationVector: {x: 0, y: 0, z: 0}
 --- !u!114 &5302577713163494793
 MonoBehaviour:
