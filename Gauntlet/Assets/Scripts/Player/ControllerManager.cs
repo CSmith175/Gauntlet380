@@ -120,8 +120,9 @@ public class ControllerManager : MonoBehaviour
         return Vector2.zero;
     }
 
-    //Button Presses
-
+    /// <summary>
+    /// Figures out which gamepad had a button pressed from a CallbackContext and a playerNum
+    /// </summary>
     public static bool ButtonPressed(InputAction.CallbackContext context, PlayerNums playerNum)
     {
         if (_gamePadDeviceIDs.TryGetValue(context.control.device.deviceId, out _checkingController))
@@ -135,6 +136,24 @@ public class ControllerManager : MonoBehaviour
             }
         }
 
+        return false;
+    }
+
+    /// <summary>
+    /// Figures out which gamepad had a button pressed from a deviceID and a playerNum
+    /// </summary>
+    public static bool ButtonPressed(int deviceID, PlayerNums playerNum)
+    {
+        _gamePadDeviceIDs.TryGetValue(deviceID, out _currentController);
+        _playerControllers.TryGetValue(playerNum, out _checkingController);
+
+        if (_currentController != null)
+        {
+            if (_currentController == _checkingController)
+            {
+                return true;
+            }
+        }
         return false;
     }
 

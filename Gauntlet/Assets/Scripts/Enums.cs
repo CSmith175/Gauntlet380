@@ -1,5 +1,5 @@
 //Used to determine if a projectile came from an enemy or a player
-public enum ProjectileSource
+public enum ProjectileSourceType
 {
     Player,
     Enemy
@@ -49,6 +49,7 @@ public enum PlayerStatCategories
 {
     MoveSpeed,
     ShotDamage,
+    ShotDowntime,
     MeleeDamage,
     MagicDamage,
     Defense,

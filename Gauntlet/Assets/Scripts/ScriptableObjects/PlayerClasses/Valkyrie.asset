@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Valkyrie
   m_EditorClassIdentifier: 
   _characterName: Thyra
-  _baseMoveSpeed: 500
+  _baseMoveSpeed: 300
   _baseShotAttack: 0
+  _baseShotDowntime: 0.2
   _baseMeleeAttack: 0
   _baseMagicAttack: 0
   _baseDefense: 0
-  _baseShotSpeed: 15
+  _baseShotSpeed: 20
   _baseHealth: 0
   _characterModelPrefab: {fileID: 6604856568255550271, guid: 25d4d16809e1c0c40a6c330f3cd5ee6a, type: 3}
   _characterShotPrefab: {fileID: 9115255721918842669, guid: eaae3ef7a3f6afb4d82dc86a5735688e, type: 3}

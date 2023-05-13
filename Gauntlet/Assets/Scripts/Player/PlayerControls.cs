@@ -1,10 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    #region "Variables"
     [HideInInspector] public Player attatchedPlayer;
 
     private PlayerActionMap _playerActionMap;
@@ -19,6 +19,17 @@ public class PlayerControls : MonoBehaviour
     private GameObject _currentShot;
     private Rigidbody _currentShotRBody;
     private Projectile _currentprojectile;
+
+    private bool _canShoot = true;
+
+    //for shot input buffer
+    private bool _shotInputBuffer = false;
+    private Coroutine _shotBufferCoroutine = null;
+    private int _recentDeviceID;
+    private InputAction.CallbackContext _dummyCallbackContext;
+    #endregion
+
+    #region "Unity Funtions"
 
     private void OnEnable()
     {
@@ -37,7 +48,8 @@ public class PlayerControls : MonoBehaviour
         {
             _playerActionMap.Enable();
 
-            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed += context => PlayerShoot(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed += context => PlayerShoot(context, false);
+
             _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed += context => PlayerUsePotion(context);
             _playerActionMap.PlayerMovement.ControllerButtonsKey.performed += context => PlayerUseKey(context);
         }
@@ -47,9 +59,9 @@ public class PlayerControls : MonoBehaviour
     private void OnDisable()
     {
         //player action unsubscriptions
-        if(_playerActionMap != null)
+        if (_playerActionMap != null)
         {
-            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed -= context => PlayerShoot(context);
+            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed -= context => PlayerShoot(context, false);
             _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed -= context => PlayerUsePotion(context);
             _playerActionMap.PlayerMovement.ControllerButtonsKey.performed -= context => PlayerUseKey(context);
 
@@ -57,12 +69,11 @@ public class PlayerControls : MonoBehaviour
         }
     }
 
-
-
     private void FixedUpdate()
     {
         PlayerMove();
     }
+    #endregion
 
     #region Player Actions
 
@@ -94,11 +105,32 @@ public class PlayerControls : MonoBehaviour
     /// <summary>
     /// Player fire action invoked from a controller
     /// </summary>
-    private void PlayerShoot(InputAction.CallbackContext context)
+    private void PlayerShoot(InputAction.CallbackContext context, bool buffered)
     {
-        if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
+        //sets the lastcontext variable for use in the input buffering
+        if (!buffered)
         {
-            if(attatchedPlayer.ClassData.CharacterShotPrefab != null)
+            _recentDeviceID = context.control.device.deviceId;
+        }
+
+        //can't shoot, starts buffer and returns. mannualy set with a literal to a fith of a second
+        if (!_canShoot)
+        {
+            //input buffer coroutine
+            if (_shotBufferCoroutine != null)
+            {
+                StopCoroutine(_shotBufferCoroutine);
+            }
+
+            _shotBufferCoroutine = StartCoroutine(ShotInputBuffer(0.20f));
+            return;
+        }
+
+        //handles the creation of the shot projectile 
+        if (buffered || ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
+        {
+
+            if (attatchedPlayer.ClassData.CharacterShotPrefab != null)
             {
                 // returns out of a pool already exsists of the type so its fine
                 ObjectPooling.MakeNewObjectPool(attatchedPlayer.ClassData.CharacterShotPrefab, 10);
@@ -122,11 +154,14 @@ public class PlayerControls : MonoBehaviour
                     _currentShot.TryGetComponent(out _currentprojectile);
                     if (_currentprojectile)
                     {
-                        _currentprojectile.SetSourceEntity(gameObject);
+                        _currentprojectile.InitilizeProjectile(gameObject, (int)attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.ShotDamage), ProjectileSourceType.Player);
                     }
                 }
             }
         }
+
+        //starts the shot delay
+        StartCoroutine(ShotDelayTimer(attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.ShotDowntime)));
     }
     /// <summary>
     /// Player potion action invoked by a controller
@@ -135,7 +170,8 @@ public class PlayerControls : MonoBehaviour
     {
         if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
-            Debug.Log("Player Used Potion from controller");
+            if (attatchedPlayer.PlayerInventory != null)
+                attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Potion);
         }
     }
     /// <summary>
@@ -145,7 +181,8 @@ public class PlayerControls : MonoBehaviour
     {
         if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
-            Debug.Log("Player Used Key from controller");
+            if (attatchedPlayer.PlayerInventory != null)
+                attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Key);
         }
     }
 
@@ -166,7 +203,7 @@ public class PlayerControls : MonoBehaviour
 
     private void DeterminePlayerAction(int playerNumber)
     {
-        if(_playerActionMap == null)
+        if (_playerActionMap == null)
         {
             InitilizeInputAction();
         }
@@ -195,4 +232,31 @@ public class PlayerControls : MonoBehaviour
 
     #endregion
 
+    #region"Coroutines"
+    //Shooting input delay and buffering coroutines
+    private IEnumerator ShotDelayTimer(float timerDuration)
+    {
+        _canShoot = false;
+
+        yield return new WaitForSeconds(timerDuration);
+
+        _canShoot = true;
+
+        if (_shotInputBuffer)
+        {
+            if (ControllerManager.ButtonPressed(_recentDeviceID, (PlayerNums)_controllerNumber))
+            {
+                _shotInputBuffer = false;
+                PlayerShoot(_dummyCallbackContext, true);
+            }
+        }
+    }
+
+    private IEnumerator ShotInputBuffer(float duration)
+    {
+        _shotInputBuffer = true;
+        yield return new WaitForSeconds(duration);
+        _shotInputBuffer = false;
+    }
+    #endregion
 }

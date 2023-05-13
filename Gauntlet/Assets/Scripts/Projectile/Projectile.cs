@@ -9,7 +9,15 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    [Tooltip("Additional spawn offset for the projectile relative to what created it. Y is Forward/Backward, X is Left/Right")][SerializeField] private Vector2 _spawnOffset = Vector2.zero;
+
+    //projectile data
     private GameObject _sourceEntity;
+    private ProjectileData _projectileData;
+
+    //projectile lifetime control
+    private float _creationTime;
+    private readonly int _destroyTime = 10;
 
     #region "Component Variables"
     private ProjectileFadeAnimator _fadeAnimator; //can be set up on prefab, dosen't matter either way. 
@@ -65,6 +73,9 @@ public class Projectile : MonoBehaviour
             gameObject.TryGetComponent(out _projectileCollider);       
         }
         if (_projectileCollider) _projectileCollider.enabled = true; //re-enables the collider
+
+        //gets current time
+        _creationTime = Time.time;
     }
     //removes event subscription to prevent errors
     private void OnDisable()
@@ -79,6 +90,15 @@ public class Projectile : MonoBehaviour
             ClearProjectile();
         }
         else if (collision.gameObject != _sourceEntity)
+        {
+            ClearProjectile();
+        }
+    }
+    //Clears projectile if its alive too long
+    private void Update()
+    {
+        //tracks projectile lifetime and sends back to pool after its around for way to long (10 Seconds)
+        if(_creationTime + _destroyTime < Time.time)
         {
             ClearProjectile();
         }
@@ -127,9 +147,19 @@ public class Projectile : MonoBehaviour
     #endregion
 
     #region "Public Initilization Functions"
-    public void SetSourceEntity(GameObject sourceEntity)
+    public void InitilizeProjectile(GameObject sourceEntity, int damage, ProjectileSourceType type)
     {
+        //initilizes projectile information
         _sourceEntity = sourceEntity;
+        _projectileData.SetProjectileData(damage, type);
+
+        //adds the projectile specific offset (assumes what launched the projectile spawned the projectile at its position)
+        if(sourceEntity != null)
+        {
+            transform.position += sourceEntity.transform.forward * _spawnOffset.y;
+            transform.position += sourceEntity.transform.right * _spawnOffset.x;
+        }
+
     }
 
     #endregion

@@ -41,8 +41,8 @@ public class SimpleRotationScript : MonoBehaviour
         }
     }
 
-    //rotates object, in late update to not interfere with projectile pathing
-    private void LateUpdate()
+    //rotates object
+    private void Update()
     {
         transform.Rotate(_appliedRotationVector * Time.deltaTime);
     }

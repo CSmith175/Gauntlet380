@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Elf
   m_EditorClassIdentifier: 
   _characterName: Questor
-  _baseMoveSpeed: 750
+  _baseMoveSpeed: 400
   _baseShotAttack: 0
+  _baseShotDowntime: 0.2
   _baseMeleeAttack: 0
   _baseMagicAttack: 0
   _baseDefense: 0
