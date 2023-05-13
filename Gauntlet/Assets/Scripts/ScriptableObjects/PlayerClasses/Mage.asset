@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   _characterName: Merlin
-  _baseMoveSpeed: 500
-  _baseShotAttack: 0
+  _baseMoveSpeed: 450
+  _baseShotAttack: 10
+  _baseShotDowntime: 0.35
   _baseMeleeAttack: 0
   _baseMagicAttack: 0
   _baseDefense: 0
-  _baseShotSpeed: 0
+  _baseShotSpeed: 22
   _baseHealth: 0
   _characterModelPrefab: {fileID: 1584206139138172056, guid: 191b3672cdbf96044bf28836c31b9740, type: 3}
+  _characterShotPrefab: {fileID: 6552157047381998743, guid: 40fadb374e374a64eb31ee29f180784e, type: 3}

@@ -77,7 +77,7 @@ public class PlayerStats
         }
     }
 
-    public int GetPlayerStat(PlayerStatCategories statCategory)
+    public float GetPlayerStat(PlayerStatCategories statCategory)
     {
         switch (statCategory)
         {
@@ -85,6 +85,8 @@ public class PlayerStats
                 return _currentStats.moveSpeed;
             case PlayerStatCategories.ShotDamage:
                 return _currentStats.shotDamage;
+            case PlayerStatCategories.ShotDowntime:
+                return _currentStats.ShotDowntime;
             case PlayerStatCategories.MeleeDamage:
                 return _currentStats.meleeDamage;
             case PlayerStatCategories.MagicDamage:
@@ -109,6 +111,7 @@ public class PlayerStats
     {
         _currentStats.moveSpeed = classData.BaseMoveSpeed;
         _currentStats.shotDamage = classData.BaseShotAttack;
+        _currentStats.ShotDowntime = classData.BaseShotDowntime;
         _currentStats.meleeDamage = classData.BaseMeleeAttack;
         _currentStats.magicDamage = classData.BaseMagicAttack;
         _currentStats.defense = classData.BaseDefense;
