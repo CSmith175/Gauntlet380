@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PickupLogic : MonoBehaviour
@@ -10,15 +8,17 @@ public class PickupLogic : MonoBehaviour
     {
         if(other.gameObject.layer == 3)
         {
-            PlayerInventory pi = other.GetComponent<Player>().PlayerInventory;
-            if (pi.CheckIfInventoryFull())
+            if (other.TryGetComponent(out Player player))
             {
-                return;
-            }
-            else
-            {
-                pi.TryAddItem(item);
-                gameObject.SetActive(false);
+                if (player.PlayerInventory.CheckIfInventoryFull())
+                {
+                    return;
+                }
+                else
+                {
+                    player.PlayerInventory.TryAddItem(item);
+                    gameObject.SetActive(false);
+                }
             }
         }
     }

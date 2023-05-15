@@ -53,6 +53,24 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ControllerButtonsClassScroll"",
+                    ""type"": ""Button"",
+                    ""id"": ""29796ca6-b99f-4060-b6c1-ba77631304a0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ControllerButtonsClassSelect"",
+                    ""type"": ""Button"",
+                    ""id"": ""b225f838-91a9-4316-87bf-01aa018e197f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -121,6 +139,94 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""action"": ""ControllerButtonsKey"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""5752f55a-8357-47f5-9549-295e178f4db0"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsClassScroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""f59839f9-9dac-440c-b705-356a15d040c9"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsClassScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""2583d456-1823-4c70-83e3-358ba33b072c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsClassScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""e1f3210d-9825-4c48-9316-1b1c70df4c37"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsClassScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""867e025b-07e2-410b-a17b-f97a0b90b532"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsClassScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db6b7004-7c9c-4f71-a700-eacbc7a0c451"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsClassSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""969e3e20-c502-4a83-885f-1b14407d0c79"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsClassSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0165ffca-8bc6-43a5-987e-97befa919bdc"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllerButtonsClassSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -132,6 +238,8 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         m_PlayerMovement_ControllerButtonsShoot = m_PlayerMovement.FindAction("ControllerButtonsShoot", throwIfNotFound: true);
         m_PlayerMovement_ControllerButtonsPotion = m_PlayerMovement.FindAction("ControllerButtonsPotion", throwIfNotFound: true);
         m_PlayerMovement_ControllerButtonsKey = m_PlayerMovement.FindAction("ControllerButtonsKey", throwIfNotFound: true);
+        m_PlayerMovement_ControllerButtonsClassScroll = m_PlayerMovement.FindAction("ControllerButtonsClassScroll", throwIfNotFound: true);
+        m_PlayerMovement_ControllerButtonsClassSelect = m_PlayerMovement.FindAction("ControllerButtonsClassSelect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -194,6 +302,8 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_ControllerButtonsShoot;
     private readonly InputAction m_PlayerMovement_ControllerButtonsPotion;
     private readonly InputAction m_PlayerMovement_ControllerButtonsKey;
+    private readonly InputAction m_PlayerMovement_ControllerButtonsClassScroll;
+    private readonly InputAction m_PlayerMovement_ControllerButtonsClassSelect;
     public struct PlayerMovementActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -201,6 +311,8 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         public InputAction @ControllerButtonsShoot => m_Wrapper.m_PlayerMovement_ControllerButtonsShoot;
         public InputAction @ControllerButtonsPotion => m_Wrapper.m_PlayerMovement_ControllerButtonsPotion;
         public InputAction @ControllerButtonsKey => m_Wrapper.m_PlayerMovement_ControllerButtonsKey;
+        public InputAction @ControllerButtonsClassScroll => m_Wrapper.m_PlayerMovement_ControllerButtonsClassScroll;
+        public InputAction @ControllerButtonsClassSelect => m_Wrapper.m_PlayerMovement_ControllerButtonsClassSelect;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -219,6 +331,12 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @ControllerButtonsKey.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsKey;
                 @ControllerButtonsKey.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsKey;
                 @ControllerButtonsKey.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsKey;
+                @ControllerButtonsClassScroll.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsClassScroll;
+                @ControllerButtonsClassScroll.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsClassScroll;
+                @ControllerButtonsClassScroll.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsClassScroll;
+                @ControllerButtonsClassSelect.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsClassSelect;
+                @ControllerButtonsClassSelect.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsClassSelect;
+                @ControllerButtonsClassSelect.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnControllerButtonsClassSelect;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -232,6 +350,12 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @ControllerButtonsKey.started += instance.OnControllerButtonsKey;
                 @ControllerButtonsKey.performed += instance.OnControllerButtonsKey;
                 @ControllerButtonsKey.canceled += instance.OnControllerButtonsKey;
+                @ControllerButtonsClassScroll.started += instance.OnControllerButtonsClassScroll;
+                @ControllerButtonsClassScroll.performed += instance.OnControllerButtonsClassScroll;
+                @ControllerButtonsClassScroll.canceled += instance.OnControllerButtonsClassScroll;
+                @ControllerButtonsClassSelect.started += instance.OnControllerButtonsClassSelect;
+                @ControllerButtonsClassSelect.performed += instance.OnControllerButtonsClassSelect;
+                @ControllerButtonsClassSelect.canceled += instance.OnControllerButtonsClassSelect;
             }
         }
     }
@@ -241,5 +365,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         void OnControllerButtonsShoot(InputAction.CallbackContext context);
         void OnControllerButtonsPotion(InputAction.CallbackContext context);
         void OnControllerButtonsKey(InputAction.CallbackContext context);
+        void OnControllerButtonsClassScroll(InputAction.CallbackContext context);
+        void OnControllerButtonsClassSelect(InputAction.CallbackContext context);
     }
 }

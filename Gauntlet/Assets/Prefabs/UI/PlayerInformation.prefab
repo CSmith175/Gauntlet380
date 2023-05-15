@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.8039216, g: 0.8039216, b: 0.8039216, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.8039216, g: 0.8039216, b: 0.8039216, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -250,7 +250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &622082457185830513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -409,7 +409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1859843691008174247
 RectTransform:
   m_ObjectHideFlags: 0
@@ -875,7 +875,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unjoinedUI: {fileID: 5684581341265100045}
+  _currentlySelectedClassText: {fileID: 8654927528778065399}
+  _availableClasses: []
   _gameUI: {fileID: 7480933597554174438}
+  _scoreText: {fileID: 9004410784452012951}
+  _healthText: {fileID: 9004410784297521681}
   _gameUIBackground: {fileID: 7856651258041609729}
   _playerInfoText: {fileID: 9004410784160321132}
   _emptyInventoryIcon: {fileID: 8104124627598083385, guid: c61de00681becd84b8e26c7c93922771, type: 3}

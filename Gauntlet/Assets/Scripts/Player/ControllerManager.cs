@@ -86,7 +86,6 @@ public class ControllerManager : MonoBehaviour
 
     #endregion
 
-
     #region "Input Retreiving Functions"
 
     /// <summary>
@@ -154,6 +153,16 @@ public class ControllerManager : MonoBehaviour
                 return true;
             }
         }
+        return false;
+    }
+
+    public static bool CheckControllerActive(int deviceID)
+    {
+        if(_gamePadDeviceIDs.TryGetValue(deviceID, out _currentController))
+        {
+            return true;
+        }
+
         return false;
     }
 

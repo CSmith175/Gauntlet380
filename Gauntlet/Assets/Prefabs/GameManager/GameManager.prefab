@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2368458067424543884}
   - component: {fileID: 2368458067424543885}
   - component: {fileID: 7574047188058038136}
+  - component: {fileID: 3572289927595487550}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -57,3 +58,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraSettings: {fileID: 11400000, guid: 0ca81fdc2a897534bbaf41c429e1a67b, type: 2}
+--- !u!114 &3572289927595487550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2368458067424543886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a9ffd95fed851459bba465d3645987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _availableClasses:
+  - {fileID: 11400000, guid: 9e662e9fe913fc04c9b65a4f69467dee, type: 2}
+  - {fileID: 11400000, guid: 37dfe836f8d26f54a9000b10aa45e8b6, type: 2}
+  - {fileID: 11400000, guid: 93f345abfee151c4e8261e161f23f9c6, type: 2}
+  - {fileID: 11400000, guid: 6ae6fc7eb3efdda4095a802cea3540d2, type: 2}

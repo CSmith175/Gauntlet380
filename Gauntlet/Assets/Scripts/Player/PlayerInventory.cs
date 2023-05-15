@@ -3,18 +3,23 @@ using System.Linq;
 
 public class PlayerInventory
 {
+    private readonly Player _attatchedPlayer;
+
     private readonly int _maxItemAmount;
     private ItemType[] _inventoryItems;
 
     //classes using the item interface that holds functions for use when an item is used
-    private Dictionary<ItemType, IInventoryItem> _inventoryItemDictionary; 
+    private Dictionary<ItemType, IInventoryItem> _inventoryItemDictionary;
+
 
     #region "Constructors"
     /// <summary>
     /// Constructor that creates an empty inventory with the default size of 12. Constructors with parameters exsist for specifying initial inventory state and size as well
     /// </summary>
-    public PlayerInventory()
+    public PlayerInventory(Player player)
     {
+        _attatchedPlayer = player;
+
         _maxItemAmount = 12;
         _inventoryItems = new ItemType[_maxItemAmount];
 
@@ -25,8 +30,10 @@ public class PlayerInventory
     /// Constructor that allows the inventory's size to be set
     /// </summary>
     /// <param name="maxItemAmount"> Maximum capacity of the inventory. </param>
-    public PlayerInventory (int maxItemAmount)
+    public PlayerInventory (Player player, int maxItemAmount)
     {
+        _attatchedPlayer = player;
+
         _maxItemAmount = maxItemAmount;
         _inventoryItems = new ItemType[maxItemAmount];
 
@@ -38,8 +45,10 @@ public class PlayerInventory
     /// </summary>
     /// <param name="initialInventory"> Initial Inventory Items for the inventory </param>
     /// <param name="maxItemAmount"> Maximum capacity of the inventory. (Will clamp the initial inventory if its larger) </param>
-    public PlayerInventory(ItemType[] initialInventory, int maxItemAmount)
+    public PlayerInventory(Player player, ItemType[] initialInventory, int maxItemAmount)
     {
+        _attatchedPlayer = player;
+
         _maxItemAmount = maxItemAmount;
         _inventoryItems = new ItemType[maxItemAmount];
 
@@ -220,6 +229,10 @@ public class PlayerInventory
             inventoryList.Sort(InventorySortFunction);
 
             _inventoryItems = inventoryList.ToArray();
+
+            //fires Update event. Done here because format inventory is called after basicaly any inventory change
+            if(_attatchedPlayer)
+                _attatchedPlayer.OnInventoryUpdate?.Invoke(this);
         }
     }
 
