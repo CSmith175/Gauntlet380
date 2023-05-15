@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8124827982767957244}
   - component: {fileID: -8408926631910872204}
   - component: {fileID: -4349027869086257774}
+  - component: {fileID: 7598679846212773581}
+  - component: {fileID: 1681563395510263792}
   m_Layer: 0
   m_Name: DemonShot
   m_TagString: Untagged
@@ -127,3 +129,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &7598679846212773581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088357258996308522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da2c270c07183b449d7bcaf027eaeaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnOffset: {x: 0, y: 0.5}
+--- !u!114 &1681563395510263792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088357258996308522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192b46f82d09fd04386f6ca115aad6c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
