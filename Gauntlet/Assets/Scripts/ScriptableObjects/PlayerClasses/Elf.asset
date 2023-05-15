@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Elf
   m_EditorClassIdentifier: 
   _characterName: Questor
+  _characterUIColorTintDark: {r: 0.48609737, g: 1, b: 0.4575472, a: 1}
+  _characterUIColorTintLight: {r: 0.759434, g: 1, b: 0.76616305, a: 1}
   _baseMoveSpeed: 600
   _baseShotAttack: 5
   _baseShotDowntime: 0.25

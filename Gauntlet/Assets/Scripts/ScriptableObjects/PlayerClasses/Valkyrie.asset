@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Valkyrie
   m_EditorClassIdentifier: 
   _characterName: Thyra
+  _characterUIColorTintDark: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+  _characterUIColorTintLight: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
   _baseMoveSpeed: 450
   _baseShotAttack: 8
   _baseShotDowntime: 0.25

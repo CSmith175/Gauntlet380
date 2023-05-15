@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CameraController: MonoBehaviour
 {
+    [SerializeField] private CameraSettings _cameraSettings;
+
     #region "variables Set from Settings
     //set by the initilize function (Standin for a constructor due to Monobehavior quirks)
     private float _cameraMinHeight = 10;
@@ -43,6 +45,12 @@ public class CameraController: MonoBehaviour
     private Vector3 _currentVelocity;
     #endregion
 
+    //initilizes Camera Settings
+    private void Awake()
+    {
+        if(_cameraSettings)
+            IntilizeCameraController(_cameraSettings);
+    }
 
     //runs current camera mode every frame
     private void LateUpdate()
@@ -53,6 +61,15 @@ public class CameraController: MonoBehaviour
         }
     }
 
+    //listens for changes in player amounts
+    private void OnEnable()
+    {
+        EventBus.OnPlayerChanged.AddListener(UpdateCamera);
+    }
+    private void OnDisable()
+    {
+        EventBus.OnPlayerChanged.RemoveListener(UpdateCamera);
+    }
 
     #region "Public Functions for Player Manager"
     /// <summary>

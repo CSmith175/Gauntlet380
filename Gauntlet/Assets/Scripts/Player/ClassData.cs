@@ -6,10 +6,15 @@ public class ClassData : ScriptableObject
     #region Display Inspector Variables
     [Header("Display Info")]
     [SerializeField] private string _characterName;
+    [Tooltip("Tint of the UI for this character (Darker UI Components")] [SerializeField] private Color _characterUIColorTintDark;
+    [Tooltip("Tint of the UI for this character (Lighter UI Components")] [SerializeField] private Color _characterUIColorTintLight;
     #endregion
 
     #region "Display Getter Properties"
     public string CharacterName { get { return _characterName; } }
+    public Color CharacterUIColorDark { get { return _characterUIColorTintDark; } }
+    public Color CharacterUIColorLight { get { return _characterUIColorTintLight; } }
+
     #endregion
 
     #region "Stat Inspector Variables"

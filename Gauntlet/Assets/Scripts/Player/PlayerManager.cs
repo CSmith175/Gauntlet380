@@ -17,21 +17,6 @@ public class PlayerManager : MonoBehaviour
     private Player[] _players;
     public Player[] Players { get { return _players; } }
 
-    //camera related
-    private CameraController _cameraController;
-    [Space(10)]
-    [SerializeField] [Tooltip("Scriptable Object Settings for the Camera")] private CameraSettings _cameraSettings;
-
-    private void Awake()
-    {
-        //attatches controller and saves refrence for updating display modes
-        _cameraController = gameObject.AddComponent<CameraController>();
-        if(_cameraSettings)
-        {
-            _cameraController.IntilizeCameraController(_cameraSettings); //applies the settings to the camera
-        }
-    }
-
     private void AddPlayer(ClassData playerClass)
     {
         if (!playerClass)
@@ -54,8 +39,8 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        //updates camera
-        _cameraController.UpdateCamera(_players);
+        //publishes event
+        EventBus.OnPlayerChanged?.Invoke(_players);
     }
 
     private int DetermineControllerNumber()
@@ -76,7 +61,7 @@ public class PlayerManager : MonoBehaviour
             {
                 if(_players[ii])
                 {
-                    if (_players[ii].KeyboardControllerNumber == checkingValue)
+                    if (_players[ii].ControllerNumber == checkingValue)
                         break;
                 }
 
@@ -168,6 +153,7 @@ public class PlayerManager : MonoBehaviour
         RemovePlayer(playerList[playerNumber]);
         playerList.Remove(playerList[playerNumber]);
 
+
         _players = new Player[_playerMax];
         for (int i = 0; i < _players.Length; i++)
         {
@@ -185,8 +171,8 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        //updates camera
-        _cameraController.UpdateCamera(_players);
+        //publishes event
+        EventBus.OnPlayerChanged?.Invoke(_players);
     }
 
     private void RemovePlayer(Player player) //what happens when a player is dropped
@@ -199,7 +185,7 @@ public class PlayerManager : MonoBehaviour
     private void OnGUI()
     {
         //adding players debugging
-        if(GUILayout.Button("Add Player"))
+        if(GUI.Button(new Rect(10 ,Screen.height - 50, 80, 20), "Add Player"))
         {
             AddPlayer(SelectRandomClassFromAvailable());
         }
@@ -208,28 +194,28 @@ public class PlayerManager : MonoBehaviour
         {
             if (_players[0])
             {
-                if(GUILayout.Button("Drop Player 1"))
+                if(GUI.Button(new Rect(10, Screen.height - 80, 200, 20), "Drop Player 1"))
                 {
                     DropPlayer(1);
                 }
             }
             if (_players[1])
             {
-                if (GUILayout.Button("Drop Player 2"))
+                if (GUI.Button(new Rect(10, Screen.height - 110, 200, 20), "Drop Player 2"))
                 {
                     DropPlayer(2);
                 }
             }
             if (_players[2])
             {
-                if (GUILayout.Button("Drop Player 3"))
+                if (GUI.Button(new Rect(10, Screen.height - 140, 200, 20), "Drop Player 3"))
                 {
                     DropPlayer(3);
                 }
             }
             if (_players[3])
             {
-                if (GUILayout.Button("Drop Player 4"))
+                if (GUI.Button(new Rect(10, Screen.height - 170, 200, 20), "Drop Player 4"))
                 {
                     DropPlayer(4);
                 }

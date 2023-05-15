@@ -26,7 +26,6 @@ public class PlayerControls : MonoBehaviour
     private bool _shotInputBuffer = false;
     private Coroutine _shotBufferCoroutine = null;
     private int _recentDeviceID;
-    private InputAction.CallbackContext _dummyCallbackContext;
     #endregion
 
     #region "Unity Funtions"
@@ -247,7 +246,7 @@ public class PlayerControls : MonoBehaviour
             if (ControllerManager.ButtonPressed(_recentDeviceID, (PlayerNums)_controllerNumber))
             {
                 _shotInputBuffer = false;
-                PlayerShoot(_dummyCallbackContext, true);
+                PlayerShoot(new InputAction.CallbackContext(), true);
             }
         }
     }

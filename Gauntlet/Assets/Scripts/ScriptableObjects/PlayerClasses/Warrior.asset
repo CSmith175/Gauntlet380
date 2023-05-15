@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Warrior
   m_EditorClassIdentifier: 
   _characterName: Thor
+  _characterUIColorTintDark: {r: 1, g: 0.43867922, b: 0.43867922, a: 1}
+  _characterUIColorTintLight: {r: 1, g: 0.75, b: 0.75, a: 1}
   _baseMoveSpeed: 300
   _baseShotAttack: 25
   _baseShotDowntime: 0.5

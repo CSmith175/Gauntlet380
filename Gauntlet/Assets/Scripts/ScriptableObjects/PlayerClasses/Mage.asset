@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Mage
   m_EditorClassIdentifier: 
   _characterName: Merlin
+  _characterUIColorTintDark: {r: 0.5697569, g: 0.5613208, b: 1, a: 1}
+  _characterUIColorTintLight: {r: 0.8268246, g: 0.8254717, b: 1, a: 1}
   _baseMoveSpeed: 450
   _baseShotAttack: 10
   _baseShotDowntime: 0.35

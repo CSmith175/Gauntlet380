@@ -54,7 +54,8 @@ public enum PlayerStatCategories
     MagicDamage,
     Defense,
     ShotSpeed,
-    Health
+    Health,
+    Score
 }
 //Used for binding players to controllers
 public enum PlayerNums
@@ -63,4 +64,13 @@ public enum PlayerNums
     Player2 = 2,
     Player3 = 3,
     Player4 = 4
+}
+
+//used in the UI for determining the state of each player
+public enum PlayerUIDisplayState
+{
+    Unjoined,
+    Game,
+    Dead,
+    LevelComplete
 }

@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IGameEntity
 {
 
 
-    //used for keyboard and controller bindings
-    private int _keyboardControllerNumber;
-    public int KeyboardControllerNumber
+    //used controller bindings
+    private int _controllerNumber;
+    public int ControllerNumber
     {
-        get { return _keyboardControllerNumber; }
+        get { return _controllerNumber; }
     }
 
 
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
     /// <param name="controls"> pass in a controls here to reset it instead of creating a new one </param>
     private void SetUpPlayerMovement(PlayerControls controls, int controllerNumber)
     {
-        _keyboardControllerNumber = controllerNumber; //sets the held controller number
+        _controllerNumber = controllerNumber; //sets the held controller number
 
         if (controls) //resets a currently exsisting controls
         {
@@ -123,6 +123,11 @@ public class Player : MonoBehaviour
         {
             _playerInventory = new PlayerInventory();
         }
+    }
+
+    public void ReactToShot(int shotDamage)
+    {
+        _playerStats.IncrementPlayerStat(PlayerStatCategories.Health, -shotDamage);
     }
 
     #endregion

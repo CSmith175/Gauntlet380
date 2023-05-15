@@ -38,6 +38,7 @@ public struct PlayerStatValues
     public int defense;
     public int shotSpeed;
     public int health;
+    public int score;
 }
 
 public struct NarrationInputParing

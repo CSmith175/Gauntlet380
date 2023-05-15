@@ -37,6 +37,16 @@ public class PlayerStats
     {
         switch (statCategory)
         {
+            case PlayerStatCategories.Health:
+                _currentStats.health += increment;
+                //prevents negative values
+                _currentStats.health = Mathf.Max(0, _currentStats.health);
+                break;
+            case PlayerStatCategories.Score:
+                _currentStats.score += increment;
+                //prevents negative values
+                _currentStats.health = Mathf.Max(0, _currentStats.score);
+                break;
             case PlayerStatCategories.MoveSpeed:
                 _currentStats.moveSpeed += increment;
                 //prevents negative values or 0
@@ -59,19 +69,15 @@ public class PlayerStats
                 break;
             case PlayerStatCategories.Defense:
                 _currentStats.defense += increment;
-                //prevents negative values or 0
-                _currentStats.defense = Mathf.Max(1, _currentStats.defense);
+                //prevents negative
+                _currentStats.defense = Mathf.Max(0, _currentStats.defense);
                 break;
             case PlayerStatCategories.ShotSpeed:
                 _currentStats.shotSpeed += increment;
                 //prevents negative values or 0
                 _currentStats.shotSpeed = Mathf.Max(1, _currentStats.shotSpeed);
                 break;
-            case PlayerStatCategories.Health:
-                _currentStats.health += increment;
-                //prevents negative values or 0
-                _currentStats.health = Mathf.Max(1, _currentStats.health);
-                break;
+
             default:
                 break;
         }
@@ -81,6 +87,10 @@ public class PlayerStats
     {
         switch (statCategory)
         {
+            case PlayerStatCategories.Health:
+                return _currentStats.health;
+            case PlayerStatCategories.Score:
+                return _currentStats.score;
             case PlayerStatCategories.MoveSpeed:
                 return _currentStats.moveSpeed;
             case PlayerStatCategories.ShotDamage:
@@ -95,8 +105,6 @@ public class PlayerStats
                 return _currentStats.defense;
             case PlayerStatCategories.ShotSpeed:
                 return _currentStats.shotSpeed;
-            case PlayerStatCategories.Health:
-                return _currentStats.health;
             default:
                 Debug.LogError("No Stat Category of type: <b>" + Enum.GetName(typeof(PlayerStatCategories), statCategory) + "</b> Implemented in GetPlayerStat on PlayerStats.cs. Returning 10 as a default");
                 return 10;
