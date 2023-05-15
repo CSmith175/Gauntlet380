@@ -170,7 +170,11 @@ public class PlayerControls : MonoBehaviour
         if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
             if (attatchedPlayer.PlayerInventory != null)
+            {
+                PotionInventoryItem._potionDamage = (int)attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.MagicDamage);
                 attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Potion);
+            }
+
         }
     }
     /// <summary>
@@ -184,7 +188,11 @@ public class PlayerControls : MonoBehaviour
             {
                 if (attatchedPlayer.ClosestDoor != null && Vector3.Distance(transform.position, attatchedPlayer.ClosestDoor.transform.position) < 2)
                 {
-                    attatchedPlayer.ClosestDoor.OpenDoor(null);
+                    if(!attatchedPlayer.ClosestDoor.IsOpened)
+                    {
+                        if(attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Key))
+                            attatchedPlayer.ClosestDoor.OpenDoor();
+                    }
                 }
             }
         }

@@ -8,4 +8,5 @@ public class KeyInventoryItem : IInventoryItem
     {
         Debug.Log("Key Used!");
     }
+
 }

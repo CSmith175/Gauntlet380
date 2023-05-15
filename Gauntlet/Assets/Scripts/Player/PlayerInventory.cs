@@ -74,7 +74,7 @@ public class PlayerInventory
     /// Uses item of given type, assuming one is present. does nothing if the player dosn't have any of the item.
     /// </summary>
     /// <param name="type"> Item Type to Use </param>
-    public void TryUseItem(ItemType type)
+    public bool TryUseItem(ItemType type)
     {
         if (_inventoryItems != null)
         {
@@ -83,7 +83,7 @@ public class PlayerInventory
                 if (_inventoryItems[i] == ItemType.Empty)
                 {
                     //inventory is always moved to the left so when a null is gotten there are no more items
-                    return;
+                    return false;
                 }
 
                 if (_inventoryItems[i] == type)
@@ -99,11 +99,12 @@ public class PlayerInventory
                     //emptys item slot and formats inventory
                     _inventoryItems[i] = ItemType.Empty;
                     FormatInventory();
-                    return;
+                    return true;
                 }
             }
         }
 
+        return false;
     }
 
     /// <summary>
