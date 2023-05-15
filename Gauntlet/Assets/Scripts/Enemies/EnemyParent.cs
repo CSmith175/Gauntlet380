@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyParent : MonoBehaviour, IEnemy
 {
+    public ProjectileSourceType EntityType
+    {
+        get { return ProjectileSourceType.Enemy; }
+    }
+
     public EnemyStats stats;
     public LayerMask playerLayerMask = 3;
 

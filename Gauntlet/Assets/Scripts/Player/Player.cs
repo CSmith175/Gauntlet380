@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IShootingEntity
+public class Player : MonoBehaviour, IGameEntity
 {
     public ProjectileSourceType EntityType
     {
