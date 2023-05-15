@@ -1,3 +1,12 @@
+//Interface for things that go pew pew
+public interface IShootingEntity
+{
+    public ProjectileSourceType EntityType
+    {
+        get;
+    }
+}
+
 //general interface for all entities. allows all entities to react to being shot iof they need to
 public interface IGameEntity
 {

@@ -15,7 +15,6 @@ public class Projectile : MonoBehaviour
     private GameObject _sourceEntity;
 
     private ProjectileData _projectileData;
-    public ProjectileData ProjectileData { get { return _projectileData; } }
 
 
     //projectile lifetime control

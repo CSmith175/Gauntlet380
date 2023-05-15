@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IGameEntity
+public class Player : MonoBehaviour, IShootingEntity
 {
+    public ProjectileSourceType EntityType
+    {
+        get { return ProjectileSourceType.Player; }
+    }
+
 
 
     //used controller bindings
