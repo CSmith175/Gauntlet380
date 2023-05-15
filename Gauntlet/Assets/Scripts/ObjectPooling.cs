@@ -9,16 +9,16 @@ public class ObjectPooling : MonoBehaviour
     private static int defaultPoolSize = 50;
     private static GameObject poolParent, specificPool;
 
-    private void Awake()
-    {
-        poolParent = new GameObject();
-        poolParent.name = "Pool Empty";
-    }
-
     public static void MakeNewObjectPool(GameObject go)
     {
         if (objectPools.ContainsKey(go.name))
             return;
+
+        if (poolParent == null)
+        {
+            poolParent = new GameObject();
+            poolParent.name = "Pool Empty";
+        }
 
         specificPool = Instantiate(poolParent);
         specificPool.transform.position = Vector3.zero;

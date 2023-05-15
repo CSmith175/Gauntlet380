@@ -7,5 +7,6 @@ public class SpawnerStats : ScriptableObject
 {
     public float enemySpawnRate;
     public float spawnerBaseHealth;
+    public int pointValue;
     public GameObject spawnerEnemyPrefab;
 }

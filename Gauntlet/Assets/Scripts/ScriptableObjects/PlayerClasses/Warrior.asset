@@ -18,9 +18,9 @@ MonoBehaviour:
   _baseMoveSpeed: 300
   _baseShotAttack: 25
   _baseShotDowntime: 0.5
-  _baseMeleeAttack: 0
-  _baseMagicAttack: 0
-  _baseDefense: 0
+  _baseMeleeAttack: 30
+  _baseMagicAttack: 10
+  _baseDefense: 15
   _baseShotSpeed: 16
   _baseHealth: 2000
   _characterModelPrefab: {fileID: 924927120865986372, guid: cce9416d831da8745a04d6d31b188f47, type: 3}

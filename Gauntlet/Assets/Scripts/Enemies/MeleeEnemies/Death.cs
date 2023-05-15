@@ -7,6 +7,6 @@ public class Death : MeleeEnemy
     protected virtual void AttackPlayer(Player player)
     {
         //Take health directly from the player, bypassing armor
-        //player.playerStats.playerStatValues.health -= stats.enemyMeleeDamage
+        player.PlayerStats.IncrementPlayerStat(PlayerStatCategories.Health, stats.enemyMeleeDamage);
     }
 }
