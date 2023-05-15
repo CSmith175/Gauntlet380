@@ -181,7 +181,12 @@ public class PlayerControls : MonoBehaviour
         if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
         {
             if (attatchedPlayer.PlayerInventory != null)
-                attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Key);
+            {
+                if (attatchedPlayer.ClosestDoor != null && Vector3.Distance(transform.position, attatchedPlayer.ClosestDoor.transform.position) < 2)
+                {
+                    attatchedPlayer.ClosestDoor.OpenDoor(null);
+                }
+            }
         }
     }
 

@@ -45,6 +45,12 @@ public class Player : MonoBehaviour, IGameEntity
         }
     }
 
+    public DoorLogic ClosestDoor
+    {
+        get;
+        private set;
+    }
+
     public void InitilizePlayer(int controllerNumber, ClassData classData)
     {
         //non component based initilization
@@ -72,6 +78,21 @@ public class Player : MonoBehaviour, IGameEntity
         }
     }
 
+
+    #region "Unity Functions"
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Door")
+        {
+            if(other.gameObject.TryGetComponent(out DoorLogic door))
+            {
+                ClosestDoor = door;
+            }
+        }
+    }
+
+    #endregion
 
 
     #region "Helper Functions for Player Initilization
