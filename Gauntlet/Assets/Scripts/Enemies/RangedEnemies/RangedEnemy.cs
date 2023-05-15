@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedEnemy : EnemyParent, IShootingEntity
+public class RangedEnemy : EnemyParent
 {
     public GameObject projectilePrefab;
     protected float rangedAttackSpeed = 2f;
