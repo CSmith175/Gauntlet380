@@ -13,7 +13,9 @@ public class Projectile : MonoBehaviour
 
     //projectile data
     private GameObject _sourceEntity;
+
     private ProjectileData _projectileData;
+
 
     //projectile lifetime control
     private float _creationTime;
