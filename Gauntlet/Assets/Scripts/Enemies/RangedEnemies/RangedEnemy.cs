@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedEnemy : EnemyParent
+public class RangedEnemy : EnemyParent, IShootingEntity
 {
     public GameObject projectilePrefab;
     protected float rangedAttackSpeed = 2f;
@@ -66,7 +66,9 @@ public class RangedEnemy : EnemyParent
         if(projectilePrefab != null)
         {
             projectile = ObjectPooling.PullObjectFromPool(projectilePrefab);
-            projectile.GetComponent<IProjectile>().AssignStatsOfProjectile(stats);
+
+            projectile.GetComponent<Projectile>().InitilizeProjectile(gameObject, stats.enemyShotDamage, ProjectileSourceType.Enemy);
+
             projectile.transform.position = transform.position;
             projectile.transform.rotation = Quaternion.LookRotation(closestPlayer.transform.position - transform.position, transform.up);
         }
