@@ -89,12 +89,32 @@ public class Projectile : MonoBehaviour
     {
         if (!_sourceEntity)
         {
+            if (collision.gameObject.TryGetComponent(out IGameEntity gameEntity))
+            {
+                if (gameEntity.EntityType != _projectileData.projectileSourceType)
+                {
+                    gameEntity.ReactToShot(_projectileData.ProjectileDamage);
+                }
+            }
+
             ClearProjectile();
         }
-        else if (collision.gameObject != _sourceEntity)
+        else
         {
-            ClearProjectile();
+            if(collision.gameObject != _sourceEntity)
+            {
+                if (collision.gameObject.TryGetComponent(out IGameEntity gameEntity))
+                {
+                    if (gameEntity.EntityType != _projectileData.projectileSourceType)
+                    {
+                        gameEntity.ReactToShot(_projectileData.ProjectileDamage);
+                    }
+                }
+
+                ClearProjectile();
+            }
         }
+
     }
     //Clears projectile if its alive too long
     private void Update()
