@@ -79,7 +79,7 @@ public class EnemyParent : MonoBehaviour, IEnemy
         gameObject.SetActive(false);
     }
 
-    public void ReactToShot(int shotDamage)
+    public void ReactToShot(int shotDamage, GameObject shotSourceEntity)
     {
         //Take damage from the player
     }

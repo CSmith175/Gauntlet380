@@ -151,7 +151,7 @@ public class Player : MonoBehaviour, IGameEntity
         }
     }
 
-    public void ReactToShot(int shotDamage)
+    public void ReactToShot(int shotDamage, GameObject shotSourceEntity)
     {
         _playerStats.IncrementPlayerStat(PlayerStatCategories.Health, -shotDamage);
     }

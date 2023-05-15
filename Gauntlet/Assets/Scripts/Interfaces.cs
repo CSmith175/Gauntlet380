@@ -1,7 +1,9 @@
+using UnityEngine;
+
 //general interface for all entities. allows all entities to react to being shot iof they need to
 public interface IGameEntity
 {
-    public void ReactToShot(int shotDamage);
+    public void ReactToShot(int shotDamage, GameObject shotSourceEntity);
     public ProjectileSourceType EntityType
     {
         get;

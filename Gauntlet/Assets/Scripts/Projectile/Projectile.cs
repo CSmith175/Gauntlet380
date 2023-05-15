@@ -93,7 +93,7 @@ public class Projectile : MonoBehaviour
             {
                 if (gameEntity.EntityType != _projectileData.projectileSourceType)
                 {
-                    gameEntity.ReactToShot(_projectileData.ProjectileDamage);
+                    gameEntity.ReactToShot(_projectileData.ProjectileDamage, gameObject);
                 }
             }
 
@@ -107,7 +107,7 @@ public class Projectile : MonoBehaviour
                 {
                     if (gameEntity.EntityType != _projectileData.projectileSourceType)
                     {
-                        gameEntity.ReactToShot(_projectileData.ProjectileDamage);
+                        gameEntity.ReactToShot(_projectileData.ProjectileDamage, _sourceEntity);
                     }
                 }
 

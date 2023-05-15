@@ -186,7 +186,7 @@ public class PlayerControls : MonoBehaviour
         {
             if (attatchedPlayer.PlayerInventory != null)
             {
-                if (attatchedPlayer.ClosestDoor != null && Vector3.Distance(transform.position, attatchedPlayer.ClosestDoor.transform.position) < 2)
+                if (attatchedPlayer.ClosestDoor != null && Vector3.Distance(transform.position, attatchedPlayer.ClosestDoor.transform.position) < 4)
                 {
                     if(!attatchedPlayer.ClosestDoor.IsOpened)
                     {

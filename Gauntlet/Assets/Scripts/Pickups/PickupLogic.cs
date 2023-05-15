@@ -10,7 +10,7 @@ public class PickupLogic : MonoBehaviour
     {
         if(other.gameObject.layer == 3)
         {
-            PlayerInventory pi = other.GetComponent<PlayerInventory>();
+            PlayerInventory pi = other.GetComponent<Player>().PlayerInventory;
             if (pi.CheckIfInventoryFull())
             {
                 return;
