@@ -22,6 +22,6 @@ MonoBehaviour:
   _baseMagicAttack: 0
   _baseDefense: 0
   _baseShotSpeed: 22
-  _baseHealth: 0
+  _baseHealth: 1200
   _characterModelPrefab: {fileID: 1584206139138172056, guid: 191b3672cdbf96044bf28836c31b9740, type: 3}
   _characterShotPrefab: {fileID: 6552157047381998743, guid: 40fadb374e374a64eb31ee29f180784e, type: 3}

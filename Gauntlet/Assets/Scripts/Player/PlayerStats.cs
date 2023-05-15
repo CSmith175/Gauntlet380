@@ -3,7 +3,7 @@ using System;
 
 public class PlayerStats
 {
-    private ClassData _baseStats; //base stats of the player. Passed in through the constructor
+    private Player _attatchedPlayer; //Associated Player
     private PlayerStatValues _currentStats; //current stats of the player
 
     #region "Public Functions"
@@ -11,20 +11,20 @@ public class PlayerStats
     /// Create a new playerstats, usint the class base stats as a starting point
     /// </summary>
     /// <param name="baseStats"> Stats to set the new PlayerStats to to start out </param>
-    public PlayerStats(ClassData baseStats)
+    public PlayerStats(Player player)
     {
-        InitilizePlayerStats(baseStats);
+        InitilizePlayerStats(player);
     }
 
     /// <summary>
     /// Initilizes the base stats
     /// </summary>
     /// <param name="baseStats"> Initial stats from a class </param>
-    public void InitilizePlayerStats(ClassData baseStats)
+    public void InitilizePlayerStats(Player player)
     {
-        _baseStats = baseStats;
+        _attatchedPlayer = player;
 
-        SetStatsFromClassData(baseStats);
+        SetStatsFromClassData(player.ClassData);
     }
 
 
@@ -41,11 +41,15 @@ public class PlayerStats
                 _currentStats.health += increment;
                 //prevents negative values
                 _currentStats.health = Mathf.Max(0, _currentStats.health);
+                //fires event on attatched player
+                _attatchedPlayer.OnHealthUpdate?.Invoke(_currentStats.health);
                 break;
             case PlayerStatCategories.Score:
                 _currentStats.score += increment;
                 //prevents negative values
                 _currentStats.health = Mathf.Max(0, _currentStats.score);
+                //fires event on attatched player
+                _attatchedPlayer.OnScoreUpdate?.Invoke(_currentStats.score);
                 break;
             case PlayerStatCategories.MoveSpeed:
                 _currentStats.moveSpeed += increment;

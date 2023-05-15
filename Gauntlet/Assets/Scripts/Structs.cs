@@ -25,7 +25,6 @@ public struct ProjectileData
 }
 
 
-
 public struct PlayerStatValues
 {
     public int moveSpeed;

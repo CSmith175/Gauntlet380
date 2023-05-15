@@ -20,7 +20,28 @@ public class PlayerInformationUI : MonoBehaviour
     [Space(10)]
     [Tooltip("Parent Object of the Unjoined UI")] [SerializeField] private GameObject _unjoinedUI;
     [Space(5)]
+    //input detection for unjoined UI
+    private PlayerJoinInputs _playerJoinInputs;
+    public PlayerJoinInputs PlayerJoinInputs
+    {
+        get
+        {
+            if(_playerJoinInputs == null)
+            {
+                //adds unjoined inputs
+                if (!gameObject.TryGetComponent(out _playerJoinInputs))
+                    _playerJoinInputs = gameObject.AddComponent<PlayerJoinInputs>();
+            }
+            return _playerJoinInputs;
+        }
+    }
+    //Unjoined UI display text
+    [SerializeField] private Text _currentlySelectedClassText;
+    //Available Classes
+    [SerializeField] private ClassData[] _availableClasses;
 
+    //tracks current selection
+    private int _selectionIndex;
     #endregion
 
     #region "Game UI"
@@ -67,7 +88,7 @@ public class PlayerInformationUI : MonoBehaviour
 
     #endregion
 
-
+    #region "Unity Functions
     private void Awake()
     {
         //adds images to dark color list
@@ -90,7 +111,27 @@ public class PlayerInformationUI : MonoBehaviour
                     _lightUIImages.Add(image);
         }
 
+        //adds unjoined inputs
+        if (!gameObject.TryGetComponent(out _playerJoinInputs))
+            _playerJoinInputs = gameObject.AddComponent<PlayerJoinInputs>();
+
     }
+
+    //event subscriptions (also subscribed to in "SetUIFromCharacter for the Player ones")
+    private void OnEnable()
+    {
+        SubscribePlayerEvents(_player, true);
+        EventBus.OnAvailableClassesUpdated.AddListener(UpdateAvailableClasses);
+        PlayerJoinInputs.OnSelectScroll = UpdateCurrentSelectedClass;
+    }
+    private void OnDisable()
+    {
+        UnsubscribePlayerEvents(_player);
+        EventBus.OnAvailableClassesUpdated.RemoveListener(UpdateAvailableClasses);
+        PlayerJoinInputs.OnSelectScroll = null;
+    }
+    #endregion
+
 
     /// <summary>
     /// Initilizes canvas information to a player character, updates things like name and colors
@@ -98,9 +139,11 @@ public class PlayerInformationUI : MonoBehaviour
     /// <param name="player"> inputted player, does nothing if null </param>
     public void SetUIFromCharacter(Player player)
     {
+        UnsubscribePlayerEvents(_player);
         _player = player;
+        SubscribePlayerEvents(_player, true);
 
-        if(_player)
+        if (_player)
         {
             if (_playerInfoText)
                 _playerInfoText.text = _player.ClassData.CharacterName;
@@ -138,8 +181,32 @@ public class PlayerInformationUI : MonoBehaviour
         SwapCanvas(state);
     }
 
-    #region "Inventory"
+    #region "Class Select"
+    //subscribes to action on PlayerJoinInputs
+    private void UpdateCurrentSelectedClass(int select)
+    {
+        if (_availableClasses != null)
+        {
+            _selectionIndex += select;
 
+            if (_selectionIndex >= _availableClasses.Length)
+                _selectionIndex = 0;
+            else if (_selectionIndex < 0)
+                _selectionIndex = _availableClasses.Length - 1;
+
+            if (_currentlySelectedClassText != null && _availableClasses.Length > 0)
+            {
+                _currentlySelectedClassText.text = _availableClasses[_selectionIndex].CharacterName;
+            }
+        }
+    }
+
+    #endregion
+
+    #region "Updated Fields (Inventory, Score, Health)"
+    /// <summary>
+    /// Updates the display for the inventory.
+    /// </summary>
     private void UpdateInventoryDisplay(PlayerInventory inventory)
     {
         if(inventory != null)
@@ -222,12 +289,29 @@ public class PlayerInformationUI : MonoBehaviour
             SetUIColors();
         }
     }
-
+    /// <summary>
+    /// Updates the display for the health Text
+    /// </summary>
+    private void UpdateHealthText(int health)
+    {
+        if(_healthText != null)
+        {
+            _healthText.text = "Health: " + health.ToString();
+        }
+    }
+    /// <summary>
+    /// Updates the display for the score Text
+    /// </summary>
+    private void UpdateScoreText(int score)
+    {
+        if (_scoreText != null)
+        {
+            _scoreText.text = "Score: " + score.ToString();
+        }
+    }
     #endregion
 
-
     #region "Helper Functions"
-
     //handles the switching of the UI componets for the state
     private void SwapCanvas(PlayerUIDisplayState state)
     {
@@ -309,6 +393,50 @@ public class PlayerInformationUI : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region "Event Functions
+    /// <summary>
+    /// Subscribes events for UI updates with inputted player
+    /// </summary>
+    /// <param name="playerToSubscribe"> player to update from </param>
+    /// <param name="initialInvoke"> Update right away? </param>
+    private void SubscribePlayerEvents(Player playerToSubscribe, bool initialInvoke)
+    {
+        if (_player != null)
+        {
+            _player.OnInventoryUpdate += UpdateInventoryDisplay;
+            _player.OnHealthUpdate += UpdateHealthText;
+            _player.OnScoreUpdate += UpdateScoreText;
+
+            if (initialInvoke)
+            {
+                _player.OnInventoryUpdate?.Invoke(_player.PlayerInventory);
+                _player.OnHealthUpdate?.Invoke((int)_player.PlayerStats.GetPlayerStat(PlayerStatCategories.Health));
+                _player.OnScoreUpdate?.Invoke((int)_player.PlayerStats.GetPlayerStat(PlayerStatCategories.Score));
+            }
+        }
+    }
+    /// <summary>
+    /// Unsubscribe UI update events from given player
+    /// </summary>
+    /// <param name="playerToUnsubscribe"> player to stop updating from </param>
+    private void UnsubscribePlayerEvents(Player playerToUnsubscribe)
+    {
+        if (playerToUnsubscribe != null)
+        {
+            _player.OnInventoryUpdate -= UpdateInventoryDisplay;
+            _player.OnHealthUpdate -= UpdateHealthText;
+            _player.OnScoreUpdate -= UpdateScoreText;
+        }
+    }
+    /// <summary>
+    /// Updates the array of available classes for the player to chose from
+    /// </summary>
+    /// <param name="availableClasses"></param>
+    private void UpdateAvailableClasses(ClassData[] availableClasses)
+    {
+        _availableClasses = availableClasses;
+    }
     #endregion
 }

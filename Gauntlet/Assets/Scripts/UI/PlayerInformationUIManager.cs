@@ -81,28 +81,7 @@ public class PlayerInformationUIManager : MonoBehaviour
         }
     }
 
-    //sorts players lowest to highest (first to last) by their controller num. controller num is used to keep placement consistent.
-    private int SortPlayersByControllerNum(Player a, Player b)
-    {
-        if (a == null && b != null)
-            return 1;
-        if (a != null && b == null)
-            return -1;
-
-        if (a == null && b == null)
-            return 0;
-
-        if (a.ControllerNumber > b.ControllerNumber)
-            return 1;
-        if (a.ControllerNumber < b.ControllerNumber)
-            return -1;
-
-        return 0;
-    }
     #endregion
-
-
-
 
 
 

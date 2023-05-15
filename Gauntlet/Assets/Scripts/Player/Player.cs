@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IGameEntity
@@ -9,16 +8,13 @@ public class Player : MonoBehaviour, IGameEntity
         get { return ProjectileSourceType.Player; }
     }
 
-
-
+    #region "Variables/Properties"
     //used controller bindings
     private int _controllerNumber;
     public int ControllerNumber
     {
         get { return _controllerNumber; }
     }
-
-
 
     //Class data Instance, (Elf, Mage, Warrior, etc.) used in a few places
     private ClassData _classData;
@@ -44,15 +40,26 @@ public class Player : MonoBehaviour, IGameEntity
             return _playerInventory;
         }
     }
-
+    //closest door to the player
     public DoorLogic ClosestDoor
     {
         get;
         private set;
     }
 
+    #endregion
+
+    #region "Event Actions"
+    public Action<PlayerInventory> OnInventoryUpdate;
+    public Action<int> OnHealthUpdate;
+    public Action<int> OnScoreUpdate;
+    #endregion
+
+    //Replacment for a constructor
     public void InitilizePlayer(int controllerNumber, ClassData classData)
     {
+        _classData = classData;
+
         //non component based initilization
         SetUpPlayerStats(classData);
         SetUpPlayerInventory(true);
@@ -60,8 +67,6 @@ public class Player : MonoBehaviour, IGameEntity
         //component based initilization
 
         bool playerControlsInitilized = false;
-        _classData = classData;
-
 
         foreach(var component in gameObject.GetComponents(typeof(Component)))
         {
@@ -77,7 +82,6 @@ public class Player : MonoBehaviour, IGameEntity
             SetUpPlayerMovement(null, controllerNumber);
         }
     }
-
 
     #region "Unity Functions"
 
@@ -124,11 +128,11 @@ public class Player : MonoBehaviour, IGameEntity
     {
         if(_playerStats != null)
         {
-            _playerStats.InitilizePlayerStats(classData);
+            _playerStats.InitilizePlayerStats(this);
         }
         else
         {
-            _playerStats = new PlayerStats(classData);
+            _playerStats = new PlayerStats(this);
         }
     }
     /// <summary>
@@ -147,7 +151,7 @@ public class Player : MonoBehaviour, IGameEntity
         }
         else
         {
-            _playerInventory = new PlayerInventory();
+            _playerInventory = new PlayerInventory(this);
         }
     }
 
