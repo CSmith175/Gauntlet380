@@ -9,12 +9,8 @@ public class DoorLogic : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
 
-    public void OpenDoor(PlayerInventory playerInventory)
+    public void OpenDoor()
     {
-        if (playerInventory.CheckForItemOfType(ItemType.Key))
-        {
-            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-            playerInventory.TryUseItem(ItemType.Key);
-        }
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

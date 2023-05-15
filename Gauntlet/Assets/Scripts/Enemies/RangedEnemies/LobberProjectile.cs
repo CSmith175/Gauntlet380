@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LobberProjectile : MonoBehaviour, IProjectile
+public class LobberProjectile : MonoBehaviour
 {
     public Vector3 destinationPoint;
     public float lobHeight = 3.0f;
@@ -38,17 +38,7 @@ public class LobberProjectile : MonoBehaviour, IProjectile
             LobToTarget();
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == 3)
-        {
-            //other.gameObject.GetComponent<Player>().ReactToShot(stats.enemyShotDamage);
-            Debug.Log("Oh ouch, player shot!");
-            gameObject.SetActive(false);
-        }
-    }
-        private void LobToTarget()
+    private void LobToTarget()
     {
         u = (Time.time - timeStart) / jumpTime;
         if (u >= 1)
@@ -71,10 +61,5 @@ public class LobberProjectile : MonoBehaviour, IProjectile
     public void AssignDestinationPoint(Vector3 endPos)
     {
         destinationPoint = endPos;
-    }
-
-    public void AssignStatsOfProjectile(EnemyStats baseStats)
-    {
-        stats = baseStats;
     }
 }

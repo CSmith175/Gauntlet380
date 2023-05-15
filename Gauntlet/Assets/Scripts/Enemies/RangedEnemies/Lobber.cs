@@ -9,7 +9,8 @@ public class Lobber : RangedEnemy
         if (projectilePrefab != null)
         {
             projectile = ObjectPooling.PullObjectFromPool(projectilePrefab);
-            projectile.GetComponent<LobberProjectile>().AssignStatsOfProjectile(stats);
+            projectile.GetComponent<Projectile>().InitilizeProjectile(gameObject, stats.enemyShotDamage, EntityType);
+
             projectile.transform.position = transform.position;
             projectile.GetComponent<LobberProjectile>().IntializeLob(closestPlayer.gameObject.transform.position);
         }
