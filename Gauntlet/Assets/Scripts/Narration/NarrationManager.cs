@@ -6,6 +6,14 @@ public class NarrationManager : MonoBehaviour
     private NarrationConstructor _narrationConstructor;
     [SerializeField] private TextDisplay _display;
 
+    [Header("Random Rambiling frequency")]
+    [SerializeField] private float _rambleFrequencyMin = 10f;
+    [SerializeField] private float _rambleFrequencyMax = 30f;
+
+    private float _currentTime = 0;
+    private float _currentInterval = 0;
+    private NarrationInputParing[] _blankInputs = new NarrationInputParing[0]; 
+
 
     /// <summary>
     /// Event for triggering the narration event
@@ -33,9 +41,6 @@ public class NarrationManager : MonoBehaviour
         }
     }
 
-
-
-
     //handles subscribing and unsubscribing the narration function
     private void OnEnable()
     {
@@ -49,5 +54,16 @@ public class NarrationManager : MonoBehaviour
     private void OnDisable()
     {
         _triggerNarration.RemoveListener(PlayNarration);
+    }
+
+    private void Update()
+    {
+        if(_currentTime + _currentInterval < Time.time)
+        {
+            _currentTime = Time.time;
+            _currentInterval = Random.Range(_rambleFrequencyMin, _rambleFrequencyMax);
+
+            PlayNarration(NarrationType.Ramble, _blankInputs);
+        }
     }
 }

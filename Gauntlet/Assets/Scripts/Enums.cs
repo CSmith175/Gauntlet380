@@ -16,12 +16,19 @@ public enum CameraModes
 public enum NarrationType
 {
     Undefined,
-    Damage,
-    Treasure,
-    Key,
-    Potion,
-    Food,
-    LowHealth,
+    PlayerJoined,
+    PlayerDropped,
+    FoodPickedUp,
+    PotionPickedUp,
+    PotionUsed,
+    KeyPickedUp,
+    KeyUsed,
+    StatBoostPickedUp,
+    PlayerExit,
+    PlayerDamaged,
+    PlayerDied,
+    PlayerHealthLow,
+    Ramble
 }
 
 //used to help organize data for narration
@@ -34,6 +41,7 @@ public enum NarrationInformationType
     DamageValue,
     HealValue,
     TreasureValue,
+    Stat
 }
 
 //used to determine which inventoryItem a player has picked up

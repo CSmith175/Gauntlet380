@@ -13,6 +13,10 @@ public class PlayerManager : MonoBehaviour
     private Player[] _players;
     public Player[] Players { get { return _players; } }
 
+    //for simplifying narration triggers
+    private NarrationTriggerController _narrationController = new NarrationTriggerController();
+    public NarrationTriggerController NarrationController { get { return _narrationController; } }
+
 
     #region "Unity Functions
     //for initilization of event listeners
@@ -29,12 +33,20 @@ public class PlayerManager : MonoBehaviour
         EventBus.OnPlayerClear.AddListener(CheckForAllPlayersClear);
         EventBus.OnPlayerDied.AddListener(CheckForAllPlayersDead);
         EventBus.OnTryAddPlayer.AddListener(AddPlayer);
+
+        //narration events
+        EventBus.OnPlayerClear.AddListener(PlayerExitNarration);
+        EventBus.OnPlayerDied.AddListener(PlayerDiedNarration);
     }
     private void OnDisable()
     {
         EventBus.OnPlayerClear.RemoveListener(CheckForAllPlayersClear);
         EventBus.OnPlayerDied.RemoveListener(CheckForAllPlayersDead);
         EventBus.OnTryAddPlayer.RemoveListener(AddPlayer);
+
+        //narration events
+        EventBus.OnPlayerClear.RemoveListener(PlayerExitNarration);
+        EventBus.OnPlayerDied.RemoveListener(PlayerDiedNarration);
     }
     #endregion
 
@@ -139,6 +151,10 @@ public class PlayerManager : MonoBehaviour
 
         //publishes event
         EventBus.OnPlayerChanged?.Invoke(_players);
+
+        //Narration Trigger
+        _narrationController.CreatePlayerNamePairing(playerClass);
+        _narrationController.TriggerNarration(NarrationType.PlayerJoined);
     }
 
 
@@ -181,8 +197,12 @@ public class PlayerManager : MonoBehaviour
 
         //publishes event
         EventBus.OnPlayerChanged?.Invoke(_players);
+
         //updates available classes attatched to the event
         UpdateClassAvailabilityListeners();
+
+        //Narration Trigger
+        _narrationController.TriggerNarration(NarrationType.PlayerDropped);
     }
 
     #endregion
@@ -321,6 +341,29 @@ public class PlayerManager : MonoBehaviour
             EventBus.OnAllPlayersClear?.Invoke();
         }
     }
+    #endregion
+
+    #region "Event-Based Narration"
+    //for when a player exits
+    private void PlayerExitNarration(Player player)
+    {
+        if(player != null)
+        {
+            NarrationController.CreatePlayerNamePairing(player.ClassData);
+            NarrationController.TriggerNarration(NarrationType.PlayerExit);
+        }
+    }
+    //for when a player dies
+    private void PlayerDiedNarration(Player player)
+    {
+        if (player != null)
+        {
+            NarrationController.CreatePlayerNamePairing(player.ClassData);
+            NarrationController.TriggerNarration(NarrationType.PlayerDied);
+        }
+    }
+
+
     #endregion
 
 }

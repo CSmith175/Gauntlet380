@@ -18,6 +18,18 @@ public class PickupLogic : MonoBehaviour
                 {
                     player.PlayerInventory.TryAddItem(item);
                     gameObject.SetActive(false);
+
+                    //narration
+                    player.NarrationController.CreatePlayerNamePairing(player.ClassData);
+                    switch (item)
+                    {
+                        case ItemType.Potion:
+                            player.NarrationController.TriggerNarration(NarrationType.PotionPickedUp);
+                            break;
+                        case ItemType.Key:
+                            player.NarrationController.TriggerNarration(NarrationType.KeyPickedUp);
+                            break;
+                    }
                 }
             }
         }

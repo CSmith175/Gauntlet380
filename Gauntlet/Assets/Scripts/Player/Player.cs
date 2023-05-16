@@ -47,6 +47,10 @@ public class Player : MonoBehaviour, IGameEntity
         private set;
     }
 
+    //for simplifying narration triggers
+    private NarrationTriggerController _narrationController = new NarrationTriggerController();
+    public NarrationTriggerController NarrationController { get { return _narrationController; } }
+
     #endregion
 
     #region "Event Actions"
@@ -161,4 +165,6 @@ public class Player : MonoBehaviour, IGameEntity
     }
 
     #endregion
+
+
 }
