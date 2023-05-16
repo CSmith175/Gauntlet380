@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class NarrationManager : MonoBehaviour
 {
     private static NarrationEvent _triggerNarration;
     private NarrationConstructor _narrationConstructor;
     [SerializeField] private TextDisplay _display;
+
 
     /// <summary>
     /// Event for triggering the narration event
