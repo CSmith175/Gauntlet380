@@ -124,7 +124,11 @@ public class PlayerManager : MonoBehaviour
                 _players[i].gameObject.name = ("Player" + (i + 1) + " : " + playerClass.name);
                 _players[i].InitilizePlayer(DetermineControllerNumber(), playerClass, controllerID);
 
-                _players[i].transform.position = _playerSpawnPos; //lazy way of setting to a spawn position. convert to a function later
+                if (LevelManager.playerSpawn != null)
+                    _players[i].transform.position = LevelManager.playerSpawn.position;
+                else
+                    _players[i].transform.position = _playerSpawnPos;
+
 
                 //updates available classes attatched to the event
                 UpdateClassAvailabilityListeners();
