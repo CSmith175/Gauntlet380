@@ -11,3 +11,6 @@ public class PlayerClearedLevel: UnityEvent<Player[]> { }
 
 //runs when available classes are determined
 public class AvailableClassesUpdated: UnityEvent<ClassData[]> { }
+
+//runs when trying to add a player
+public class TryAddPlayer: UnityEvent<int, ClassData> { }

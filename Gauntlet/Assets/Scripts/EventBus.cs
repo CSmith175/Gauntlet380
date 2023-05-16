@@ -31,4 +31,8 @@ public static class EventBus
     //event for when the available classes for player's selection are updated
     private static AvailableClassesUpdated _availableClassesUpdatedEvent = new AvailableClassesUpdated();
     public static AvailableClassesUpdated OnAvailableClassesUpdated { get { return _availableClassesUpdatedEvent; } }
+
+    //for when trying to add a player with a specific controller ID and class
+    private static TryAddPlayer _tryAddPlayerEvent = new TryAddPlayer();
+    public static TryAddPlayer OnTryAddPlayer { get { return _tryAddPlayerEvent; } }
 }

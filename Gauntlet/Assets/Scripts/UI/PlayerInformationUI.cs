@@ -7,6 +7,8 @@ public class PlayerInformationUI : MonoBehaviour
 {
     //current state of the UI
     private PlayerUIDisplayState _state;
+    public PlayerUIDisplayState State { get { return _state; } }
+
     //player corresponds too. 
     private Player _player;
 
@@ -20,25 +22,11 @@ public class PlayerInformationUI : MonoBehaviour
     [Space(10)]
     [Tooltip("Parent Object of the Unjoined UI")] [SerializeField] private GameObject _unjoinedUI;
     [Space(5)]
-    //input detection for unjoined UI
-    private PlayerJoinInputs _playerJoinInputs;
-    public PlayerJoinInputs PlayerJoinInputs
-    {
-        get
-        {
-            if(_playerJoinInputs == null)
-            {
-                //adds unjoined inputs
-                if (!gameObject.TryGetComponent(out _playerJoinInputs))
-                    _playerJoinInputs = gameObject.AddComponent<PlayerJoinInputs>();
-            }
-            return _playerJoinInputs;
-        }
-    }
+
     //Unjoined UI display text
     [SerializeField] private Text _currentlySelectedClassText;
     //Available Classes
-    [SerializeField] private ClassData[] _availableClasses;
+    private ClassData[] _availableClasses;
 
     //tracks current selection
     private int _selectionIndex;
@@ -111,9 +99,7 @@ public class PlayerInformationUI : MonoBehaviour
                     _lightUIImages.Add(image);
         }
 
-        //adds unjoined inputs
-        if (!gameObject.TryGetComponent(out _playerJoinInputs))
-            _playerJoinInputs = gameObject.AddComponent<PlayerJoinInputs>();
+
 
     }
 
@@ -122,13 +108,13 @@ public class PlayerInformationUI : MonoBehaviour
     {
         SubscribePlayerEvents(_player, true);
         EventBus.OnAvailableClassesUpdated.AddListener(UpdateAvailableClasses);
-        PlayerJoinInputs.OnSelectScroll = UpdateCurrentSelectedClass;
+
     }
     private void OnDisable()
     {
         UnsubscribePlayerEvents(_player);
         EventBus.OnAvailableClassesUpdated.RemoveListener(UpdateAvailableClasses);
-        PlayerJoinInputs.OnSelectScroll = null;
+
     }
     #endregion
 
@@ -183,7 +169,8 @@ public class PlayerInformationUI : MonoBehaviour
 
     #region "Class Select"
     //subscribes to action on PlayerJoinInputs
-    private void UpdateCurrentSelectedClass(int select)
+
+    public void UpdateCurrentSelectedClass(int select)
     {
         if (_availableClasses != null)
         {
@@ -194,11 +181,25 @@ public class PlayerInformationUI : MonoBehaviour
             else if (_selectionIndex < 0)
                 _selectionIndex = _availableClasses.Length - 1;
 
+
             if (_currentlySelectedClassText != null && _availableClasses.Length > 0)
             {
                 _currentlySelectedClassText.text = _availableClasses[_selectionIndex].CharacterName;
             }
         }
+    }
+
+    public ClassData GetSelectedClass()
+    {
+        if(_availableClasses != null && _availableClasses.Length > 0)
+        {
+            if(_selectionIndex > 0 && _selectionIndex < _availableClasses.Length)
+            {
+                return _availableClasses[_selectionIndex];
+            }
+        }
+
+        return null;
     }
 
     #endregion

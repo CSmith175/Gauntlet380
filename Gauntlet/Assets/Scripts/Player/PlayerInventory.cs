@@ -11,7 +11,6 @@ public class PlayerInventory
     //classes using the item interface that holds functions for use when an item is used
     private Dictionary<ItemType, IInventoryItem> _inventoryItemDictionary;
 
-
     #region "Constructors"
     /// <summary>
     /// Constructor that creates an empty inventory with the default size of 12. Constructors with parameters exsist for specifying initial inventory state and size as well
