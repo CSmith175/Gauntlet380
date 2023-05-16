@@ -28,8 +28,9 @@ public class TextDisplay : MonoBehaviour
 
     [Tooltip("Min time for the narrator to change face poses")] [SerializeField] private float _minNarratorDelay;
     [Tooltip("Max time for the narrator to change face poses")] [SerializeField] private float _maxNarratorDelay;
-    float _currentTime = 0;
-    float _currentDuration = 1;
+    private float _currentTime = 0;
+    private float _currentDuration = 1;
+    private bool _talking = false;
 
 
     public void DisplayNarration(string narration)
@@ -83,12 +84,12 @@ public class TextDisplay : MonoBehaviour
 
         if(_narratorImage && _openMouth && _closedMouth)
         {
-            if(textScrolling != null)
+            if(_talking)
             {
                 if(_currentTime + _currentDuration < Time.time)
                 {
                     _currentTime = Time.time;
-                    _currentTime = Time.time + Random.Range(_minNarratorDelay, _maxNarratorDelay);
+                    _currentDuration = Random.Range(_minNarratorDelay, _maxNarratorDelay);
 
                     if (_narratorImage.sprite == _openMouth)
                         _narratorImage.sprite = _closedMouth;
@@ -110,6 +111,7 @@ public class TextDisplay : MonoBehaviour
 
     private IEnumerator DisplayNarration(string narration, float speed)
     {
+        _talking = true;
         WaitForSeconds delay = new WaitForSeconds(speed);
         textMesh.text = "";
 
@@ -120,9 +122,12 @@ public class TextDisplay : MonoBehaviour
             yield return delay;
         }
 
+        _talking = false;
+
         yield return new WaitForSeconds(narrationHangtime);
 
         textScrolling = null;
+
         if (_narrationQueue.Count > 0)
             DisplayNarration(_narrationQueue.Dequeue());
         else
