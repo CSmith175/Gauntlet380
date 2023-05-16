@@ -8,8 +8,14 @@ public class ExitLogic : MonoBehaviour
     {
         if (other.gameObject.layer == 3)
         {
+            Player player;
             Debug.Log("Player Exited");
-            GameObject.FindGameObjectWithTag("GameManager").GetComponent<LevelManager>().PlayerExited();
+            other.gameObject.TryGetComponent<Player>(out player);
+
+            if(player != null)
+            {
+                EventBus.OnPlayerClear?.Invoke(player);
+            }
         }
     }
 }

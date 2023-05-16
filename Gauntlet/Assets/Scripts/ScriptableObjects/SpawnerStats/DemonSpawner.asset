@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09075a698cf0d364283f008427a5a3bb, type: 3}
+  m_Name: DemonSpawner
+  m_EditorClassIdentifier: 
+  enemySpawnRate: 1
+  spawnerBaseHealth: 80
+  pointValue: 100
+  spawnerEnemyPrefab: {fileID: 4994326916041451396, guid: 602aa2dcc6274ad40abf3573b56ed503, type: 3}
