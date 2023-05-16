@@ -875,8 +875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unjoinedUI: {fileID: 5684581341265100045}
-  _currentlySelectedClassText: {fileID: 8654927528778065399}
-  _availableClasses: []
+  _currentlySelectedClassText: {fileID: 6769650927200315158}
   _gameUI: {fileID: 7480933597554174438}
   _scoreText: {fileID: 9004410784452012951}
   _healthText: {fileID: 9004410784297521681}

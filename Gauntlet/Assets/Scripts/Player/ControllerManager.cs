@@ -6,15 +6,19 @@ using UnityEngine.InputSystem;
 public class ControllerManager : MonoBehaviour
 {
     //staticly tracked dictionary and list for controller bindings
-    private static Dictionary<PlayerNums, Gamepad> _playerControllers = new Dictionary<PlayerNums, Gamepad>();
-    private static List<Gamepad> _inUseGamepads = new List<Gamepad>();
-    private static Dictionary<int, Gamepad> _gamePadDeviceIDs = new Dictionary<int, Gamepad>();
+    private static readonly Dictionary<PlayerNums, Gamepad> _playerControllers = new Dictionary<PlayerNums, Gamepad>();
+    private static readonly List<Gamepad> _inUseGamepads = new List<Gamepad>();
+    private static readonly Dictionary<int, Gamepad> _gamePadDeviceIDs = new Dictionary<int, Gamepad>();
 
+    //staticaly tracked information for player selection controller bindings
+    private static readonly Dictionary<int, PlayerInformationUI> _playerSelectBindings = new Dictionary<int, PlayerInformationUI>();
+    private static readonly List<PlayerInformationUI> _boundUI = new List<PlayerInformationUI>();
 
     //private variables
     private static Gamepad _currentController;
     private static Gamepad _checkingController;
     private static Vector2 _currentMovementVector = new Vector2();
+    private static PlayerInformationUI _currentInformationUI;
 
     #region "Controller Binding Functions
 
@@ -26,6 +30,7 @@ public class ControllerManager : MonoBehaviour
     {
         //removes potential current controller binding
         UnbindPlayerController(playerNum);
+
 
         //gets the first available controller on Gamepad.all
         foreach (Gamepad gamePad in Gamepad.all)
@@ -49,6 +54,8 @@ public class ControllerManager : MonoBehaviour
     {
         //removes potential current controller binding
         UnbindPlayerController(playerNum);
+        //unbinds potential player selection binding
+        UnbindInactivePlayerJoinController(gamePad.deviceId);
 
         //adds specific gamepad to bindings
         if(!_inUseGamepads.Contains(gamePad))
@@ -82,6 +89,38 @@ public class ControllerManager : MonoBehaviour
 
             _playerControllers.Remove(playerNum);
         }
+    }
+
+    //for "inactive" controllers (Player Joining)
+    /// <summary>
+    /// Binds a controller for use in player selection
+    /// </summary>
+    /// <param name="deviceID"> ID of the controller </param>
+    /// <param name="joinInputs"> attatcked JoinInputs instance </param>
+    public static void BindInactivePlayerJoinController(int deviceID, PlayerInformationUI playerUI)
+    {
+        if(playerUI != null && !_playerSelectBindings.ContainsKey(deviceID))
+        {
+            _playerSelectBindings.Add(deviceID, playerUI);
+            _boundUI.Add(playerUI);
+        }
+
+    }
+
+    /// <summary>
+    /// Removes the inactive binding for use in player selection
+    /// </summary>
+    /// <param name="deviceID"> ID of the controller </param>
+    public static void UnbindInactivePlayerJoinController(int deviceID)
+    {
+        if (_playerSelectBindings.ContainsKey(deviceID))
+        {
+            _playerSelectBindings.TryGetValue(deviceID, out _currentInformationUI);
+            _boundUI.Remove(_currentInformationUI);
+
+            _playerSelectBindings.Remove(deviceID);
+        }
+
     }
 
     #endregion
@@ -156,12 +195,47 @@ public class ControllerManager : MonoBehaviour
         return false;
     }
 
+    //for "inactive" controllers (Player Joining)
+
+    /// <summary>
+    /// Checks if a controller is in use by one of the players currently in-game
+    /// </summary>
+    /// <param name="deviceID"> device ID of the controller being tested </param>
+    /// <returns> true if controller is in use, false if it's not </returns>
     public static bool CheckControllerActive(int deviceID)
     {
         if(_gamePadDeviceIDs.TryGetValue(deviceID, out _currentController))
         {
             return true;
         }
+
+        return false;
+    }
+
+    public static bool CheckControllerPlayerSelect(int deviceID)
+    {
+        if (_playerSelectBindings.TryGetValue(deviceID, out _currentInformationUI))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static PlayerInformationUI TryGetPlayerSelectBinding(int deviceID)
+    {
+        if(_playerSelectBindings.TryGetValue(deviceID, out _currentInformationUI))
+        {
+            return _currentInformationUI;
+        }
+
+        return null;
+    }
+
+    public static bool CheckIfUIBound(PlayerInformationUI playerUI)
+    {
+        if (_boundUI.Contains(playerUI))
+            return true;
 
         return false;
     }

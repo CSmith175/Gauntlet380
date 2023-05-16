@@ -56,7 +56,7 @@ public class Player : MonoBehaviour, IGameEntity
     #endregion
 
     //Replacment for a constructor
-    public void InitilizePlayer(int controllerNumber, ClassData classData)
+    public void InitilizePlayer(int controllerNumber, ClassData classData, int controllerID)
     {
         _classData = classData;
 
@@ -72,14 +72,14 @@ public class Player : MonoBehaviour, IGameEntity
         {
             if (component is PlayerControls)
             {
-                SetUpPlayerMovement(component as PlayerControls, controllerNumber);
+                SetUpPlayerMovement(component as PlayerControls, controllerNumber, controllerID);
                 playerControlsInitilized = true;
             }
         }
 
         if(!playerControlsInitilized)
         {
-            SetUpPlayerMovement(null, controllerNumber);
+            SetUpPlayerMovement(null, controllerNumber, controllerID);
         }
     }
 
@@ -105,17 +105,17 @@ public class Player : MonoBehaviour, IGameEntity
     /// Sets up Player Controls monobehavior. Resets one if its passed in, otherwise attatches a new one
     /// </summary>
     /// <param name="controls"> pass in a controls here to reset it instead of creating a new one </param>
-    private void SetUpPlayerMovement(PlayerControls controls, int controllerNumber)
+    private void SetUpPlayerMovement(PlayerControls controls, int controllerNumber, int controllerID)
     {
         _controllerNumber = controllerNumber; //sets the held controller number
 
         if (controls) //resets a currently exsisting controls
         {
-            controls.InitilizePlayer(controllerNumber, this);
+            controls.InitilizePlayer(controllerNumber, this, controllerID);
         }
         else //creates a new controls and sets it up
         {
-            gameObject.AddComponent<PlayerControls>().InitilizePlayer(controllerNumber, this);
+            gameObject.AddComponent<PlayerControls>().InitilizePlayer(controllerNumber, this, controllerID);
 
         }
     }

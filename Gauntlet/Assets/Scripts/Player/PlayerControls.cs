@@ -203,18 +203,19 @@ public class PlayerControls : MonoBehaviour
 
     #region "Initilization Related"
 
-    public void InitilizePlayer(int controllerNumber, Player player)
+    public void InitilizePlayer(int controllerNumber, Player player, int controllerID)
     {
         InitilizeInputAction();
 
         _controllerNumber = Mathf.Clamp(controllerNumber, 1, 4);
-        DeterminePlayerAction(_controllerNumber);
+        DeterminePlayerAction(_controllerNumber, controllerID);
         attatchedPlayer = player;
 
         OnEnable();
     }
 
-    private void DeterminePlayerAction(int playerNumber)
+
+    private void DeterminePlayerAction(int playerNumber, int controllerID)
     {
         if (_playerActionMap == null)
         {
@@ -223,8 +224,21 @@ public class PlayerControls : MonoBehaviour
 
         playerNumber = Mathf.Clamp(playerNumber, 1, 4);
 
-        //determines controller
-        ControllerManager.BindRandomAvailableControllerToPlayer((PlayerNums)playerNumber);
+        Gamepad gamepad = null;
+        foreach (Gamepad pad in Gamepad.all)
+        {
+            if(pad.deviceId == controllerID)
+            {
+                gamepad = pad;
+            }
+        }
+
+        if(gamepad != null)
+        {
+            //determines controller
+            ControllerManager.BindSpecificAvailableControllerToPlayer((PlayerNums)playerNumber, gamepad);
+        }
+
     }
 
     private void InitilizeInputAction() //initilizes the action map

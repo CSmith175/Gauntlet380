@@ -28,11 +28,13 @@ public class PlayerManager : MonoBehaviour
     {
         EventBus.OnPlayerClear.AddListener(CheckForAllPlayersClear);
         EventBus.OnPlayerDied.AddListener(CheckForAllPlayersDead);
+        EventBus.OnTryAddPlayer.AddListener(AddPlayer);
     }
     private void OnDisable()
     {
         EventBus.OnPlayerClear.RemoveListener(CheckForAllPlayersClear);
         EventBus.OnPlayerDied.RemoveListener(CheckForAllPlayersDead);
+        EventBus.OnTryAddPlayer.RemoveListener(AddPlayer);
     }
     #endregion
 
@@ -94,14 +96,17 @@ public class PlayerManager : MonoBehaviour
         Debug.LogError("Couldn't Select a class in SelectRandomClassFromAvailable()");
         return null;
     }
+
     #endregion
 
     #region "Player Adding/Dropping"
     /// <summary>
-    /// Adds a player and feeds through inputted class data
+    /// Adds a player and feeds through inputted class data, random controller
     /// </summary>
     /// <param name="playerClass"> Class of the new player </param>
-    private void AddPlayer(ClassData playerClass)
+
+
+    private void AddPlayer(int controllerID, ClassData playerClass)
     {
         if (!playerClass)
             Debug.LogError("No playerclass found when trying to add a player");
@@ -117,7 +122,7 @@ public class PlayerManager : MonoBehaviour
             {
                 _players[i] = playerClass.SpawnClassPrefab().AddComponent<Player>();
                 _players[i].gameObject.name = ("Player" + (i + 1) + " : " + playerClass.name);
-                _players[i].InitilizePlayer(DetermineControllerNumber(), playerClass);
+                _players[i].InitilizePlayer(DetermineControllerNumber(), playerClass, controllerID);
                 _players[i].transform.position = _playerSpawnPos; //lazy way of setting to a spawn position. convert to a function later
                 //updates available classes attatched to the event
                 UpdateClassAvailabilityListeners();
@@ -129,6 +134,8 @@ public class PlayerManager : MonoBehaviour
         //publishes event
         EventBus.OnPlayerChanged?.Invoke(_players);
     }
+
+
     /// <summary>
     /// Drops a player from the game
     /// </summary>
@@ -247,17 +254,17 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region "Events"
-    private void CheckForAllPlayersDead(Player[] players)
+    private void CheckForAllPlayersDead(Player player)
     {
         Debug.Log("Checking Players Death States ...");
 
-        if(players != null)
+        if(_players != null)
         {
-            for (int i = 0; i < players.Length; i++)
+            for (int i = 0; i < _players.Length; i++)
             {
-                if(players[i] != null)
+                if(_players[i] != null)
                 {
-                    if(players[i].PlayerStats.GetPlayerStat(PlayerStatCategories.Health) > 0)
+                    if(_players[i].PlayerStats.GetPlayerStat(PlayerStatCategories.Health) > 0)
                     {
                         return;
                     }
@@ -268,18 +275,18 @@ public class PlayerManager : MonoBehaviour
             EventBus.OnAllPlayersDead?.Invoke();
         }
     }
-    private void CheckForAllPlayersClear(Player[] players)
+    private void CheckForAllPlayersClear(Player player)
     {
         Debug.Log("Checking Players Clear States ...");
 
         //assumes players are set to inactive when they clear
-        if (players != null)
+        if (_players != null)
         {
-            for (int i = 0; i < players.Length; i++)
+            for (int i = 0; i < _players.Length; i++)
             {
-                if (players[i] != null)
+                if (_players[i] != null)
                 {
-                    if (players[i].gameObject.activeSelf)
+                    if (_players[i].gameObject.activeSelf)
                     {
                         return;
                     }
@@ -292,56 +299,4 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
-    //for debugging
-    private void OnGUI()
-    {
-        //adding players debugging
-        if(GUI.Button(new Rect(10 ,Screen.height - 50, 80, 20), "Add Player"))
-        {
-            AddPlayer(SelectRandomClassFromAvailable());
-        }
-        //removing players debugging
-        if(_players != null && _players.Length == 4)
-        {
-            if (_players[0])
-            {
-                if(GUI.Button(new Rect(10, Screen.height - 80, 200, 20), "Drop Player 1"))
-                {
-                    DropPlayer(1);
-                }
-                if (GUI.Button(new Rect(220, Screen.height - 80, 200, 20), "Drain Player Health by 250"))
-                {
-                    _players[0].PlayerStats.IncrementPlayerStat(PlayerStatCategories.Health, -250);
-                }
-                if (GUI.Button(new Rect(430, Screen.height - 80, 200, 20), "Add to Player Score by 100"))
-                {
-                    _players[0].PlayerStats.IncrementPlayerStat(PlayerStatCategories.Score, 100);
-                }
-
-            }
-            if (_players[1])
-            {
-                if (GUI.Button(new Rect(10, Screen.height - 110, 200, 20), "Drop Player 2"))
-                {
-                    DropPlayer(2);
-                }
-            }
-            if (_players[2])
-            {
-                if (GUI.Button(new Rect(10, Screen.height - 140, 200, 20), "Drop Player 3"))
-                {
-                    DropPlayer(3);
-                }
-            }
-            if (_players[3])
-            {
-                if (GUI.Button(new Rect(10, Screen.height - 170, 200, 20), "Drop Player 4"))
-                {
-                    DropPlayer(4);
-                }
-            }
-        }
-
-
-    }
 }
