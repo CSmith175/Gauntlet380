@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: GruntSpawner
   m_EditorClassIdentifier: 
   enemySpawnRate: 1
-  spawnerBaseHealth: 5
+  spawnerBaseHealth: 30
+  pointValue: 50
   spawnerEnemyPrefab: {fileID: 539866322847213443, guid: 117f144d32c747044acb9f80f855cf2c, type: 3}

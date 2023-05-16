@@ -9,6 +9,7 @@ public class EnemyParent : MonoBehaviour, IEnemy
         get { return ProjectileSourceType.Enemy; }
     }
 
+    public bool isVisible = false;
     public EnemyStats stats;
     public LayerMask playerLayerMask = 3;
 
@@ -16,6 +17,7 @@ public class EnemyParent : MonoBehaviour, IEnemy
 
     private Rigidbody rb;
     private float detectionRange = 100f;
+    private int currentHP;
     protected bool chasingPlayer = false;
 
     private void Awake()
@@ -25,12 +27,23 @@ public class EnemyParent : MonoBehaviour, IEnemy
 
     protected void OnEnable()
     {
+        currentHP = stats.enemyMaxHealth;
         InvokeRepeating("MoveTowardsNearestPlayer", 0.3f, 0.3f);
     }
 
     protected void OnDisable()
     {
         CancelInvoke("MoveTowardsNearestPlayer");
+    }
+
+    //Flips bool for when the enemy is visible to the main camera
+    private void OnBecameVisible()
+    {
+        isVisible = true;
+    }
+    private void OnBecameInvisible()
+    {
+        isVisible = false;
     }
 
     protected virtual void MoveTowardsNearestPlayer()
@@ -81,6 +94,11 @@ public class EnemyParent : MonoBehaviour, IEnemy
 
     public void ReactToShot(int shotDamage, GameObject shotSourceEntity)
     {
-        //Take damage from the player
+        currentHP -= shotDamage;
+        if (currentHP <= 0)
+        {
+            OnDeath();
+            shotSourceEntity.GetComponent<Player>().PlayerStats.IncrementPlayerStat(PlayerStatCategories.Score, stats.enemyPointValue);
+        }
     }
 }

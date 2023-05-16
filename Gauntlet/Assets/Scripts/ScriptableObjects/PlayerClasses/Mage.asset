@@ -18,8 +18,8 @@ MonoBehaviour:
   _baseMoveSpeed: 450
   _baseShotAttack: 10
   _baseShotDowntime: 0.35
-  _baseMeleeAttack: 0
-  _baseMagicAttack: 0
+  _baseMeleeAttack: 5
+  _baseMagicAttack: 80
   _baseDefense: 0
   _baseShotSpeed: 22
   _baseHealth: 1200

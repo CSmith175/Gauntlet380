@@ -16,6 +16,6 @@ public class MeleeEnemy : EnemyParent
     protected virtual void AttackPlayer(Player player)
     {
         //Take the player reference and deal damage to that specifc player
-            //player.ReactToShot(stats.enemyMeleeDamage);
+        player.ReactToShot(stats.enemyMeleeDamage, gameObject);
     }
 }

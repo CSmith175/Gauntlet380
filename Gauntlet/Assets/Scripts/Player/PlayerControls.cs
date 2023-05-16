@@ -172,6 +172,7 @@ public class PlayerControls : MonoBehaviour
             if (attatchedPlayer.PlayerInventory != null)
             {
                 PotionInventoryItem._potionDamage = (int)attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.MagicDamage);
+                PotionInventoryItem._sourceEntity = gameObject;
                 attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Potion);
             }
 

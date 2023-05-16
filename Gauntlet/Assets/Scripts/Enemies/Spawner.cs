@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviour, IGameEntity
 {
     public SpawnerStats spawnerStats;
 
     private Vector3 spawnBoxHalfSize = new Vector3(0.45f, 0.45f, 0.45f);
     private bool enemySpawned = false;
+    private int currentHealth;
+    public bool isVisible = false;
 
-
-    private void Start()
+    public ProjectileSourceType EntityType
     {
-        ObjectPooling.MakeNewObjectPool(spawnerStats.spawnerEnemyPrefab);
+        get { return ProjectileSourceType.Enemy; }
     }
 
     private void OnEnable()
     {
+        currentHealth = (int)spawnerStats.spawnerBaseHealth;
         ObjectPooling.MakeNewObjectPool(spawnerStats.spawnerEnemyPrefab);
         InvokeRepeating("SpawnEnemy", spawnerStats.enemySpawnRate, spawnerStats.enemySpawnRate);
     }
@@ -25,6 +27,15 @@ public class Spawner : MonoBehaviour
     private void OnDisable()
     {
         CancelInvoke("SpawnEnemy");
+    }
+
+    private void OnBecameVisible()
+    {
+        isVisible = true;
+    }
+    private void OnBecameInvisible()
+    {
+        isVisible = false;
     }
 
     private void SpawnEnemy()
@@ -46,7 +57,7 @@ public class Spawner : MonoBehaviour
                 originalOffset.x++;
                 if(!Physics.CheckBox(originalOffset, spawnBoxHalfSize))
                 {
-                    Debug.Log("Pulling object from pool");
+                    //Debug.Log("Pulling object from pool");
                     GameObject enemy = ObjectPooling.PullObjectFromPool(spawnerStats.spawnerEnemyPrefab);
                     if(enemy != null)
                     {
@@ -56,6 +67,22 @@ public class Spawner : MonoBehaviour
                     return;
                 }
             }
+        }
+    }
+
+    public void ReactToShot(int shotDamage, GameObject shotSourceEntity)
+    {
+        currentHealth -= shotDamage;
+        if(currentHealth <= 0)
+        {
+            Player killingPlayer;
+            shotSourceEntity.TryGetComponent<Player>(out killingPlayer);
+            if(killingPlayer != null)
+            {
+                killingPlayer.PlayerStats.IncrementPlayerStat(PlayerStatCategories.Score, spawnerStats.pointValue);
+            }
+
+            gameObject.SetActive(false);
         }
     }
 }
