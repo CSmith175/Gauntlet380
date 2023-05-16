@@ -32,6 +32,7 @@ public class LevelManager: MonoBehaviour
     }
     private void LoadNextLevel()
     {
+        Debug.Log("Loading Next Level");
         currentLevel++;
         if(currentLevel >= levels.Length)
         {
@@ -54,6 +55,7 @@ public class LevelManager: MonoBehaviour
             enemy.gameObject.SetActive(false);
         }
 
+        Debug.Log("Loading level: " + currentLevel);
         levels[level].SetActive(true);
     }
 

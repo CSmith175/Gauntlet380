@@ -61,7 +61,7 @@ public class ObjectPooling : MonoBehaviour
     //Returns an object if it has a current pool
     public static GameObject PullObjectFromPool(GameObject go)
     {
-        Debug.Log("Pulling " + go.name);
+        //Debug.Log("Pulling " + go.name);
         if (objectPools.ContainsKey(go.name))
         {
             List<GameObject> tempList = new List<GameObject>();

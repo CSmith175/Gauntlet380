@@ -14,7 +14,8 @@ public class ExitLogic : MonoBehaviour
 
             if(player != null)
             {
-                //EventBus.OnPlayerClear?.Invoke(player);
+                player.gameObject.SetActive(false);
+                EventBus.OnPlayerClear?.Invoke(player);
             }
         }
     }
