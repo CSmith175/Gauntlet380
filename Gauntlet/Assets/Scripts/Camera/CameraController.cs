@@ -228,8 +228,20 @@ public class CameraController: MonoBehaviour
     private PlayerPositionDistance[] CaculateLargestPlayerDistance(Transform[] playerTransforms)
     {
         List<PlayerPositionDistance> distances = new List<PlayerPositionDistance>();
-        Vector3 centerPoint = Vector3.zero; 
 
+        //Vector3 centerPoint = Vector3.zero; 
+
+        Vector3 centerPoint = Vector3.zero;
+
+        if(_playerTransforms != null)
+        {
+            for (int i = 0; i < _playerTransforms.Length; i++)
+            {
+                centerPoint += _playerTransforms[i].position;
+            }
+
+            centerPoint /= _playerTransforms.Length;
+        }
 
         for (int i = 0; i < playerTransforms.Length; i++)
         {

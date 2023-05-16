@@ -148,6 +148,7 @@ public class PlayerInformationUIManager : MonoBehaviour
 
                     if (data && _currentUIInformation.boundGamePad != null)
                     {
+
                         EventBus.OnTryAddPlayer?.Invoke(data, _currentUIInformation.boundGamePad);
 
                         _currentUIInformation.isSelectionBoundToController = false;

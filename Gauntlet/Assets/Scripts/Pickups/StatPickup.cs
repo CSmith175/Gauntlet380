@@ -18,6 +18,11 @@ public class StatPickup : MonoBehaviour
             if(player != null)
             {
                 player.PlayerStats.IncrementPlayerStat(statPowerUp, powerUpAmount);
+
+                player.NarrationController.CreatePlayerNamePairing(player.ClassData);
+                player.NarrationController.CreateStatPairing(statPowerUp);
+                player.NarrationController.TriggerNarration(NarrationType.StatBoostPickedUp);
+
                 gameObject.SetActive(false);
             }
         }

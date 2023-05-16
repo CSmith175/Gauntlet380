@@ -26,6 +26,9 @@ public class PlayerManager : MonoBehaviour
     {
         if(_classes != null)
             EventBus.OnAvailableClassesUpdated?.Invoke(_classes);
+
+        //easy way to do health drain over time
+        InvokeRepeating(nameof(DrainPlayerHealth), 5f, 0.5f);
     }
 
 
@@ -50,6 +53,7 @@ public class PlayerManager : MonoBehaviour
         EventBus.OnPlayerClear.RemoveListener(PlayerExitNarration);
         EventBus.OnPlayerDied.RemoveListener(PlayerDiedNarration);
     }
+
     #endregion
 
     #region "Player Class(wizard/elf, etc.) Related
@@ -96,6 +100,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (_players[i] == null)
             {
+
                 _players[i] = playerClass.SpawnClassPrefab().AddComponent<Player>();
 
                 //controller binding
@@ -339,7 +344,20 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
     #endregion
+
+    private void DrainPlayerHealth()
+    {
+        if(_players != null)
+        {
+            for (int i = 0; i < _players.Length; i++)
+            {
+                if(_players[i] != null)
+                {
+                    _players[i].PlayerStats.IncrementPlayerStat(PlayerStatCategories.Health, -1);
+                }
+            }
+        }
+    }
 
 }

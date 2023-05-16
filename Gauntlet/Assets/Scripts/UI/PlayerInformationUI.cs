@@ -196,7 +196,7 @@ public class PlayerInformationUI : MonoBehaviour
     {
         if(_availableClasses != null && _availableClasses.Length > 0)
         {
-            if(_selectionIndex > 0 && _selectionIndex < _availableClasses.Length)
+            if(_selectionIndex >= 0 && _selectionIndex < _availableClasses.Length)
             {
                 return _availableClasses[_selectionIndex];
             }
