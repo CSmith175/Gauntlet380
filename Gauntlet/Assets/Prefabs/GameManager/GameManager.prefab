@@ -71,10 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39480a2fd33c162429f34778d9e501f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels:
-  - {fileID: 4117298369476911794, guid: 854c3fac589f67f4eb078e1b79d074bb, type: 3}
-  - {fileID: 2034723742131218934, guid: 15a42928f721a8d46bc084e5628c3c27, type: 3}
-  - {fileID: 6314299640439792683, guid: 028be3e8727cd8e44a123badbb7f90bd, type: 3}
+  levels: []
   gameOverCanvas: {fileID: 2255161065193617817, guid: 208b3d569a9653345a60de52a98e3a11, type: 3}
   startCanvas: {fileID: 4143778711607421589, guid: e0af4ed2e66ae2b4494f0f801818f23b, type: 3}
 --- !u!114 &7233842272821913984
