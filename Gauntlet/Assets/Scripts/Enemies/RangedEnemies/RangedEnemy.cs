@@ -25,6 +25,7 @@ public class RangedEnemy : EnemyParent
     {
         base.OnDisable();
         CancelInvoke("CheckEngagementDistance");
+        CancelInvoke("StopAndShoot");
     }
 
     private void CheckEngagementDistance()

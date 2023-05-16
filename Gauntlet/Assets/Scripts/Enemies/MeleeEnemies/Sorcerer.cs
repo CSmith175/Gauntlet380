@@ -7,6 +7,11 @@ public class Sorcerer : MeleeEnemy
     public float minimumDisappearCooldown = 1.0f;
     public float maximumDisappearCooldown = 3.0f;
 
+    private void OnDisable()
+    {
+        CancelInvoke("Disappear");
+    }
+
     private void Start()
     {
         InvokeRepeating("Disappear", minimumDisappearCooldown, Random.Range(minimumDisappearCooldown, maximumDisappearCooldown));
