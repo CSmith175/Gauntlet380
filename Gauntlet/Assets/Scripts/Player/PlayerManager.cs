@@ -259,6 +259,24 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
+    #region "Utility Functions
+    /// <summary>
+    /// Sets All avaiable players acvive to the inputted state
+    /// </summary>
+    /// <param name="state"> all players active(true)? or inactive(false)? </param>
+    public void SetActiveAllPlayers(bool state)
+    {
+        if(_players != null)
+        {
+            for (int i = 0; i < _players.Length; i++)
+            {
+                if (_players[i] != null)
+                    _players[i].gameObject.SetActive(state);
+            }
+        }
+    }
+    #endregion
+
     #region "Events"
     private void CheckForAllPlayersDead(Player player)
     {
