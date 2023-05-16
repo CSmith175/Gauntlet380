@@ -107,6 +107,19 @@ public class PlayerInventory
                     //emptys item slot and formats inventory
                     _inventoryItems[i] = ItemType.Empty;
                     FormatInventory();
+
+                    //narration
+                    _attatchedPlayer.NarrationController.CreatePlayerNamePairing(_attatchedPlayer.ClassData);
+                    switch (type)
+                    {
+                        case ItemType.Potion:
+                            _attatchedPlayer.NarrationController.TriggerNarration(NarrationType.PotionUsed);
+                            break;
+                        case ItemType.Key:
+                            _attatchedPlayer.NarrationController.TriggerNarration(NarrationType.KeyUsed);
+                            break;
+                    }
+
                     return true;
                 }
             }
