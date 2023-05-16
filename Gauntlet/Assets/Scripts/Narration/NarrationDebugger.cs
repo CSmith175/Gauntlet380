@@ -19,6 +19,7 @@ public class NarrationDebugger : MonoBehaviour
 
     private void OnGUI()
     {
+        GUILayout.BeginArea(new Rect(0, Screen.height / 2, 400, Screen.height / 2)); 
         GUILayout.BeginVertical();
         foreach (int value in Enum.GetValues(typeof(NarrationType)))
         {
@@ -29,6 +30,7 @@ public class NarrationDebugger : MonoBehaviour
             }
         }
         GUILayout.EndVertical();
+        GUILayout.EndArea();
     }
 
     //initilized 2 into each
