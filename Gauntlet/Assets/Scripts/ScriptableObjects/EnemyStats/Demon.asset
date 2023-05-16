@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f348b75880791c04d9142a959c21c623, type: 3}
   m_Name: Demon
   m_EditorClassIdentifier: 
-  enemyMoveSpeed: 400
+  enemyName: 
+  enemyMoveSpeed: 300
   enemyMeleeDamage: 1
   enemyShotDamage: 3
   enemyEngageDistance: 10
   enemyPointValue: 1
-  enemyMaxHealth: 3
+  enemyMaxHealth: 10

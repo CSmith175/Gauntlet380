@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f348b75880791c04d9142a959c21c623, type: 3}
   m_Name: Ghost
   m_EditorClassIdentifier: 
-  enemyMoveSpeed: 300
+  enemyName: 
+  enemyMoveSpeed: 400
   enemyMeleeDamage: 15
   enemyShotDamage: 0
   enemyEngageDistance: 0

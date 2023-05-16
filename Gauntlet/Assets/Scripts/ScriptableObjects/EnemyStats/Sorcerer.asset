@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f348b75880791c04d9142a959c21c623, type: 3}
   m_Name: Sorcerer
   m_EditorClassIdentifier: 
+  enemyName: 
   enemyMoveSpeed: 350
   enemyMeleeDamage: 10
   enemyShotDamage: 0
   enemyEngageDistance: 0
   enemyPointValue: 50
-  enemyMaxHealth: 3
+  enemyMaxHealth: 15

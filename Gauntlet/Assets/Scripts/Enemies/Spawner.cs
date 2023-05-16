@@ -58,11 +58,14 @@ public class Spawner : MonoBehaviour, IGameEntity
                 if(!Physics.CheckBox(originalOffset, spawnBoxHalfSize))
                 {
                     //Debug.Log("Pulling object from pool");
-                    GameObject enemy = ObjectPooling.PullObjectFromPool(spawnerStats.spawnerEnemyPrefab);
-                    if(enemy != null)
+                    if(spawnerStats.spawnerEnemyPrefab != null)
                     {
-                        enemy.transform.position = originalOffset;
-                        enemySpawned = true;
+                        GameObject enemy = ObjectPooling.PullObjectFromPool(spawnerStats.spawnerEnemyPrefab);
+                        if(enemy != null)
+                        {
+                            enemy.transform.position = originalOffset;
+                            enemySpawned = true;
+                        }
                     }
                     return;
                 }

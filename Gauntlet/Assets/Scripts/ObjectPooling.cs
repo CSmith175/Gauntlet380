@@ -33,7 +33,7 @@ public class ObjectPooling : MonoBehaviour
             temp.SetActive(false);
             list.Add(temp);
         }
-
+        DontDestroyOnLoad(specificPool);
         objectPools.Add(go.name, list);
     }
 
@@ -55,6 +55,7 @@ public class ObjectPooling : MonoBehaviour
             temp.SetActive(false);
             list.Add(temp);
         }
+        DontDestroyOnLoad(specificPool);
         objectPools.Add(go.name, list);
     }
 
@@ -96,7 +97,7 @@ public class ObjectPooling : MonoBehaviour
         else
         {
             MakeNewObjectPool(go);
-            return null;
+            return PullObjectFromPool(go);
         }
     }
 }

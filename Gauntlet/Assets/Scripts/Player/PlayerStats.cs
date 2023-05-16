@@ -47,7 +47,7 @@ public class PlayerStats
             case PlayerStatCategories.Score:
                 _currentStats.score += increment;
                 //prevents negative values
-                _currentStats.health = Mathf.Max(0, _currentStats.score);
+                _currentStats.score = Mathf.Max(0, _currentStats.score);
                 //fires event on attatched player
                 _attatchedPlayer.OnScoreUpdate?.Invoke(_currentStats.score);
                 break;

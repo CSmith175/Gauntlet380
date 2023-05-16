@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangedEnemy : EnemyParent
 {
     public GameObject projectilePrefab;
-    protected float rangedAttackSpeed = 2f;
+    protected float rangedAttackSpeed = .5f;
     protected GameObject projectile;
 
     private bool shooting = false;

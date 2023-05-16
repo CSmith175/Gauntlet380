@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeEnemy : EnemyParent
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.layer == 3)
         {
@@ -15,7 +15,13 @@ public class MeleeEnemy : EnemyParent
 
     protected virtual void AttackPlayer(Player player)
     {
-        //Take the player reference and deal damage to that specifc player
-        player.ReactToShot(stats.enemyMeleeDamage, gameObject);
+        if (attacking)
+            return;
+        else
+        {
+            StartCoroutine(AttackCooldown());
+            //Take the player reference and deal damage to that specifc player
+            player.ReactToShot(stats.enemyMeleeDamage, gameObject);
+        }
     }
 }

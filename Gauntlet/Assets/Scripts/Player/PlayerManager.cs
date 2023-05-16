@@ -285,6 +285,7 @@ public class PlayerManager : MonoBehaviour
 
         if(_players != null)
         {
+            Debug.Log("Current players: " + _players[0].gameObject.name);
             for (int i = 0; i < _players.Length; i++)
             {
                 if(_players[i] != null)

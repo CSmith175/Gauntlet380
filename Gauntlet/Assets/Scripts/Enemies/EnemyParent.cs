@@ -18,6 +18,7 @@ public class EnemyParent : MonoBehaviour, IEnemy
     private Rigidbody rb;
     private float detectionRange = 100f;
     private int currentHP;
+    protected bool attacking = false;
     protected bool chasingPlayer = false;
 
     private void Awake()
@@ -85,6 +86,12 @@ public class EnemyParent : MonoBehaviour, IEnemy
             rb.velocity = transform.forward * stats.enemyMoveSpeed * Time.deltaTime;
         else
             rb.velocity = Vector3.zero;
+    }
+
+    protected IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(1.5f);
+        attacking = false;
     }
 
     public void OnDeath()

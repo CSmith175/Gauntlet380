@@ -132,6 +132,11 @@ public class Player : MonoBehaviour, IGameEntity
     public void ReactToShot(int shotDamage, GameObject shotSourceEntity)
     {
         _playerStats.IncrementPlayerStat(PlayerStatCategories.Health, -shotDamage);
+        if(_playerStats.GetPlayerStat(PlayerStatCategories.Health) <= 0)
+        {
+            EventBus.OnPlayerDied?.Invoke(this);
+            gameObject.SetActive(false);
+        }
     }
 
     #endregion

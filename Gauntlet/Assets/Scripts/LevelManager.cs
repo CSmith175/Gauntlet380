@@ -30,7 +30,7 @@ public class LevelManager: MonoBehaviour
         currentLevel = 0;
         gameOverCanvas.SetActive(false);
         startCanvas.SetActive(true);
-        LoadLevel(currentLevel);
+        //LoadLevel(currentLevel);
     }
     private void LoadNextLevel()
     {
@@ -76,6 +76,7 @@ public class LevelManager: MonoBehaviour
     public void StartGame()
     {
         startCanvas.SetActive(false);
+        LoadLevel(currentLevel);
     }
 
     public void RestartGame()
@@ -85,6 +86,7 @@ public class LevelManager: MonoBehaviour
 
     private void DisplayGameOver()
     {
+        Debug.Log("Displaying Game Over");
         gameOverCanvas.SetActive(true);
     }
 
