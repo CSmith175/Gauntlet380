@@ -1,4 +1,5 @@
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 //runs when a player joins or leaves, used primarily for updating UI
 public class PlayersChanged : UnityEvent<Player[]> { }
@@ -13,4 +14,4 @@ public class PlayerClearedLevel: UnityEvent<Player> { }
 public class AvailableClassesUpdated: UnityEvent<ClassData[]> { }
 
 //runs when trying to add a player
-public class TryAddPlayer: UnityEvent<int, ClassData> { }
+public class TryAddPlayer: UnityEvent<ClassData, Gamepad> { }

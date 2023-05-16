@@ -14,8 +14,8 @@ public class PlayerInformationUIManager : MonoBehaviour
     private GameObject _currentPlayerInformationObj;
     private PlayerInformationUI _currentUIInformation;
 
-    //for join input
-    private PlayerActionMap _actionmap;
+    //gamepads
+    private Dictionary<Gamepad, PlayerInformationUI> _controlBindings = new Dictionary<Gamepad, PlayerInformationUI>();
 
     #region "Unity Functions"
     //sets up player UI
@@ -27,54 +27,53 @@ public class PlayerInformationUIManager : MonoBehaviour
     //subscribes to event bus event for when players join and leave, annd join inputs
     private void OnEnable()
     {
-        EventBus.OnPlayerChanged.AddListener(FigureOutPlayers);
+        //controller stuff
+        ControllerManager.unboundGamePadPressed += BindUnboundControllerToSelection;
 
-        if (_actionmap == null)
-        {
-            _actionmap = new PlayerActionMap();
-        }
 
-        _actionmap.Enable();
+        ControllerManager.selectionPadPressed += ClassScroll;
+        ControllerManager.selectionPadPressed += ClassSelect;
+
     }
     private void OnDisable()
     {
-        EventBus.OnPlayerChanged.RemoveListener(FigureOutPlayers);
+        //controller stuff
+        ControllerManager.unboundGamePadPressed -= BindUnboundControllerToSelection;
 
-        if (_actionmap != null)
-        {
-            _actionmap.Disable();
-        }
+        ControllerManager.selectionPadPressed -= ClassScroll;
+        ControllerManager.selectionPadPressed -= ClassSelect;
     }
 
-    private void Start()
-    {
-        if (_actionmap != null)
-        {
-            _actionmap.PlayerMovement.ControllerButtonsClassScroll.performed += context => ClassScroll(context);
-            _actionmap.PlayerMovement.ControllerButtonsClassSelect.performed += context => ClassSelect(context);
-        }
-    }
 
     #endregion
 
     #region "Event Subscription Functions"
-    private void FigureOutPlayers(Player[] players)
+    private void BindUnboundControllerToSelection(Gamepad gamepad)
     {
-        if (players != null && _playerUIInformations != null)
+        GamePadState gamePadstate = ControllerManager.TryGetGamepadState(gamepad);
+        if(gamePadstate != null && _playerUIInformations != null)
         {
-
-            for (int i = 0; i < players.Length && i < _playerUIInformations.Length; i++)
+            for (int i = 0; i < _playerUIInformations.Length; i++)
             {
-                if(players[i] != null)
+                //gets first Unjoined UI
+                if (_playerUIInformations[i].State == PlayerUIDisplayState.Unjoined && _playerUIInformations[i].isSelectionBoundToController == false)
                 {
-                    _playerUIInformations[i].UpdateUIState(PlayerUIDisplayState.Game, players[i]);
-                    _playerUIInformations[i].SetUIFromCharacter(players[i]);
-                }
-                else
-                {
-                    _playerUIInformations[i].UpdateUIState(PlayerUIDisplayState.Unjoined, null);
-                }
+                    gamePadstate.attatchedSelectionUI = _playerUIInformations[i];
+                    gamePadstate.gamePadMode = GamePadMode.SelectScreen;
 
+                    _playerUIInformations[i].isSelectionBoundToController = true;
+                    _playerUIInformations[i].boundGamePad = gamepad;
+
+                    if(_controlBindings.ContainsKey(gamepad))
+                    {
+                        _controlBindings.Remove(gamepad);
+                    }
+                    _controlBindings.Add(gamepad, _playerUIInformations[i]);
+
+
+                    Debug.Log("Bound");
+                    return;
+                }
             }
         }
     }
@@ -113,78 +112,53 @@ public class PlayerInformationUIManager : MonoBehaviour
     #endregion
 
     #region "Class Select Functions
-    private void ClassScroll(InputAction.CallbackContext context)
+    private void ClassScroll(Gamepad pad, GamePadButton button)
     {
-
-        //gets the float value
-        int value = (int)context.ReadValue<float>();
-        //input
-        if (_playerUIInformations != null)
+        if(_controlBindings.ContainsKey(pad))
         {
-            if (!ControllerManager.CheckControllerActive(context.control.device.deviceId))
+            _controlBindings.TryGetValue(pad, out _currentUIInformation);
+
+            if (_currentUIInformation != null)
             {
-                //binding found
-                if(ControllerManager.CheckControllerPlayerSelect(context.control.device.deviceId))
-                {
-                    _currentUIInformation = ControllerManager.TryGetPlayerSelectBinding(context.control.device.deviceId);
-                }
-                //no binding found, try to find first unjoined
+                int value;
+
+                if (button == GamePadButton.DPadLeft)
+                    value = -1;
+                else if (button == GamePadButton.DPadRight)
+                    value = 1;
                 else
-                {
-                    for (int i = 0; i < _playerUIInformations.Length; i++)
-                    {
-                        if(_playerUIInformations[i].State == PlayerUIDisplayState.Unjoined && !ControllerManager.CheckIfUIBound(_playerUIInformations[i]))
-                        {
-                            ControllerManager.BindInactivePlayerJoinController(context.control.device.deviceId, _playerUIInformations[i]);
-                            _currentUIInformation = ControllerManager.TryGetPlayerSelectBinding(context.control.device.deviceId);
-                        }
-                    }
-                }
+                    return;
+
+                _currentUIInformation.UpdateCurrentSelectedClass(value);
             }
         }
-
-        if(_currentUIInformation != null)
-        {
-            _currentUIInformation.UpdateCurrentSelectedClass(value);
-        }
-        
 
     }
-    private void ClassSelect(InputAction.CallbackContext context)
+    private void ClassSelect(Gamepad pad, GamePadButton button)
     {
-        if (_playerUIInformations != null)
+        if (_controlBindings.ContainsKey(pad))
         {
-            if (!ControllerManager.CheckControllerActive(context.control.device.deviceId))
+            _controlBindings.TryGetValue(pad, out _currentUIInformation);
+
+            if (_currentUIInformation != null)
             {
-                //binding found
-                if (ControllerManager.CheckControllerPlayerSelect(context.control.device.deviceId))
+                if (button == GamePadButton.Start || button == GamePadButton.DPadDown || button == GamePadButton.AButtonSouth)
                 {
-                    Debug.Log("binding found!");
-                    _currentUIInformation = ControllerManager.TryGetPlayerSelectBinding(context.control.device.deviceId);
-                }
-                //no binding found, try to find first unjoined
-                else
-                {
-                    Debug.Log("No binding found");
-                    for (int i = 0; i < _playerUIInformations.Length; i++)
+                    ClassData data = _currentUIInformation.GetSelectedClass();
+
+                    if (data && _currentUIInformation.boundGamePad != null)
                     {
-                        if (_playerUIInformations[i].State == PlayerUIDisplayState.Unjoined && !ControllerManager.CheckIfUIBound(_playerUIInformations[i]))
-                        {
-                            ControllerManager.BindInactivePlayerJoinController(context.control.device.deviceId, _playerUIInformations[i]);
-                            _currentUIInformation = ControllerManager.TryGetPlayerSelectBinding(context.control.device.deviceId);
-                        }
+                        EventBus.OnTryAddPlayer?.Invoke(data, _currentUIInformation.boundGamePad);
+
+                        _currentUIInformation.isSelectionBoundToController = false;
+                        _currentUIInformation.boundGamePad = null;
+
+                        if (PlayerManager.playerAwaitingUI != null)
+                            _currentUIInformation.UpdateUIState(PlayerUIDisplayState.Game, PlayerManager.playerAwaitingUI);
+                        PlayerManager.playerAwaitingUI = null;
+
                     }
                 }
-            }
-        }
-
-        if(_currentUIInformation != null)
-        {
-            ClassData data = _currentUIInformation.GetSelectedClass();
-
-            if(data)
-            {
-                EventBus.OnTryAddPlayer?.Invoke(context.control.device.deviceId, data);
             }
         }
     }

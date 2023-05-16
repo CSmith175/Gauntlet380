@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7574047188058038136}
   - component: {fileID: 8676375022601734932}
   - component: {fileID: 7233842272821913984}
+  - component: {fileID: 5277721697638519701}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -93,3 +94,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9e662e9fe913fc04c9b65a4f69467dee, type: 2}
   _playerMax: 4
   _playerSpawnPos: {x: 0, y: 1, z: 0}
+--- !u!114 &5277721697638519701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2368458067424543886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cef3cb0fe031894abb3b3a85a8756ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

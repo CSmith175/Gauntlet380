@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IGameEntity
 {
@@ -9,12 +10,6 @@ public class Player : MonoBehaviour, IGameEntity
     }
 
     #region "Variables/Properties"
-    //used controller bindings
-    private int _controllerNumber;
-    public int ControllerNumber
-    {
-        get { return _controllerNumber; }
-    }
 
     //Class data Instance, (Elf, Mage, Warrior, etc.) used in a few places
     private ClassData _classData;
@@ -51,6 +46,9 @@ public class Player : MonoBehaviour, IGameEntity
     private NarrationTriggerController _narrationController = new NarrationTriggerController();
     public NarrationTriggerController NarrationController { get { return _narrationController; } }
 
+    //bound gamepad
+    public Gamepad _boundPad;
+
     #endregion
 
     #region "Event Actions"
@@ -60,7 +58,7 @@ public class Player : MonoBehaviour, IGameEntity
     #endregion
 
     //Replacment for a constructor
-    public void InitilizePlayer(int controllerNumber, ClassData classData, int controllerID)
+    public void InitilizePlayer(ClassData classData)
     {
         _classData = classData;
 
@@ -68,23 +66,13 @@ public class Player : MonoBehaviour, IGameEntity
         SetUpPlayerStats(classData);
         SetUpPlayerInventory(true);
 
-        //component based initilization
-
-        bool playerControlsInitilized = false;
-
-        foreach(var component in gameObject.GetComponents(typeof(Component)))
+        //initilizes player controls
+        gameObject.TryGetComponent(out PlayerControls pControls);
+        if(pControls == null)
         {
-            if (component is PlayerControls)
-            {
-                SetUpPlayerMovement(component as PlayerControls, controllerNumber, controllerID);
-                playerControlsInitilized = true;
-            }
+            pControls = gameObject.AddComponent<PlayerControls>();
         }
-
-        if(!playerControlsInitilized)
-        {
-            SetUpPlayerMovement(null, controllerNumber, controllerID);
-        }
+        pControls.InitilizePlayer(this);
     }
 
     #region "Unity Functions"
@@ -105,24 +93,6 @@ public class Player : MonoBehaviour, IGameEntity
 
     #region "Helper Functions for Player Initilization
 
-    /// <summary>
-    /// Sets up Player Controls monobehavior. Resets one if its passed in, otherwise attatches a new one
-    /// </summary>
-    /// <param name="controls"> pass in a controls here to reset it instead of creating a new one </param>
-    private void SetUpPlayerMovement(PlayerControls controls, int controllerNumber, int controllerID)
-    {
-        _controllerNumber = controllerNumber; //sets the held controller number
-
-        if (controls) //resets a currently exsisting controls
-        {
-            controls.InitilizePlayer(controllerNumber, this, controllerID);
-        }
-        else //creates a new controls and sets it up
-        {
-            gameObject.AddComponent<PlayerControls>().InitilizePlayer(controllerNumber, this, controllerID);
-
-        }
-    }
 
     /// <summary>
     /// Sets up the player stats class

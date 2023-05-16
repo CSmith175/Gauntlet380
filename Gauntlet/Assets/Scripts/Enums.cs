@@ -65,14 +65,6 @@ public enum PlayerStatCategories
     Health,
     Score
 }
-//Used for binding players to controllers
-public enum PlayerNums
-{
-    Player1 = 1,
-    Player2 = 2,
-    Player3 = 3,
-    Player4 = 4
-}
 
 //used in the UI for determining the state of each player
 public enum PlayerUIDisplayState

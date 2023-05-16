@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PlayerInformationUI : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public class PlayerInformationUI : MonoBehaviour
 
     //tracks current selection
     private int _selectionIndex;
+
+    //tracks if UI is bound to a controller
+    public bool isSelectionBoundToController = false;
+    public Gamepad boundGamePad;
+
     #endregion
 
     #region "Game UI"
@@ -98,9 +104,6 @@ public class PlayerInformationUI : MonoBehaviour
                 if (_inventoryDisplayGroup.TryGetComponent(out Image image))
                     _lightUIImages.Add(image);
         }
-
-
-
     }
 
     //event subscriptions (also subscribed to in "SetUIFromCharacter for the Player ones")

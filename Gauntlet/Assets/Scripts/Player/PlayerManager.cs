@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     private NarrationTriggerController _narrationController = new NarrationTriggerController();
     public NarrationTriggerController NarrationController { get { return _narrationController; } }
 
+    public static Player playerAwaitingUI;
 
     #region "Unity Functions
     //for initilization of event listeners
@@ -50,44 +52,6 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
-    #region "Controller Related"
-    /// <summary>
-    /// Determines the controller number (a value from 1 - 4 that represents a controller)
-    /// </summary>
-    /// <returns></returns>
-    private int DetermineControllerNumber()
-    {
-        if (_players == null)
-        {
-            _players = new Player[_playerMax];
-            return 1;
-        } //null checks player array, returns one for first controller if its null
-
-        int checkingValue = 0;
-
-        for (int i = 0; i < _playerMax; i++)
-        {
-            checkingValue++;
-
-            for (int ii = 0; ii < _players.Length; ii++)
-            {
-                if (_players[ii])
-                {
-                    if (_players[ii].ControllerNumber == checkingValue)
-                        break;
-                }
-
-                if (ii == _players.Length - 1)
-                    return checkingValue;
-
-            }
-        }
-
-        Debug.LogWarning("No Controllers were available, defauting to 1");
-        return 1;
-    }
-    #endregion
-
     #region "Player Class(wizard/elf, etc.) Related
     /// <summary>
     /// Selects a random class thats not in use
@@ -118,7 +82,7 @@ public class PlayerManager : MonoBehaviour
     /// <param name="playerClass"> Class of the new player </param>
 
 
-    private void AddPlayer(int controllerID, ClassData playerClass)
+    private void AddPlayer(ClassData playerClass, Gamepad gamepad)
     {
         if (!playerClass)
             Debug.LogError("No playerclass found when trying to add a player");
@@ -133,14 +97,26 @@ public class PlayerManager : MonoBehaviour
             if (_players[i] == null)
             {
                 _players[i] = playerClass.SpawnClassPrefab().AddComponent<Player>();
+
+                //controller binding
+                GamePadState state = ControllerManager.TryGetGamepadState(gamepad);
+                if (state != null)
+                {
+                    state.attatchedPlayer = _players[i];
+                    state.attatchedSelectionUI = null;
+                    state.gamePadMode = GamePadMode.InGame;
+
+                    _players[i]._boundPad = gamepad;
+                    playerAwaitingUI = _players[i];
+                }
+
                 _players[i].gameObject.name = ("Player" + (i + 1) + " : " + playerClass.name);
-                _players[i].InitilizePlayer(DetermineControllerNumber(), playerClass, controllerID);
+                _players[i].InitilizePlayer(playerClass);
 
                 if (LevelManager.playerSpawn != null)
                     _players[i].transform.position = LevelManager.playerSpawn.position;
                 else
                     _players[i].transform.position = _playerSpawnPos;
-
 
                 //updates available classes attatched to the event
                 UpdateClassAvailabilityListeners();

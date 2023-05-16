@@ -7,10 +7,6 @@ public class PlayerControls : MonoBehaviour
     #region "Variables"
     [HideInInspector] public Player attatchedPlayer;
 
-    private PlayerActionMap _playerActionMap;
-
-    private int _controllerNumber;
-
     //variables used to store information internaly
     private Vector2 _movementVector = new Vector2();
     private Vector3 _appliedMovementVector = new Vector3();
@@ -25,7 +21,10 @@ public class PlayerControls : MonoBehaviour
     //for shot input buffer
     private bool _shotInputBuffer = false;
     private Coroutine _shotBufferCoroutine = null;
-    private int _recentDeviceID;
+
+    //bound gamepad
+    public Gamepad _boundPad;
+
     #endregion
 
     #region "Unity Funtions"
@@ -39,33 +38,21 @@ public class PlayerControls : MonoBehaviour
         }
         InitilizeRigidbody(_rBody);
 
-
-
-
-        //player action subscriptions
-        if (_playerActionMap != null)
-        {
-            _playerActionMap.Enable();
-
-            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed += context => PlayerShoot(context, false);
-
-            _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed += context => PlayerUsePotion(context);
-            _playerActionMap.PlayerMovement.ControllerButtonsKey.performed += context => PlayerUseKey(context);
-        }
-
+        //controller stuff
+        ControllerManager.playerStickInput += SetMovementVector;
+        ControllerManager.playerPadPressed += PlayerShoot;
+        ControllerManager.playerPadPressed += PlayerUsePotion;
+        ControllerManager.playerPadPressed += PlayerUseKey;
     }
 
     private void OnDisable()
     {
-        //player action unsubscriptions
-        if (_playerActionMap != null)
-        {
-            _playerActionMap.PlayerMovement.ControllerButtonsShoot.performed -= context => PlayerShoot(context, false);
-            _playerActionMap.PlayerMovement.ControllerButtonsPotion.performed -= context => PlayerUsePotion(context);
-            _playerActionMap.PlayerMovement.ControllerButtonsKey.performed -= context => PlayerUseKey(context);
+        //controller stuff
 
-            _playerActionMap.Disable();
-        }
+        ControllerManager.playerStickInput -= SetMovementVector;
+        ControllerManager.playerPadPressed -= PlayerShoot;
+        ControllerManager.playerPadPressed -= PlayerUsePotion;
+        ControllerManager.playerPadPressed -= PlayerUseKey;
     }
 
     private void FixedUpdate()
@@ -81,8 +68,6 @@ public class PlayerControls : MonoBehaviour
     /// </summary>
     private void PlayerMove()
     {
-        //checks controller input
-        _movementVector = ControllerManager.GetMovementVector((PlayerNums)_controllerNumber);
 
         //if its still 0, velocity is 0
         if (_movementVector.x == 0 && _movementVector.y == 0)
@@ -104,95 +89,98 @@ public class PlayerControls : MonoBehaviour
     /// <summary>
     /// Player fire action invoked from a controller
     /// </summary>
-    private void PlayerShoot(InputAction.CallbackContext context, bool buffered)
+    private void PlayerShoot(Gamepad pad, GamePadButton button)
     {
-        //sets the lastcontext variable for use in the input buffering
-        if (!buffered)
+        Debug.Log("Try Shoot");
+        if (pad == _boundPad)
         {
-            _recentDeviceID = context.control.device.deviceId;
-        }
-
-        //can't shoot, starts buffer and returns. mannualy set with a literal to a fith of a second
-        if (!_canShoot)
-        {
-            //input buffer coroutine
-            if (_shotBufferCoroutine != null)
+            Debug.Log("Shoot Sucsess");
+            //can't shoot, starts buffer and returns. mannualy set with a literal to a fith of a second
+            if (!_canShoot)
             {
-                StopCoroutine(_shotBufferCoroutine);
+                //input buffer coroutine
+                if (_shotBufferCoroutine != null)
+                {
+                    StopCoroutine(_shotBufferCoroutine);
+                }
+
+                _shotBufferCoroutine = StartCoroutine(ShotInputBuffer(0.20f));
+                return;
             }
 
-            _shotBufferCoroutine = StartCoroutine(ShotInputBuffer(0.20f));
-            return;
-        }
-
-        //handles the creation of the shot projectile 
-        if (buffered || ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
-        {
-
-            if (attatchedPlayer.ClassData.CharacterShotPrefab != null)
+            //handles the creation of the shot projectile 
+            if (button == GamePadButton.AButtonSouth || button == GamePadButton.DPadDown)
             {
-                // returns out of a pool already exsists of the type so its fine
-                ObjectPooling.MakeNewObjectPool(attatchedPlayer.ClassData.CharacterShotPrefab, 10);
-
-                _currentShot = ObjectPooling.PullObjectFromPool(attatchedPlayer.ClassData.CharacterShotPrefab);
-
-                if (_currentShot != null)
+                if (attatchedPlayer.ClassData.CharacterShotPrefab != null)
                 {
-                    //activates and launches projectile
-                    _currentShot.transform.position = transform.position;
-                    _currentShot.transform.LookAt(transform.position + transform.forward);
+                    // returns out of a pool already exsists of the type so its fine
+                    ObjectPooling.MakeNewObjectPool(attatchedPlayer.ClassData.CharacterShotPrefab, 10);
 
-                    //launches the projectile
-                    _currentShot.TryGetComponent(out _currentShotRBody);
-                    if (_currentShotRBody)
-                    {
-                        _currentShotRBody.velocity = transform.forward * attatchedPlayer.ClassData.BaseShotSpeed;
-                    }
+                    _currentShot = ObjectPooling.PullObjectFromPool(attatchedPlayer.ClassData.CharacterShotPrefab);
 
-                    //tells the projectile that this player is the source of the projectile
-                    _currentShot.TryGetComponent(out _currentprojectile);
-                    if (_currentprojectile)
+                    if (_currentShot != null)
                     {
-                        _currentprojectile.InitilizeProjectile(gameObject, (int)attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.ShotDamage), ProjectileSourceType.Player);
+                        //activates and launches projectile
+                        _currentShot.transform.position = transform.position;
+                        _currentShot.transform.LookAt(transform.position + transform.forward);
+
+                        //launches the projectile
+                        _currentShot.TryGetComponent(out _currentShotRBody);
+                        if (_currentShotRBody)
+                        {
+                            _currentShotRBody.velocity = transform.forward * attatchedPlayer.ClassData.BaseShotSpeed;
+                        }
+
+                        //tells the projectile that this player is the source of the projectile
+                        _currentShot.TryGetComponent(out _currentprojectile);
+                        if (_currentprojectile)
+                        {
+                            _currentprojectile.InitilizeProjectile(gameObject, (int)attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.ShotDamage), ProjectileSourceType.Player);
+                        }
                     }
                 }
             }
-        }
 
-        //starts the shot delay
-        StartCoroutine(ShotDelayTimer(attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.ShotDowntime)));
+            //starts the shot delay
+            StartCoroutine(ShotDelayTimer(attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.ShotDowntime)));
+        }
     }
     /// <summary>
     /// Player potion action invoked by a controller
     /// </summary>
-    private void PlayerUsePotion(InputAction.CallbackContext context)
+    private void PlayerUsePotion(Gamepad pad, GamePadButton button)
     {
-        if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
+        if(pad == _boundPad)
         {
-            if (attatchedPlayer.PlayerInventory != null)
+            if (button == GamePadButton.BButtonEast || button == GamePadButton.DPadRight)
             {
-                PotionInventoryItem._potionDamage = (int)attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.MagicDamage);
-                PotionInventoryItem._sourceEntity = gameObject;
-                attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Potion);
+                if (attatchedPlayer.PlayerInventory != null)
+                {
+                    PotionInventoryItem._potionDamage = (int)attatchedPlayer.PlayerStats.GetPlayerStat(PlayerStatCategories.MagicDamage);
+                    PotionInventoryItem._sourceEntity = gameObject;
+                    attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Potion);
+                }
             }
-
         }
     }
     /// <summary>
     /// Player key action invoked by a controller
     /// </summary>
-    private void PlayerUseKey(InputAction.CallbackContext context)
+    private void PlayerUseKey(Gamepad pad, GamePadButton button)
     {
-        if (ControllerManager.ButtonPressed(context, (PlayerNums)_controllerNumber))
+        if(pad == _boundPad)
         {
-            if (attatchedPlayer.PlayerInventory != null)
+            if(button == GamePadButton.XButtonWest || button == GamePadButton.DPadLeft)
             {
-                if (attatchedPlayer.ClosestDoor != null && Vector3.Distance(transform.position, attatchedPlayer.ClosestDoor.transform.position) < 4)
+                if (attatchedPlayer.PlayerInventory != null)
                 {
-                    if(!attatchedPlayer.ClosestDoor.IsOpened)
+                    if (attatchedPlayer.ClosestDoor != null && Vector3.Distance(transform.position, attatchedPlayer.ClosestDoor.transform.position) < 4)
                     {
-                        if(attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Key))
-                            attatchedPlayer.ClosestDoor.OpenDoor();
+                        if (!attatchedPlayer.ClosestDoor.IsOpened)
+                        {
+                            if (attatchedPlayer.PlayerInventory.TryUseItem(ItemType.Key))
+                                attatchedPlayer.ClosestDoor.OpenDoor();
+                        }
                     }
                 }
             }
@@ -203,49 +191,12 @@ public class PlayerControls : MonoBehaviour
 
     #region "Initilization Related"
 
-    public void InitilizePlayer(int controllerNumber, Player player, int controllerID)
+    public void InitilizePlayer(Player player)
     {
-        InitilizeInputAction();
-
-        _controllerNumber = Mathf.Clamp(controllerNumber, 1, 4);
-        DeterminePlayerAction(_controllerNumber, controllerID);
         attatchedPlayer = player;
-
-        OnEnable();
+        _boundPad = player._boundPad;
     }
 
-
-    private void DeterminePlayerAction(int playerNumber, int controllerID)
-    {
-        if (_playerActionMap == null)
-        {
-            InitilizeInputAction();
-        }
-
-        playerNumber = Mathf.Clamp(playerNumber, 1, 4);
-
-        Gamepad gamepad = null;
-        foreach (Gamepad pad in Gamepad.all)
-        {
-            if(pad.deviceId == controllerID)
-            {
-                gamepad = pad;
-            }
-        }
-
-        if(gamepad != null)
-        {
-            //determines controller
-            ControllerManager.BindSpecificAvailableControllerToPlayer((PlayerNums)playerNumber, gamepad);
-        }
-
-    }
-
-    private void InitilizeInputAction() //initilizes the action map
-    {
-        _playerActionMap = new PlayerActionMap();
-        _playerActionMap.Enable();
-    }
 
     private void InitilizeRigidbody(Rigidbody rBody)
     {
@@ -271,11 +222,8 @@ public class PlayerControls : MonoBehaviour
 
         if (_shotInputBuffer)
         {
-            if (ControllerManager.ButtonPressed(_recentDeviceID, (PlayerNums)_controllerNumber))
-            {
-                _shotInputBuffer = false;
-                PlayerShoot(new InputAction.CallbackContext(), true);
-            }
+            _shotInputBuffer = false;
+            PlayerShoot(_boundPad, GamePadButton.AButtonSouth);
         }
     }
 
@@ -285,5 +233,17 @@ public class PlayerControls : MonoBehaviour
         yield return new WaitForSeconds(duration);
         _shotInputBuffer = false;
     }
+    #endregion
+
+    #region "Movement Events"
+    //sets the movement vector
+    private void SetMovementVector(Gamepad pad, Vector2 moveVector)
+    {
+        if(pad == _boundPad)
+        {
+            _movementVector = moveVector;
+        }
+    }
+
     #endregion
 }
