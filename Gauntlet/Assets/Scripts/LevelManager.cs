@@ -10,6 +10,7 @@ public class LevelManager: MonoBehaviour
 
     public static Transform playerSpawn;
     private int currentLevel = 0;
+    private PlayerManager playerManager;
 
     private void OnEnable()
     {
@@ -25,6 +26,7 @@ public class LevelManager: MonoBehaviour
 
     private void Start()
     {
+        TryGetComponent<PlayerManager>(out playerManager);
         currentLevel = 0;
         gameOverCanvas.SetActive(false);
         startCanvas.SetActive(true);
@@ -33,11 +35,15 @@ public class LevelManager: MonoBehaviour
     private void LoadNextLevel()
     {
         Debug.Log("Loading Next Level");
+        levels[currentLevel].SetActive(false);
         currentLevel++;
         if(currentLevel >= levels.Length)
         {
             currentLevel = 0;
         }
+        if(playerManager != null)
+            playerManager.SetActiveAllPlayers(true);
+
 
         LoadLevel(currentLevel);
     }

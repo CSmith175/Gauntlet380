@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2368458067424543885}
   - component: {fileID: 7574047188058038136}
   - component: {fileID: 8676375022601734932}
+  - component: {fileID: 7233842272821913984}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -76,3 +77,22 @@ MonoBehaviour:
   - {fileID: 6314299640439792683, guid: 028be3e8727cd8e44a123badbb7f90bd, type: 3}
   gameOverCanvas: {fileID: 2255161065193617817, guid: 208b3d569a9653345a60de52a98e3a11, type: 3}
   startCanvas: {fileID: 4143778711607421589, guid: e0af4ed2e66ae2b4494f0f801818f23b, type: 3}
+--- !u!114 &7233842272821913984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2368458067424543886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73f90cb443faaa41bb5e7c01075bd69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _classes:
+  - {fileID: 11400000, guid: 37dfe836f8d26f54a9000b10aa45e8b6, type: 2}
+  - {fileID: 11400000, guid: 93f345abfee151c4e8261e161f23f9c6, type: 2}
+  - {fileID: 11400000, guid: 6ae6fc7eb3efdda4095a802cea3540d2, type: 2}
+  - {fileID: 11400000, guid: 9e662e9fe913fc04c9b65a4f69467dee, type: 2}
+  _playerMax: 4
+  _playerSpawnPos: {x: 0, y: 1, z: 0}
