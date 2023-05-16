@@ -4,10 +4,10 @@ using UnityEngine.Events;
 public class PlayersChanged : UnityEvent<Player[]> { }
 
 //runs when a player dies
-public class PlayerDied : UnityEvent<Player[]> { }
+public class PlayerDied : UnityEvent<Player> { }
 
 //runs when a player clears the level
-public class PlayerClearedLevel: UnityEvent<Player[]> { }
+public class PlayerClearedLevel: UnityEvent<Player> { }
 
 //runs when available classes are determined
 public class AvailableClassesUpdated: UnityEvent<ClassData[]> { }
