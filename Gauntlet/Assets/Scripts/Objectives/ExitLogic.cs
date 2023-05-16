@@ -14,7 +14,7 @@ public class ExitLogic : MonoBehaviour
 
             if(player != null)
             {
-                EventBus.OnPlayerClear?.Invoke(player);
+                //EventBus.OnPlayerClear?.Invoke(player);
             }
         }
     }

@@ -7,9 +7,9 @@ public class LevelManager: MonoBehaviour
 {
     public GameObject[] levels;
     public GameObject gameOverCanvas, startCanvas;
+
+    public static Transform playerSpawn;
     private int currentLevel = 0;
-    private int currentPlayerCount = 0;
-    private int playersExited = 0;
 
     private void OnEnable()
     {
@@ -55,6 +55,14 @@ public class LevelManager: MonoBehaviour
         }
 
         levels[level].SetActive(true);
+    }
+
+    private void MovePlayersToSpawn()
+    {
+        foreach (Player player in GameObject.FindObjectsOfType<Player>())
+        {
+            player.gameObject.transform.position = playerSpawn.position;
+        }
     }
 
     public void StartGame()
